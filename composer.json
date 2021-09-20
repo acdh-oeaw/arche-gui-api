@@ -1,0 +1,34 @@
+{
+    "name": "acdh-oeaw/arche-gui-api",
+    "description": "Drupal module to ACDH ARCHE repository",
+    "type": "drupal-module",
+    "homepage": "https://github.com/acdh-oeaw/arche-gui-api",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Norbert Czirjak",
+            "email": "norbert.czirjak@oeaw.ac.at"
+        }
+    ],
+    "require": {
+        "acdh-oeaw/arche-lib": "*",
+        "acdh-oeaw/arche-lib-disserv": "*",
+        "acdh-oeaw/arche-lib-schema": "*",
+        "zozlak/logging": "*",
+        "acdh-oeaw/easyrdf": "*",
+        "twig/extensions": "^1.5",
+        "phpunit/phpunit": "^9",
+        "phpspec/prophecy-phpunit": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9",
+        "drupal/core-dev": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Drupal\\ArcheGuiApi\\Helper\\": "src/Helper",
+            "Drupal\\ArcheGuiApi\\Controller\\": "src/Controller",
+            "Drupal\\ArcheGuiApi\\Model\\": "src/Model"
+        }
+    }
+}

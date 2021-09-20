@@ -1,0 +1,6 @@
+arche_api_persons:    
+    path: '/api/v2/persons/{searchStr}'
+    defaults:
+        _controller: '\Drupal\arche_gui_api\Controller\ArcheApiMainController::api_persons'
+    requirements:
+        _access: 'TRUE'
