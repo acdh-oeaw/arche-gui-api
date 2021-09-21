@@ -26,9 +26,9 @@
     },
     "autoload": {
         "psr-4": {
-            "Drupal\\ArcheGuiApi\\Helper\\": "src/Helper",
-            "Drupal\\ArcheGuiApi\\Controller\\": "src/Controller",
-            "Drupal\\ArcheGuiApi\\Model\\": "src/Model"
+            "Drupal\\arche_gui_api\\Helper\\": "src/Helper",
+            "Drupal\\arche_gui_api\\Controller\\": "src/Controller",
+            "Drupal\\arche_gui_api\\Model\\": "src/Model"
         }
     }
 }

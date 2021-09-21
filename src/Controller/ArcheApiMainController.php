@@ -2,8 +2,6 @@
 
 namespace Drupal\arche_gui_api\Controller;
 
-use Drupal\Core\Controller\ControllerBase;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
@@ -11,64 +9,21 @@ use Symfony\Component\HttpFoundation\JsonResponse;
  *
  * @author nczirjak
  */
-class ArcheApiMainController extends ControllerBase 
+class ArcheApiMainController extends \Drupal\Core\Controller\ControllerBase
 {
     
-    /**
-     * ACDH:Perons for metadata editor
-     * @param string $searchStr
-     * @return Response
-     */
-    public function api_persons(string $searchStr): Response
+    
+    public function api_gnd_persons(): JsonResponse
     {   
-        $controller = new \Drupal\arche_gui_api\Controller\PersonsController();
-        return $controller->execute($searchStr);
+        $controller = new \Drupal\arche_gui_api\Controller\GND\GndPersonsController();
+        return $controller->execute();
     }
     
-    /**
-     * ACDH:Concepts for metadata editor
-     * @param string $searchStr
-     * @return Response
-     */
-    public function api_concepts(string $searchStr): Response
+    public function api_get_inversedata(string $repoid): JsonResponse
     {   
-        $controller = new \Drupal\arche_gui_api\Controller\ConceptsController();
-        return $controller->execute($searchStr);
+        $controller = new \Drupal\arche_gui_api\Controller\InverseDataController();
+        return $controller->execute($repoid);
     }
     
-    /**
-     * ACDH:Places for metadata editor
-     * @param string $searchStr
-     * @return Response
-     */
-    public function api_places(string $searchStr): Response
-    {   
-        $controller = new \Drupal\arche_gui_api\Controller\PlacesController();
-        return $controller->execute($searchStr);
-    }
-    
-    /**
-     * ACDH:Publications for metadata editor
-     * @param string $searchStr
-     * @return Response
-     */
-    public function api_publications(string $searchStr): Response
-    {   
-        $controller = new \Drupal\arche_gui_api\Controller\PublicationsController();
-        return $controller->execute($searchStr);
-    }
-    
-    /**
-     * ACDH:Organisations for metadata editor
-     * @param string $searchStr
-     * @return Response
-     */
-    public function api_organisations(string $searchStr): Response
-    {   
-        $controller = new \Drupal\arche_gui_api\Controller\OrganisationsController();
-        return $controller->execute($searchStr);
-    }
-    
-    
-    
+      
 }
