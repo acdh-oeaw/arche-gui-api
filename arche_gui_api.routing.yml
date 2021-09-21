@@ -4,3 +4,31 @@ arche_api_persons:
         _controller: '\Drupal\arche_gui_api\Controller\ArcheApiMainController::api_persons'
     requirements:
         _access: 'TRUE'
+        
+arche_api_places:    
+    path: '/api/v2/places/{searchStr}'
+    defaults:
+        _controller: '\Drupal\arche_gui_api\Controller\ArcheApiMainController::api_places'
+    requirements:
+        _access: 'TRUE'        
+
+arche_api_publications:    
+    path: '/api/v2/publications/{searchStr}'
+    defaults:
+        _controller: '\Drupal\arche_gui_api\Controller\ArcheApiMainController::api_publications'
+    requirements:        
+        _access: 'TRUE'        
+
+arche_api_organisations:    
+    path: '/api/v2/organisations/{searchStr}'
+    defaults:
+        _controller: '\Drupal\arche_gui_api\Controller\ArcheApiMainController::api_organisations'
+    requirements:        
+        _access: 'TRUE'  
+
+arche_api_concepts:    
+    path: '/api/v2/concepts/{searchStr}'
+    defaults:
+        _controller: '\Drupal\arche_gui_api\Controller\ArcheApiMainController::api_concepts'
+    requirements:        
+        _access: 'TRUE'          

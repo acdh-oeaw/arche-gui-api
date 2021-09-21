@@ -1,10 +1,6 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+namespace Drupal\arche_gui_api\Model;
 
 /**
  * Description of ArcheApiModel
@@ -58,9 +54,9 @@ class ArcheApiModel {
                 array(':timeout' => $timeout)
             )->fetch();
         } catch (Exception $ex) {
-            \Drupal::logger('acdh_repo_gui')->notice($ex->getMessage());
+            \Drupal::logger('arche_gui_api')->notice($ex->getMessage());
         } catch (\Drupal\Core\Database\DatabaseExceptionWrapper $ex) {
-            \Drupal::logger('acdh_repo_gui')->notice($ex->getMessage());
+            \Drupal::logger('arche_gui_api')->notice($ex->getMessage());
         }
     }
 }
