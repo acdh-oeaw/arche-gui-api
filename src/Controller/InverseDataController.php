@@ -17,6 +17,8 @@ class InverseDataController {
          *  https://domain.com/browser/api/v2/getInverseData/value?_format=json
          */
 
+        $repoid = preg_replace( '/[^0-9]/', '', $repoid );
+        
         if (empty($repoid)) {
             return new JsonResponse(array("Please provide a search string"), 404, ['Content-Type' => 'application/json']);
         }

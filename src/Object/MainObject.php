@@ -13,6 +13,7 @@ class MainObject {
     protected $model;
     protected $repo;
     protected $repodb;
+    protected $siteLang = "en";
 
     public function __construct() {
         (isset($_SESSION['language'])) ? $this->siteLang = strtolower($_SESSION['language']) : $this->siteLang = "en";

@@ -12,10 +12,12 @@ class ArcheApiModel {
     protected $repodb;
     protected $config;
     protected $repo;
+    protected $siteLang = "en";
     
     public function __construct()
     {
         $this->config = \Drupal::service('extension.list.module')->getPath('acdh_repo_gui') . '/config/config.yaml';
+        (isset($_SESSION['language'])) ? $this->siteLang = strtolower($_SESSION['language']) : $this->siteLang = "en";
         try {
             $this->repo = \acdhOeaw\arche\lib\Repo::factory($this->config);
         } catch (\Exception $ex) {

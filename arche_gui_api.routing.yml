@@ -11,4 +11,26 @@ arche_api_get_inversedata:
         _controller: '\Drupal\arche_gui_api\Controller\ArcheApiMainController::api_get_inversedata'
     requirements:
         _access: 'TRUE'        
-         
+
+arche_api_get_members:    
+    path: '/api/v2/getMembers/{repoid}'
+    defaults:
+        _controller: '\Drupal\arche_gui_api\Controller\ArcheApiMainController::api_get_members'
+    requirements:
+        _access: 'TRUE'    
+        
+arche_api_get_rpr:    
+    path: '/api/v2/getRPR/{repoid}/{lng}'
+    defaults:
+        _controller: '\Drupal\arche_gui_api\Controller\ArcheApiMainController::api_get_rpr'
+    requirements:
+        _access: 'TRUE'          
+        
+arche_api_get_ontology_jsplugin_data:    
+    path: '/api/v2/getOntologyJSPluginData/{lng}'
+    defaults:
+        _controller: '\Drupal\arche_gui_api\Controller\ArcheApiMainController::api_get_ontology_jsplugin'
+    requirements:
+        _access: 'TRUE'
+        
+        
