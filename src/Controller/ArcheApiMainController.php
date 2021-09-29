@@ -42,6 +42,19 @@ class ArcheApiMainController extends \Drupal\Core\Controller\ControllerBase
         return $controller->execute($lang);
     }
     
+    public function api_collection_data_lazy(string $repoid, string $lang = "en"): JsonResponse
+    {   
+        $controller = new \Drupal\arche_gui_api\Controller\Collection\CollectionController();
+        return $controller->execute($repoid, $lang);
+    }
+    
+    
+    public function api_dl_collection_binaries(string $repoid): JsonResponse
+    {   
+        $controller = new \Drupal\arche_gui_api\Controller\Collection\CollectionBinariesController();
+        return $controller->execute($repoid);
+    }
+    
     
     
     

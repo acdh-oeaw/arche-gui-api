@@ -33,4 +33,22 @@ arche_api_get_ontology_jsplugin_data:
     requirements:
         _access: 'TRUE'
         
+arche_api_get_collection_data_lazy:    
+    path: '/api/v2/get_collection_data_lazy/{repoid}/{lng}'
+    defaults:
+        _controller: '\Drupal\arche_gui_api\Controller\ArcheApiMainController::api_collection_data_lazy'
+    requirements:
+        uri: '^[^\?]*$'
+        _permission: 'access content'
+        _access: 'TRUE'
+        
+arche_api_dl_collection_binaries:
+    path: '/api/v2/dl_collection_binaries/{repoid}'
+    defaults:
+        _controller: '\Drupal\arche_gui_api\Controller\ArcheApiMainController::api_dl_collection_binaries'
+    requirements:
+        uri: '^[^\?]*$'
+        _permission: 'access content'
+        _access: 'TRUE'        
+        
         
