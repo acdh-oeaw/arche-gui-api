@@ -178,9 +178,7 @@ class CollectionBinariesObject extends \Drupal\arche_gui_api\Object\MainObject {
                         //to shrink it
                         if (strlen($d) > 100) {
                             $ext = pathinfo($d, PATHINFO_EXTENSION);
-                            $tarFilename = str_replace($ext, '', $d);
-                            $tarFilename = substr($tarFilename, 0, 90);
-                            $tarFilename = $tarFilename . '.' . $ext;
+                            $tarFilename = $this->createTarFileName($ext, $d);
                         }
                         chdir($this->collectionTmpDir . $this->collectionDate . '/');
                         $tar->add($d);
@@ -194,6 +192,17 @@ class CollectionBinariesObject extends \Drupal\arche_gui_api\Object\MainObject {
             return true;
         }
         return false;
+    }
+    
+    /**
+     * Create the filename
+     * @param string $ext
+     * @param string $d
+     * @return string
+     */
+    private function createTarFileName(string $ext, string $d): string {
+        $tarFilename = str_replace($ext, '', $d);
+        return substr($tarFilename, 0, 90). '.' . $ext;
     }
 
     /**
@@ -283,7 +292,6 @@ class CollectionBinariesObject extends \Drupal\arche_gui_api\Object\MainObject {
         }
         
         $dir = "";
-
         if (!file_exists($this->collectionTmpDir . $this->collectionDate)) {
             mkdir($this->collectionTmpDir . $this->collectionDate, 0777);
             $dir = $this->collectionTmpDir . $this->collectionDate;
@@ -294,7 +302,6 @@ class CollectionBinariesObject extends \Drupal\arche_gui_api\Object\MainObject {
             mkdir($this->collectionTmpDir . $this->collectionDate . '/' . $path, 0777, true);
             $dir = $this->collectionTmpDir . $this->collectionDate . '/' . $path;
         }
-
         return $dir;
     }
 

@@ -3,6 +3,7 @@
 namespace Drupal\arche_gui_api\Controller;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Description of ArcheMainApiController
@@ -55,7 +56,11 @@ class ArcheApiMainController extends \Drupal\Core\Controller\ControllerBase
         return $controller->execute($repoid);
     }
     
-    
+    public function api_collection_dl_script(string $repoid): Response
+    {   
+        $controller = new \Drupal\arche_gui_api\Controller\Collection\CollectionScriptController();
+        return $controller->execute($repoid);
+    }
     
     
       

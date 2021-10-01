@@ -51,4 +51,14 @@ arche_api_dl_collection_binaries:
         _permission: 'access content'
         _access: 'TRUE'        
         
+arche_api_collection_dl_script:
+    path: '/api/v2/collection_dl_script/{repoid}'
+    defaults:
+        _controller: '\Drupal\arche_gui_api\Controller\ArcheApiMainController::api_collection_dl_script'
+    requirements:
+        uri: '^[^\?]*$'
+        _permission: 'access content'
+        _access: 'TRUE'       
+        
+    
         
