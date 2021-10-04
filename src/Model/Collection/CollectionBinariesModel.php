@@ -7,21 +7,23 @@ namespace Drupal\arche_gui_api\Model\Collection;
  *
  * @author nczirjak
  */
-class CollectionBinariesModel extends \Drupal\arche_gui_api\Model\ArcheApiModel {
-
-    public function __construct() {
+class CollectionBinariesModel extends \Drupal\arche_gui_api\Model\ArcheApiModel
+{
+    public function __construct()
+    {
         parent::__construct();
     }
 
-    public function getData(string $repoid, string $lang): array {
+    public function getData(string $repoid, string $lang): array
+    {
         $result = array();
 
         //run the actual query
         try {
             $this->setSqlTimeout('60000');
             $query = $this->repodb->query(
-                    "select * from  gui.collection_v2_views_func(:id, :lang) order by title;",
-                    array(
+                "select * from  gui.collection_v2_views_func(:id, :lang) order by title;",
+                array(
                         'id' => $repoid,
                         'lang' => $lang
                     )
@@ -38,7 +40,4 @@ class CollectionBinariesModel extends \Drupal\arche_gui_api\Model\ArcheApiModel 
         $this->changeBackDBConnection();
         return $result;
     }
-    
-    
-
 }

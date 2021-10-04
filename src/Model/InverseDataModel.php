@@ -7,13 +7,15 @@ namespace Drupal\arche_gui_api\Model;
  *
  * @author nczirjak
  */
-class InverseDataModel extends \Drupal\arche_gui_api\Model\ArcheApiModel {
-    
-    public function __construct() {
+class InverseDataModel extends \Drupal\arche_gui_api\Model\ArcheApiModel
+{
+    public function __construct()
+    {
         parent::__construct();
     }
     
-    public function getData(string $repoid): array {
+    public function getData(string $repoid): array
+    {
         $result = array();
         //run the actual query
         try {

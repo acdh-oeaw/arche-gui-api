@@ -7,8 +7,8 @@ namespace Drupal\arche_gui_api\Model;
  *
  * @author nczirjak
  */
-class ArcheApiModel {
-    
+class ArcheApiModel
+{
     protected $repodb;
     protected $config;
     protected $repo;

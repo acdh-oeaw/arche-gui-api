@@ -7,13 +7,15 @@ namespace Drupal\arche_gui_api\Model;
  *
  * @author nczirjak
  */
-class RPRModel extends \Drupal\arche_gui_api\Model\ArcheApiModel {
-    
-    public function __construct() {
+class RPRModel extends \Drupal\arche_gui_api\Model\ArcheApiModel
+{
+    public function __construct()
+    {
         parent::__construct();
     }
     
-    public function getData(string $repoid, string $lang = "en"): array {
+    public function getData(string $repoid, string $lang = "en"): array
+    {
         $result = array();
         //run the actual query
         try {

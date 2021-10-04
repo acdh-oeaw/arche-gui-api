@@ -11,7 +11,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
  */
 class GndPersonsController extends \Drupal\Core\Controller\ControllerBase
 {
-    public function execute(): JsonResponse {
+    public function execute(): JsonResponse
+    {
         /*
          * Usage:
          *  https://domain.com/browser/api/v2/gnd?_format=json

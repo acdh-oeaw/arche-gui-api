@@ -5,8 +5,8 @@
  *
  * @author nczirjak
  */
-class Utils {
-    
+class Utils
+{
     private $config;
     private $repo;
     

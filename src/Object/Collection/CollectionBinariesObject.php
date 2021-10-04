@@ -7,8 +7,8 @@ namespace Drupal\arche_gui_api\Object\Collection;
  *
  * @author nczirjak
  */
-class CollectionBinariesObject extends \Drupal\arche_gui_api\Object\MainObject {
-
+class CollectionBinariesObject extends \Drupal\arche_gui_api\Object\MainObject
+{
     protected $model;
     private $tmpDir;
     private $repoUrl;
@@ -17,7 +17,8 @@ class CollectionBinariesObject extends \Drupal\arche_gui_api\Object\MainObject {
     private $collectionTmpDir;
     private $turtle;
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
         if (empty($this->tmpDir)) {
             $this->setTmpDir();
@@ -26,15 +27,15 @@ class CollectionBinariesObject extends \Drupal\arche_gui_api\Object\MainObject {
     }
 
     /**
-     * 
+     *
      * @param array $binaries
      * @param string $repoid
      * @param string $username
      * @param string $password
      * @return string
      */
-    public function init(array $binaries, string $repoid, string $username = "", string $password = ""): string {
-
+    public function init(array $binaries, string $repoid, string $username = "", string $password = ""): string
+    {
         $this->repoUrl = $this->repo->getBaseUrl() . $repoid;
         
         //1. setup tmp dir
@@ -44,7 +45,7 @@ class CollectionBinariesObject extends \Drupal\arche_gui_api\Object\MainObject {
         //2. download the selected files
         $this->collectionDownloadFiles($binaries, $username, $password);
         //3. add the turtle file into the collection
-        if($this->collectionGetTurtle($repoid) === false) {
+        if ($this->collectionGetTurtle($repoid) === false) {
             \Drupal::logger('acdh_repo_gui')->notice('collection turtle file generating error' . $this->repoUrl);
         }
         //4. tar the files
@@ -63,7 +64,8 @@ class CollectionBinariesObject extends \Drupal\arche_gui_api\Object\MainObject {
      * @param string $dateID
      * @return string
      */
-    private function collectionCreateDlDirectory(): bool {
+    private function collectionCreateDlDirectory(): bool
+    {
         if (empty($this->tmpDir)) {
             $this->setTmpDir();
         }
@@ -97,7 +99,8 @@ class CollectionBinariesObject extends \Drupal\arche_gui_api\Object\MainObject {
      * @param string $username
      * @param string $password
      */
-    public function collectionDownloadFiles(array $binaries, string $username = '', string $password = '') {
+    public function collectionDownloadFiles(array $binaries, string $username = '', string $password = '')
+    {
         $client = new \GuzzleHttp\Client(['auth' => [$username, $password], 'verify' => false]);
         ini_set('max_execution_time', 1800);
 
@@ -130,7 +133,8 @@ class CollectionBinariesObject extends \Drupal\arche_gui_api\Object\MainObject {
      *
      * @return bool
      */
-    private function collectionGetTurtle(string $repoid): bool {
+    private function collectionGetTurtle(string $repoid): bool
+    {
         $ttl = $this->turtle->execute($repoid);
         if (!empty($ttl)) {
             $turtleFile = fopen($this->collectionTmpDir . $this->collectionDate . '/turtle.ttl', "w");
@@ -146,7 +150,8 @@ class CollectionBinariesObject extends \Drupal\arche_gui_api\Object\MainObject {
     /**
      * update TmpDir value
      */
-    private function setTmpDir() {
+    private function setTmpDir()
+    {
         if (empty($this->tmpDir)) {
             $this->tmpDir = \Drupal::service('file_system')->realpath(\Drupal::config('system.file')->get('default_scheme') . "://");
         }
@@ -156,7 +161,8 @@ class CollectionBinariesObject extends \Drupal\arche_gui_api\Object\MainObject {
      * TAR the downloaded collection files
      * @return bool
      */
-    private function collectionTarFiles(): bool {
+    private function collectionTarFiles(): bool
+    {
         ini_set('xdebug.max_nesting_level', 2000);
         //if we have files in the directory
         $dirFiles = scandir($this->collectionTmpDir . $this->collectionDate);
@@ -200,7 +206,8 @@ class CollectionBinariesObject extends \Drupal\arche_gui_api\Object\MainObject {
      * @param string $d
      * @return string
      */
-    private function createTarFileName(string $ext, string $d): string {
+    private function createTarFileName(string $ext, string $d): string
+    {
         $tarFilename = str_replace($ext, '', $d);
         return substr($tarFilename, 0, 90). '.' . $ext;
     }
@@ -212,7 +219,8 @@ class CollectionBinariesObject extends \Drupal\arche_gui_api\Object\MainObject {
      * @param string $fedoraUrl
      * @return type
      */
-    public function turtleDissService() {
+    public function turtleDissService()
+    {
         $result = array();
         $client = new \GuzzleHttp\Client();
 
@@ -241,7 +249,8 @@ class CollectionBinariesObject extends \Drupal\arche_gui_api\Object\MainObject {
     /**
      * Remove the files from the collections directory
      */
-    private function collectionRemoveTempFiles() {
+    private function collectionRemoveTempFiles()
+    {
         //get the collection directory
         $dir = $this->collectionTmpDir . $this->collectionDate;
         $it = new \RecursiveDirectoryIterator($dir, \RecursiveDirectoryIterator::SKIP_DOTS);
@@ -265,7 +274,8 @@ class CollectionBinariesObject extends \Drupal\arche_gui_api\Object\MainObject {
      * @param string $filename
      * @return string
      */
-    private function createFileNameForCollectionDownload(string $filename): string {
+    private function createFileNameForCollectionDownload(string $filename): string
+    {
         $exp = explode("/", $filename);
         $last = end($exp);
 
@@ -304,5 +314,4 @@ class CollectionBinariesObject extends \Drupal\arche_gui_api\Object\MainObject {
         }
         return $dir;
     }
-
 }
