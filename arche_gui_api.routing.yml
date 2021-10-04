@@ -1,5 +1,5 @@
 arche_api_gnd_persons:    
-    path: '/api/v2/gnd'
+    path: '/api/gnd'
     defaults:
         _controller: '\Drupal\arche_gui_api\Controller\ArcheApiMainController::api_gnd_persons'
     requirements:
@@ -27,7 +27,7 @@ arche_api_get_rpr:
         _access: 'TRUE'          
         
 arche_api_get_ontology_jsplugin_data:    
-    path: '/api/v2/getOntologyJSPluginData/{lng}'
+    path: '/api/getOntologyJSPluginData/{lng}'
     defaults:
         _controller: '\Drupal\arche_gui_api\Controller\ArcheApiMainController::api_get_ontology_jsplugin'
     requirements:
