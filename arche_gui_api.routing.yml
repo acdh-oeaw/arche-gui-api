@@ -6,21 +6,21 @@ arche_api_gnd_persons:
         _access: 'TRUE'
         
 arche_api_get_inversedata:    
-    path: '/api/v2/getInverseData/{repoid}'
+    path: '/api/getInverseData/{repoid}'
     defaults:
         _controller: '\Drupal\arche_gui_api\Controller\ArcheApiMainController::api_get_inversedata'
     requirements:
         _access: 'TRUE'        
 
 arche_api_get_members:    
-    path: '/api/v2/getMembers/{repoid}'
+    path: '/api/getMembers/{repoid}'
     defaults:
         _controller: '\Drupal\arche_gui_api\Controller\ArcheApiMainController::api_get_members'
     requirements:
         _access: 'TRUE'    
         
 arche_api_get_rpr:    
-    path: '/api/v2/getRPR/{repoid}/{lng}'
+    path: '/api/getRPR/{repoid}/{lng}'
     defaults:
         _controller: '\Drupal\arche_gui_api\Controller\ArcheApiMainController::api_get_rpr'
     requirements:
@@ -34,7 +34,7 @@ arche_api_get_ontology_jsplugin_data:
         _access: 'TRUE'
         
 arche_api_get_collection_data_lazy:    
-    path: '/api/v2/get_collection_data_lazy/{repoid}/{lng}'
+    path: '/api/get_collection_data_lazy/{repoid}/{lng}'
     defaults:
         _controller: '\Drupal\arche_gui_api\Controller\ArcheApiMainController::api_collection_data_lazy'
     requirements:
@@ -43,7 +43,7 @@ arche_api_get_collection_data_lazy:
         _access: 'TRUE'
         
 arche_api_dl_collection_binaries:
-    path: '/api/v2/dl_collection_binaries/{repoid}'
+    path: '/api/dl_collection_binaries/{repoid}'
     defaults:
         _controller: '\Drupal\arche_gui_api\Controller\ArcheApiMainController::api_dl_collection_binaries'
     requirements:
@@ -52,7 +52,7 @@ arche_api_dl_collection_binaries:
         _access: 'TRUE'        
         
 arche_api_collection_dl_script:
-    path: '/api/v2/collection_dl_script/{repoid}'
+    path: '/oeaw_coll_dl_script/{repoid}'
     defaults:
         _controller: '\Drupal\arche_gui_api\Controller\ArcheApiMainController::api_collection_dl_script'
     requirements:
@@ -60,5 +60,18 @@ arche_api_collection_dl_script:
         _permission: 'access content'
         _access: 'TRUE'       
         
-    
-        
+arche_api_metadataGui:    
+    path: '/api/getMetadataGui/{lang}'
+    defaults:
+        _controller: '\Drupal\arche_gui_api\Controller\ArcheApiMainController::api_getMetadataGui'
+    requirements:        
+        _access: 'TRUE'      
+
+arche_api_root_table:
+    path: '/api/getRootTable/{lang}'
+    defaults:
+        _controller: '\Drupal\arche_gui_api\Controller\ArcheApiMainController::api_getRootTable'
+    requirements:
+        uri: '^[^\?]*$'
+        _permission: 'access content'
+        _access: 'TRUE'            
