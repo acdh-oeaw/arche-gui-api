@@ -9,9 +9,10 @@ use Symfony\Component\HttpFoundation\JsonResponse;
  *
  * @author nczirjak
  */
-class OntolgyJsController {
-    
-    public function execute(string $lang = "en"): JsonResponse {
+class OntolgyJsController
+{
+    public function execute(string $lang = "en"): JsonResponse
+    {
         /*
          * Usage:
          *  https://domain.com/browser/api/v2/getOntologyJSPluginData/lang?_format=json

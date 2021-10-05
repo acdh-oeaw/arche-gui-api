@@ -7,22 +7,24 @@ namespace Drupal\arche_gui_api\Object\Ontology;
  *
  * @author nczirjak
  */
-class OntolgyJsObject extends \Drupal\arche_gui_api\Object\MainObject {
-
+class OntolgyJsObject extends \Drupal\arche_gui_api\Object\MainObject
+{
     protected $model;
 
-    protected function createModel(): void {
+    protected function createModel(): void
+    {
         $this->model = new \Drupal\arche_gui_api\Model\Ontology\OntolgyJsModel();
     }
 
-    public function init(string $lang = "en"): array {
+    public function init(string $lang = "en"): array
+    {
         $this->createModel();
         return $this->processData($this->model->getData(), $lang);
     }
 
    
-    private function processData(array $data, string $lang = "en"): array {
-        
+    private function processData(array $data, string $lang = "en"): array
+    {
         $this->result['$schema'] = "http://json-schema.org/draft-07/schema#";
         $collections = "0";
         $files = "0";
@@ -42,5 +44,4 @@ class OntolgyJsObject extends \Drupal\arche_gui_api\Object\MainObject {
         $this->result['text'] = $collections . " " . t("with", array(), array('langcode' => $lang)) . " " . $files;
         return $this->result;
     }
-
 }

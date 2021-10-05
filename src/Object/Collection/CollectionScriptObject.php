@@ -7,14 +7,15 @@ namespace Drupal\arche_gui_api\Object\Collection;
  *
  * @author nczirjak
  */
-class CollectionScriptObject extends \Drupal\arche_gui_api\Object\MainObject {
-
-    public function init(string $repoUrl): string {
+class CollectionScriptObject extends \Drupal\arche_gui_api\Object\MainObject
+{
+    public function init(string $repoUrl): string
+    {
         return $this->processData($this->repo->getBaseUrl() .$repoUrl);
     }
 
-    private function processData(string $repoUrl): string {
-
+    private function processData(string $repoUrl): string
+    {
         try {
             $text = @file_get_contents(\Drupal::request()->getSchemeAndHttpHost() . '/browser/sites/default/files/coll_dl_script/collection_download_repo.py');
            
@@ -24,7 +25,8 @@ class CollectionScriptObject extends \Drupal\arche_gui_api\Object\MainObject {
         }
     }
 
-    private function changeText(string $text, string $repoUrl): string {
+    private function changeText(string $text, string $repoUrl): string
+    {
         if (strpos($text, '{ingest.location}') !== false) {
             $text = str_replace("{ingest.location}", $this->repo->getSchema()->ingest->location, $text);
         }
@@ -45,5 +47,4 @@ class CollectionScriptObject extends \Drupal\arche_gui_api\Object\MainObject {
         }
         return $text;
     }
-
 }

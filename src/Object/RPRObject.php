@@ -7,24 +7,27 @@ namespace Drupal\arche_gui_api\Object;
  *
  * @author nczirjak
  */
-class RPRObject extends \Drupal\arche_gui_api\Object\MainObject {
-
+class RPRObject extends \Drupal\arche_gui_api\Object\MainObject
+{
     protected $model;
 
-    protected function createModel(): void {
+    protected function createModel(): void
+    {
         $this->model = new \Drupal\arche_gui_api\Model\RPRModel();
     }
 
-    public function init(string $repoid, string $lang): array {
+    public function init(string $repoid, string $lang): array
+    {
         $this->createModel();
         return $this->processData($this->model->getData($repoid, $lang));
     }
 
    
-    private function processData(array $data): array {
+    private function processData(array $data): array
+    {
         $this->result = array();
         foreach ($data as $obj) {
-            if(isset($obj->id) && isset($obj->title) && isset($obj->relatedtype) && isset($obj->acdhtype)) {
+            if (isset($obj->id) && isset($obj->title) && isset($obj->relatedtype) && isset($obj->acdhtype)) {
                 $this->result[] = array(
                     0 => "<a id='archeHref' href='/browser/oeaw_detail/$obj->id'>$obj->title</a>",
                     1 => str_replace($this->repo->getSchema()->__get('namespaces')->ontology, '', $obj->relatedtype),
@@ -34,5 +37,4 @@ class RPRObject extends \Drupal\arche_gui_api\Object\MainObject {
         }
         return $this->result;
     }
-
 }

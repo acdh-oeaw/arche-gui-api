@@ -7,13 +7,15 @@ namespace Drupal\arche_gui_api\Model;
  *
  * @author nczirjak
  */
-class GndPersonsModel extends \Drupal\arche_gui_api\Model\ArcheApiModel {
-    
-    public function __construct() {
+class GndPersonsModel extends \Drupal\arche_gui_api\Model\ArcheApiModel
+{
+    public function __construct()
+    {
         parent::__construct();
     }
     
-    public function getData(): array {
+    public function getData(): array
+    {
         $result = array();
         //run the actual query
         try {
@@ -27,8 +29,8 @@ class GndPersonsModel extends \Drupal\arche_gui_api\Model\ArcheApiModel {
                         mv.property = :type
                         and mv.value = :value
                         and i.ids like '%gnd%';",
-                    array(
-                    ':type' => 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', 
+                array(
+                    ':type' => 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type',
                     ':value' => $this->repo->getSchema()->namespaces->ontology.'Person'
                 ),
             );

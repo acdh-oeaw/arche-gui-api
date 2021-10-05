@@ -9,15 +9,16 @@ use Symfony\Component\HttpFoundation\JsonResponse;
  *
  * @author nczirjak
  */
-class RPRController {
-    
-    public function execute(string $repoid, string $lang = "en"): JsonResponse {
+class RPRController
+{
+    public function execute(string $repoid, string $lang = "en"): JsonResponse
+    {
         /*
          * Usage:
          *  https://domain.com/browser/api/v2/getRPR/repoid/lang?_format=json
          */
 
-        $repoid = preg_replace( '/[^0-9]/', '', $repoid );
+        $repoid = preg_replace('/[^0-9]/', '', $repoid);
          
         if (empty($repoid)) {
             return new JsonResponse(array("Please provide a search string"), 404, ['Content-Type' => 'application/json']);

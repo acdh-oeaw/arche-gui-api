@@ -7,13 +7,15 @@ namespace Drupal\arche_gui_api\Model\Ontology;
  *
  * @author nczirjak
  */
-class OntolgyJsModel extends \Drupal\arche_gui_api\Model\ArcheApiModel {
-    
-    public function __construct() {
+class OntolgyJsModel extends \Drupal\arche_gui_api\Model\ArcheApiModel
+{
+    public function __construct()
+    {
         parent::__construct();
     }
     
-    public function getData(): array {
+    public function getData(): array
+    {
         $result = array();
         //run the actual query
         try {

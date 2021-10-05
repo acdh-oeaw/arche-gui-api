@@ -9,15 +9,16 @@ use Symfony\Component\HttpFoundation\JsonResponse;
  *
  * @author nczirjak
  */
-class InverseDataController {
-
-    public function execute(string $repoid): JsonResponse {
+class InverseDataController
+{
+    public function execute(string $repoid): JsonResponse
+    {
         /*
          * Usage:
          *  https://domain.com/browser/api/v2/getInverseData/value?_format=json
          */
 
-        $repoid = preg_replace( '/[^0-9]/', '', $repoid );
+        $repoid = preg_replace('/[^0-9]/', '', $repoid);
         
         if (empty($repoid)) {
             return new JsonResponse(array("Please provide a search string"), 404, ['Content-Type' => 'application/json']);
@@ -32,5 +33,4 @@ class InverseDataController {
 
         return new JsonResponse($gndContent, 200, ['Content-Type' => 'application/json']);
     }
-
 }

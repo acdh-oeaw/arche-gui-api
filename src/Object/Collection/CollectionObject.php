@@ -7,21 +7,24 @@ namespace Drupal\arche_gui_api\Object\Collection;
  *
  * @author nczirjak
  */
-class CollectionObject extends \Drupal\arche_gui_api\Object\MainObject {
-
+class CollectionObject extends \Drupal\arche_gui_api\Object\MainObject
+{
     protected $model;
 
-    protected function createModel(): void {
+    protected function createModel(): void
+    {
         $this->model = new \Drupal\arche_gui_api\Model\Collection\CollectionModel();
     }
 
-    public function init(string $repoid, string $lang): array {
+    public function init(string $repoid, string $lang): array
+    {
         $this->createModel();
         //return $this->model->getData($repoid, $lang);
         return $this->processData($this->model->getData($repoid, $lang));
     }
 
-    private function processData(array $data): array {
+    private function processData(array $data): array
+    {
         $this->result = array();
 
         if (count($data) > 0) {
@@ -43,7 +46,8 @@ class CollectionObject extends \Drupal\arche_gui_api\Object\MainObject {
      * @param type $v
      * @return void
      */
-    private function createBaseProperties(&$v): void {
+    private function createBaseProperties(&$v): void
+    {
         $v['uri'] = $v['id'];
         $v['uri_dl'] = $this->repo->getBaseUrl() . $v['id'];
         $v['text'] = $v['title'];
@@ -56,7 +60,8 @@ class CollectionObject extends \Drupal\arche_gui_api\Object\MainObject {
      * Actual resource accessrestriction
      * @param type $v
      */
-    private function isPublic(&$v): void {
+    private function isPublic(&$v): void
+    {
         if ($v['accesres'] == 'public') {
             $v['userAllowedToDL'] = true;
         } else {
@@ -68,7 +73,8 @@ class CollectionObject extends \Drupal\arche_gui_api\Object\MainObject {
      * The actual resource is a binary file or a directory
      * @param type $v
      */
-    private function isDirOrFile(&$v): void {
+    private function isDirOrFile(&$v): void
+    {
         if (empty($v['filename'])) {
             $v['dir'] = true;
             $v['children'] = true;
@@ -77,5 +83,4 @@ class CollectionObject extends \Drupal\arche_gui_api\Object\MainObject {
             $v['icon'] = "jstree-file";
         }
     }
-
 }

@@ -11,14 +11,15 @@ use Symfony\Component\HttpFoundation\JsonResponse;
  */
 class CollectionController extends \Drupal\Core\Controller\ControllerBase
 {
-    public function execute(string $repoid, string $lang = "en"): JsonResponse {
+    public function execute(string $repoid, string $lang = "en"): JsonResponse
+    {
         /*
          * Usage:
          *  https://domain.com/browser/api/v2/get_collection_data_lazy/repoid?_format=json
          */
-        $repoid = preg_replace( '/[^0-9]/', '', $repoid );
+        $repoid = preg_replace('/[^0-9]/', '', $repoid);
         
-        if(empty($repoid)) {
+        if (empty($repoid)) {
             return new JsonResponse(array("Repoid is not valid!"), 404, ['Content-Type' => 'application/json']);
         }
         

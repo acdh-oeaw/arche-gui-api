@@ -7,8 +7,8 @@ namespace Drupal\arche_gui_api\Controller;
  *
  * @author nczirjak
  */
-class ArcheApiBaseController extends \Drupal\Core\Controller\ControllerBase {
-    
+class ArcheApiBaseController extends \Drupal\Core\Controller\ControllerBase
+{
     protected $config;
     protected $repo;
     protected $repodb;

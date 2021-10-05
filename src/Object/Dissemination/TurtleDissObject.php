@@ -7,13 +7,15 @@ namespace Drupal\arche_gui_api\Object\Dissemination;
  *
  * @author nczirjak
  */
-class TurtleDissObject extends \Drupal\arche_gui_api\Object\MainObject {
-
-    public function init(string $repoid): string {
+class TurtleDissObject extends \Drupal\arche_gui_api\Object\MainObject
+{
+    public function init(string $repoid): string
+    {
         return $this->request($repoid);
     }
 
-    private function request(string $repoid): string {
+    private function request(string $repoid): string
+    {
         $client = new \GuzzleHttp\Client();
         try {
             $request = $client->request('GET', $this->repo->getBaseUrl() . $repoid . '/metadata', ['Accept' => ['application/n-triples']]);
@@ -27,7 +29,8 @@ class TurtleDissObject extends \Drupal\arche_gui_api\Object\MainObject {
         }
     }
 
-    private function processBody(string $body = ""): string {
+    private function processBody(string $body = ""): string
+    {
         if (empty($body)) {
             return "";
         }
@@ -39,5 +42,4 @@ class TurtleDissObject extends \Drupal\arche_gui_api\Object\MainObject {
         $graph->parse($body);
         return $graph->serialise('turtle');
     }
-
 }

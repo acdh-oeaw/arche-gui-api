@@ -11,14 +11,15 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class CollectionScriptController extends \Drupal\Core\Controller\ControllerBase
 {
-    public function execute(string $repoid): Response {
+    public function execute(string $repoid): Response
+    {
         /*
          * Usage:
          *  https://domain.com/browser/api/v2/collection_dl_script/repoid?_format=json
          */
-        $repoid = preg_replace( '/[^0-9]/', '', $repoid );
+        $repoid = preg_replace('/[^0-9]/', '', $repoid);
         
-        if(empty($repoid)) {
+        if (empty($repoid)) {
             return new Response(array("Repoid is not valid!"), 404, ['Content-Type' => 'application/json']);
         }
         
@@ -31,5 +32,4 @@ class CollectionScriptController extends \Drupal\Core\Controller\ControllerBase
         $response->headers->set('Content-Disposition', 'attachment; filename=collection_download_script.py');
         return $response;
     }
-    
 }

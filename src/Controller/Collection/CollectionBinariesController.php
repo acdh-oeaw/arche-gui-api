@@ -11,15 +11,16 @@ use Symfony\Component\HttpFoundation\JsonResponse;
  */
 class CollectionBinariesController extends \Drupal\Core\Controller\ControllerBase
 {
-    public function execute(string $repoid): JsonResponse {
+    public function execute(string $repoid): JsonResponse
+    {
         /*
          * Usage:
          *  https://domain.com/browser/api/v2/dl_collection_binaries/repoid?_format=json
          */
         $GLOBALS['resTmpDir'] = "";
-        $repoid = preg_replace( '/[^0-9]/', '', $repoid );
+        $repoid = preg_replace('/[^0-9]/', '', $repoid);
         
-        if(empty($repoid)) {
+        if (empty($repoid)) {
             return new JsonResponse(array("Repoid is not valid!"), 404, ['Content-Type' => 'application/json']);
         }
         $binaries =  (json_decode($_POST['jsonData'], true)) ? json_decode($_POST['jsonData'], true) : array();
@@ -42,5 +43,4 @@ class CollectionBinariesController extends \Drupal\Core\Controller\ControllerBas
         
         return new JsonResponse($content, 200, ['Content-Type' => 'application/json']);
     }
-    
 }
