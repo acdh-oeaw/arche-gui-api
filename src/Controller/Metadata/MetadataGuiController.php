@@ -9,9 +9,10 @@ use Symfony\Component\HttpFoundation\JsonResponse;
  *
  * @author nczirjak
  */
-class MetadataGuiController {
-    
-    public function execute(string $lang = "en"): JsonResponse {
+class MetadataGuiController
+{
+    public function execute(string $lang = "en"): JsonResponse
+    {
         /*
          * Usage:
          *  https://domain.com/browser/api/getMetadataGui/lang?_format=json

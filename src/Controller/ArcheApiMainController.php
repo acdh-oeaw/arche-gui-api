@@ -106,19 +106,20 @@ class ArcheApiMainController extends \Drupal\Core\Controller\ControllerBase
      * @param string $lang
      * @return Response
      */
-    public function api_getRootTable(string $lang): Response {
+    public function api_getRootTable(string $lang): Response
+    {
         $controller = new \Drupal\arche_gui_api\Controller\Metadata\RootTableController();
         return $controller->execute($lang);
     }
     
-      /**
-     * 
+    /**
+     *
      * @param string $lang
      * @return JsonResponse
      */
-    public function api_getMetadataGui(string $lang): JsonResponse {
+    public function api_getMetadataGui(string $lang): JsonResponse
+    {
         $controller = new \Drupal\arche_gui_api\Controller\Metadata\MetadataGuiController();
         return $controller->execute($lang);
     }
-
 }

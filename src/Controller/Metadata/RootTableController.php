@@ -9,9 +9,10 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @author nczirjak
  */
-class RootTableController {
-
-    public function execute(string $lang = "en"): Response {
+class RootTableController
+{
+    public function execute(string $lang = "en"): Response
+    {
         /*
          * Usage:
          *  https://domain.com/browser/api/getRootTable/lang?_format=json
@@ -30,10 +31,9 @@ class RootTableController {
         if (isset($content[0]) && !empty($content[0])) {
             $response->setContent($content[0]);
             $response->setStatusCode(200);
-        } 
+        }
 
         $response->headers->set('Content-Type', 'text/html');
         return $response;
     }
-
 }
