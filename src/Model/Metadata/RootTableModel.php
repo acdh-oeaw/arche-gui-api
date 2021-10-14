@@ -7,20 +7,18 @@ namespace Drupal\arche_gui_api\Model\Metadata;
  *
  * @author nczirjak
  */
-class RootTableModel extends \Drupal\arche_gui_api\Model\ArcheApiModel
-{
-    public function __construct()
-    {
+class RootTableModel extends \Drupal\arche_gui_api\Model\ArcheApiModel {
+
+    public function __construct() {
         parent::__construct();
     }
 
-    public function getOntology(): array
-    {
+    public function getOntology(): array {
         $dbconnStr = yaml_parse_file(\Drupal::service('extension.list.module')->getPath('acdh_repo_gui').'/config/config.yaml')['dbConnStr']['guest'];
         
         $conn = new \PDO($dbconnStr);
         $cfg = (object) [
-                    'skipNamespace' => $this->repo->baseUrl() . '%', // don't forget the '%' at the end!
+                    'skipNamespace' => $this->repo->getBaseUrl() . '%', // don't forget the '%' at the end!
                     'ontologyNamespace' => $this->repo->getSchema()->namespaces->ontology,
                     'parent' => $this->repo->getSchema()->namespaces->ontology.'isPartOf',
                     'label' => $this->repo->getSchema()->namespaces->ontology.'hasTitle',
@@ -54,9 +52,10 @@ class RootTableModel extends \Drupal\arche_gui_api\Model\ArcheApiModel
         );
     }
 
-    private function getOntologyDataByProperty(\acdhOeaw\arche\lib\schema\Ontology &$ontology, string $property): mixed
-    {
+    private function getOntologyDataByProperty(\acdhOeaw\arche\lib\schema\Ontology &$ontology, string $property): mixed {
         return (isset($ontology->getClass($this->repo->getSchema()->namespaces->ontology.$property)->properties)) ?
                 $ontology->getClass($this->repo->getSchema()->namespaces->ontology.$property)->properties : "";
     }
+
+
 }
