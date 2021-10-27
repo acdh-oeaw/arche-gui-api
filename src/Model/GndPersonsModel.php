@@ -15,34 +15,35 @@ class GndPersonsModel extends \Drupal\arche_gui_api\Model\ArcheApiModel
     }
     
     public function getData(): array
-    {
-        $result = array();
-        //run the actual query
+    {   
+        $requestUrl = $this->repo->getBaseUrl() . "search?"
+                . $this->getQueryPropVal() . ""
+                . "&lang[]=" . $this->siteLang;
+         
         try {
-            $this->setSqlTimeout();
-            $query = $this->repodb->query(
-                "select 
-			DISTINCT(mv.id) as repoid, i.ids as gnd 
-                    from metadata_view as mv
-                    left join identifiers as i on mv.id = i.id 
-                    where
-                        mv.property = :type
-                        and mv.value = :value
-                        and i.ids like '%gnd%';",
-                array(
-                    ':type' => 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type',
-                    ':value' => $this->repo->getSchema()->namespaces->ontology.'Person'
-                ),
-            );
-            $result = $query->fetchAll(\PDO::FETCH_CLASS);
-        } catch (Exception $ex) {
-            \Drupal::logger('arche_gui_api')->notice($ex->getMessage());
-            $result = array();
-        } catch (\Drupal\Core\Database\DatabaseExceptionWrapper $ex) {
-            \Drupal::logger('arche_gui_api')->notice($ex->getMessage());
-            $result = array();
+            $graph = new \EasyRdf\Graph();
+            return $graph->newAndLoad($requestUrl)->toRdfPhp();
+        } catch (\Exception | \EasyRdf\Exception  $ex) {
+            die($ex->getMessage());
+            \Drupal::logger('arche_rest_gui')->notice($ex->getMessage());
+            return array();
         }
-        $this->changeBackDBConnection();
-        return $result;
+        return array();
+    }
+    
+    private function getQueryPropVal(): string {
+        return http_build_query(
+            array(
+                'property' => array(
+                    $this->repo->getSchema()->__get('namespaces')->rdfs . "type",
+                    $this->repo->getSchema()->__get('namespaces')->ontology . "hasIdentifier"
+                ),
+                'value' => array(
+                    $this->repo->getSchema()->__get('namespaces')->ontology.'Person',
+                    'gnd'
+                ),
+                'operator' => array('=', '~')
+            )
+        );
     }
 }

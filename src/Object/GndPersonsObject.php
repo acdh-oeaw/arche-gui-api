@@ -41,7 +41,9 @@ class GndPersonsObject extends \Drupal\arche_gui_api\Object\MainObject
     {
         if (count((array) $data) > 0) {
             foreach ($data as $val) {
-                $this->text .= $val->gnd . "|" . $this->host . $val->repoid . " \n";
+                if(isset($val[$this->repo->getSchema()->id]) && count($val[$this->repo->getSchema()->id]) > 0) {
+                    $this->text .= $this->getGNDIdentifier($val[$this->repo->getSchema()->id]) . "|" . $this->host . $this->getRepoId($val[$this->repo->getSchema()->id]) . " \n";
+                }
             }
             return $this->createFileContent();
         }
@@ -52,7 +54,6 @@ class GndPersonsObject extends \Drupal\arche_gui_api\Object\MainObject
     {
         if (!empty($this->text)) {
             $this->text = "#FORMAT: BEACON \n" . $this->text;
-
             if (file_save_data($this->text, "public://beacon.txt", \Drupal\Core\File\FileSystemInterface::EXISTS_REPLACE)) {
                 return array('status' => 'File created', 'url' => $this->fileLocation);
             } else {
@@ -61,5 +62,25 @@ class GndPersonsObject extends \Drupal\arche_gui_api\Object\MainObject
         } else {
             return array();
         }
+    }
+    
+    private function getGNDIdentifier(array $ids): string {
+        foreach($ids as $id) {
+            if (strpos($id['value'], '/gnd/') !== false) {               
+                return $id['value'];
+            }
+        }
+        return "";
+    }
+    
+    
+    private function getRepoId(array $ids): int {
+        $apiUrl = str_replace('http://', 'https://', \Drupal::request()->getSchemeAndHttpHost().'/api/');
+        foreach($ids as $id) {
+            if (strpos($id['value'], $apiUrl) !== false) {
+                return (int)str_replace($apiUrl, "", $id['value']);
+            }
+        }
+        return 0;
     }
 }
