@@ -15,7 +15,7 @@ class GndPersonsModel extends \Drupal\arche_gui_api\Model\ArcheApiModel
     }
     
     public function getData(): array
-    {   
+    {
         $requestUrl = $this->repo->getBaseUrl() . "search?"
                 . $this->getQueryPropVal() . ""
                 . "&lang[]=" . $this->siteLang;
@@ -31,7 +31,8 @@ class GndPersonsModel extends \Drupal\arche_gui_api\Model\ArcheApiModel
         return array();
     }
     
-    private function getQueryPropVal(): string {
+    private function getQueryPropVal(): string
+    {
         return http_build_query(
             array(
                 'property' => array(
