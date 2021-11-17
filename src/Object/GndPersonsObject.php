@@ -64,9 +64,10 @@ class GndPersonsObject extends \Drupal\arche_gui_api\Object\MainObject
         }
     }
     
-    private function getGNDIdentifier(array $ids): string {
-        foreach($ids as $id) {
-            if (strpos($id['value'], '/gnd/') !== false) {               
+    private function getGNDIdentifier(array $ids): string
+    {
+        foreach ($ids as $id) {
+            if (strpos($id['value'], '/gnd/') !== false) {
                 return $id['value'];
             }
         }
@@ -74,7 +75,9 @@ class GndPersonsObject extends \Drupal\arche_gui_api\Object\MainObject
     }
     
     
-    private function getRepoId(array $ids): int {
+
+    private function getRepoId(array $ids): int 
+    {    
         $apiUrl = $this->repo->getBaseUrl();
         foreach($ids as $id) {
             if (str_starts_with($id['value'], $apiUrl)) {
