@@ -76,10 +76,10 @@ class GndPersonsObject extends \Drupal\arche_gui_api\Object\MainObject
     
     
 
-    private function getRepoId(array $ids): int 
-    {    
+    private function getRepoId(array $ids): int
+    {
         $apiUrl = $this->repo->getBaseUrl();
-        foreach($ids as $id) {
+        foreach ($ids as $id) {
             if (str_starts_with($id['value'], $apiUrl)) {
                 return (int)str_replace($apiUrl, "", $id['value']);
             }
