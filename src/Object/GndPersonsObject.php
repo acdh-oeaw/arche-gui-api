@@ -41,7 +41,7 @@ class GndPersonsObject extends \Drupal\arche_gui_api\Object\MainObject
     {
         if (count((array) $data) > 0) {
             foreach ($data as $val) {
-                if(isset($val[$this->repo->getSchema()->id]) && count($val[$this->repo->getSchema()->id]) > 0) {
+                if (count($val[$this->repo->getSchema()->id] ?? []) > 0) {
                     $this->text .= $this->getGNDIdentifier($val[$this->repo->getSchema()->id]) . "|" . $this->host . $this->getRepoId($val[$this->repo->getSchema()->id]) . " \n";
                 }
             }
@@ -75,9 +75,9 @@ class GndPersonsObject extends \Drupal\arche_gui_api\Object\MainObject
     
     
     private function getRepoId(array $ids): int {
-        $apiUrl = str_replace('http://', 'https://', \Drupal::request()->getSchemeAndHttpHost().'/api/');
+        $apiUrl = $this->repo->getBaseUrl();
         foreach($ids as $id) {
-            if (strpos($id['value'], $apiUrl) !== false) {
+            if (str_starts_with($id['value'], $apiUrl)) {
                 return (int)str_replace($apiUrl, "", $id['value']);
             }
         }
