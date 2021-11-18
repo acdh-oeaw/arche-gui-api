@@ -34,6 +34,5 @@ class MetadataGuiModel extends \Drupal\arche_gui_api\Model\ArcheApiModel
             $classesDesc[$i] = $ontology->getClass($schema->classes->$i)->properties ?? "";
         }
         return $classesDesc;
-       
     }
 }
