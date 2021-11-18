@@ -33,12 +33,11 @@ class RootTableModel extends \Drupal\arche_gui_api\Model\ArcheApiModel
                     'label' => 'http://www.w3.org/2004/02/skos/core#altLabel'
         ];
        
-        $ontology = new \acdhOeaw\arche\lib\schema\Ontology($conn, $cfg);      
+        $ontology = new \acdhOeaw\arche\lib\schema\Ontology($conn, $cfg);
         $classesDesc = [];
         foreach (['project', 'collection', 'topCollection', 'resource', 'metadata', 'publication', 'place', 'organisation', 'person'] as $i) {
             $classesDesc[$i] = $ontology->getClass($schema->classes->$i)->properties ?? "";
         }
         return $classesDesc;
     }
-
 }
