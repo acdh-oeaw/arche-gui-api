@@ -27,13 +27,11 @@ class MetadataGuiModel extends \Drupal\arche_gui_api\Model\ArcheApiModel
             'label'             => $schema->label
         ];
        
-        $ontology = new \acdhOeaw\arche\lib\schema\Ontology($conn, $cfg);
-        
+        $ontology = new \acdhOeaw\arche\lib\schema\Ontology($conn, $cfg);        
         $classesDesc = [];
         foreach (['collection', 'topCollection', 'resource', 'project', 'person', 'publication', 'place', 'organisation'] as $i) {
             $classesDesc[$i] = $ontology->getClass($schema->classes->$i)->properties ?? "";
         }
         return $classesDesc;
-       
     }
 }
