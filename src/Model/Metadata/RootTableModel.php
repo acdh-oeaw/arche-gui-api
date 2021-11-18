@@ -7,13 +7,15 @@ namespace Drupal\arche_gui_api\Model\Metadata;
  *
  * @author nczirjak
  */
-class RootTableModel extends \Drupal\arche_gui_api\Model\ArcheApiModel {
-
-    public function __construct() {
+class RootTableModel extends \Drupal\arche_gui_api\Model\ArcheApiModel
+{
+    public function __construct()
+    {
         parent::__construct();
     }
 
-    public function getOntology(): array {
+    public function getOntology(): array
+    {
         $dbconnStr = yaml_parse_file(\Drupal::service('extension.list.module')->getPath('acdh_repo_gui') . '/config/config.yaml')['dbConnStr']['guest'];
         $schema = $this->repo->getSchema();
 
