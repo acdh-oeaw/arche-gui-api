@@ -1,0 +1,12 @@
+main-styles:  
+    version: 1.0
+    header: true
+    css:
+        base:
+            css/arche_gui_api.css: {}
+    js:
+        js/arche_gui_api.js: {}
+    dependencies:
+        - core/drupal
+        - core/drupal.form
+        - core/jquery    
