@@ -18,7 +18,7 @@ class CollectionBinariesController extends \Drupal\Core\Controller\ControllerBas
          *  https://domain.com/browser/api/v2/dl_collection_binaries/repoid?_format=json
          */
         $GLOBALS['resTmpDir'] = "";
-        $repoid = preg_replace('/[^0-9]/', '', $repoid);
+        $repoid = \Drupal\Component\Utility\Xss::filter(preg_replace('/[^0-9]/', '', $repoid));
         
         if (empty($repoid)) {
             return new JsonResponse(array("Repoid is not valid!"), 404, ['Content-Type' => 'application/json']);
@@ -31,9 +31,7 @@ class CollectionBinariesController extends \Drupal\Core\Controller\ControllerBas
         
         ($_POST['username']) ? $username = $_POST['username'] : $username = '';
         ($_POST['password']) ? $password = $_POST['password'] : $password = '';
-        error_log('ssss');
         $object = new \Drupal\arche_gui_api\Object\Collection\CollectionBinariesObject();
-        error_log(print_r($binaries, true));
         
         $content = $object->init($binaries, $repoid, $username, $password);
         

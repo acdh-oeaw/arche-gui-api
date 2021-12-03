@@ -18,13 +18,11 @@ class TurtleDissController extends \Drupal\Core\Controller\ControllerBase
      */
     public function execute(string $repoid): string
     {
-        error_log('turtle 1');
-        $repoid = preg_replace('/[^0-9]/', '', $repoid);
+        $repoid = \Drupal\Component\Utility\Xss::filter(preg_replace('/[^0-9]/', '', $repoid));
         
         if (empty($repoid)) {
             return "";
         }
-        error_log('turtle 2');
         $object = new \Drupal\arche_gui_api\Object\Dissemination\TurtleDissObject();
         return $object->init($repoid);
     }

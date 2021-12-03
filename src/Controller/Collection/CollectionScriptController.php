@@ -17,7 +17,7 @@ class CollectionScriptController extends \Drupal\Core\Controller\ControllerBase
          * Usage:
          *  https://domain.com/browser/api/v2/collection_dl_script/repoid?_format=json
          */
-        $repoid = preg_replace('/[^0-9]/', '', $repoid);
+        $repoid = \Drupal\Component\Utility\Xss::filter(preg_replace('/[^0-9]/', '', $repoid));
         
         if (empty($repoid)) {
             return new Response(array("Repoid is not valid!"), 404, ['Content-Type' => 'application/json']);
