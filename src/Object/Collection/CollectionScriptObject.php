@@ -45,6 +45,12 @@ class CollectionScriptObject extends \Drupal\arche_gui_api\Object\MainObject
         if (strpos($text, 'args = args.parse_args()') !== false) {
             $text = str_replace("args = args.parse_args()", "args = args.parse_args(['" . $repoUrl . "', '--recursive'])", $text);
         }
+        
+        if (strpos($text, '{searchMatch}') !== false) {
+            $text = str_replace("{searchMatch}", $this->repo->getSchema()->searchMatch, $text);
+        }
+            
+            
         return $text;
     }
 }
