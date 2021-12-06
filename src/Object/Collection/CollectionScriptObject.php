@@ -27,30 +27,16 @@ class CollectionScriptObject extends \Drupal\arche_gui_api\Object\MainObject
 
     private function changeText(string $text, string $repoUrl): string
     {
-        if (strpos($text, '{ingest.location}') !== false) {
-            $text = str_replace("{ingest.location}", $this->repo->getSchema()->ingest->location, $text);
-        }
-
-        if (strpos($text, '{fileName}') !== false) {
-            $text = str_replace("{fileName}", $this->repo->getSchema()->fileName, $text);
-        }
-
-        if (strpos($text, '{parent}') !== false) {
-            $text = str_replace("{parent}", $this->repo->getSchema()->parent, $text);
-        }
-        if (strpos($text, '{metadataReadMode}') !== false) {
-            $text = str_replace("{metadataReadMode}", 'X-METADATA-READ-MODE', $text);
-        }
-
-        if (strpos($text, 'args = args.parse_args()') !== false) {
-            $text = str_replace("args = args.parse_args()", "args = args.parse_args(['" . $repoUrl . "', '--recursive'])", $text);
-        }
-        
-        if (strpos($text, '{searchMatch}') !== false) {
-            $text = str_replace("{searchMatch}", $this->repo->getSchema()->searchMatch, $text);
-        }
-            
-            
+        $schema = $this->repo->getSchema();
+        $replace = [
+            "{ingest.location}" => $schema->ingest->location,
+            "{fileName}" => $schema->fileName,
+            "{parent}" => $schema->parent,
+            "{metadataReadMode}" => $this->repo->getHeaderName('metadataReadMode'),
+            "{searchMatch}" => $schema->searchMatch,
+            "{resourceUrl}" => $repoUrl,
+        ];
+        $text = str_replace(array_keys($replace), array_values($replace), $text);
         return $text;
     }
 }
