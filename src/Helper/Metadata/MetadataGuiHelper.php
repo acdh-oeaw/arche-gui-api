@@ -365,7 +365,7 @@ class MetadataGuiHelper
      * @return string
      */
     private function createRootTableTd(array $value, string $key = null): string
-    {        
+    {
         if (isset($value[$key]['en'])) {
             return '<td>' . $value[$key]['en'] . 'en</td>';
         } elseif (isset($value[$key])) {

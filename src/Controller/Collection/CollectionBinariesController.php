@@ -37,7 +37,7 @@ class CollectionBinariesController extends \Drupal\Core\Controller\ControllerBas
         $this->setUsername($_POST['username']);
         $this->setPassword($_POST['password']);
        
-        $object = new \Drupal\arche_gui_api\Object\Collection\CollectionBinariesObject();        
+        $object = new \Drupal\arche_gui_api\Object\Collection\CollectionBinariesObject();
         $content = $object->init($this->binaries, $this->repoid, $this->username, $this->password);
         
         if (empty($content)) {
@@ -47,22 +47,23 @@ class CollectionBinariesController extends \Drupal\Core\Controller\ControllerBas
         return new JsonResponse($content, 200, ['Content-Type' => 'application/json']);
     }
 
-    private function setRepoid(string $repoid): void 
+    private function setRepoid(string $repoid): void
     {
         $this->repoid = \Drupal\Component\Utility\Xss::filter(preg_replace('/[^0-9]/', '', $repoid));
     }
 
-    private function createBinariesData(string $data): void 
+    private function createBinariesData(string $data): void
     {
-        $this->binaries =  (json_decode($data, true)) ? json_decode($data, true) : array();        
+        $this->binaries =  (json_decode($data, true)) ? json_decode($data, true) : array();
     }
 
-    private function setUsername(string $data): void {
+    private function setUsername(string $data): void
+    {
         $this->username = ($data) ? $data : '';
     }
 
-    private function setPassword(string $data): void {
+    private function setPassword(string $data): void
+    {
         $this->password = ($data) ? $data : '';
     }
-
 }
