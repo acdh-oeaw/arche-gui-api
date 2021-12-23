@@ -29,7 +29,8 @@ class MetadataGuiModel extends \Drupal\arche_gui_api\Model\ArcheApiModel
        
         $ontology = new \acdhOeaw\arche\lib\schema\Ontology($conn, $cfg);
         $classesDesc = [];
-        foreach (['collection', 'topCollection', 'resource', 'project', 'person', 'publication', 'place', 'organisation'] as $i) {
+        //removed : 'person', 'publication', 'place', 'organisation'
+        foreach (['collection', 'topCollection', 'resource', 'project'] as $i) {
             $classesDesc[$i] = $ontology->getClass($schema->classes->$i)->properties ?? "";
         }
         return $classesDesc;

@@ -30,7 +30,8 @@ class RootTableModel extends \Drupal\arche_gui_api\Model\ArcheApiModel
                     'recommended' => $schema->ontology->recommended,
                     'langTag' => $schema->ontology->langTag,
                     'vocabs' => $schema->ontology->vocabs,
-                    'label' => 'http://www.w3.org/2004/02/skos/core#altLabel'
+                    'label' => 'http://www.w3.org/2004/02/skos/core#altLabel',
+                    'comment' => $this->repo->getSchema()->namespaces->rdfs.'comment'
         ];
        
         $ontology = new \acdhOeaw\arche\lib\schema\Ontology($conn, $cfg);
@@ -38,6 +39,7 @@ class RootTableModel extends \Drupal\arche_gui_api\Model\ArcheApiModel
         foreach (['project', 'collection', 'topCollection', 'resource', 'metadata', 'publication', 'place', 'organisation', 'person'] as $i) {
             $classesDesc[$i] = $ontology->getClass($schema->classes->$i)->properties ?? "";
         }
+        
         return $classesDesc;
     }
 }

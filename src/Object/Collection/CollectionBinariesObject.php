@@ -103,8 +103,9 @@ class CollectionBinariesObject extends \Drupal\arche_gui_api\Object\MainObject
     {
         $client = new \GuzzleHttp\Client(['auth' => [$username, $password], 'verify' => false]);
         ini_set('max_execution_time', 1800);
-
+        
         foreach ($binaries as $b) {
+            
             if (isset($b['path']) && isset($b['filename'])) {
                 $url = $this->repo->getBaseUrl() . "/" . $b['uri'];
                 $path = $b['path'];

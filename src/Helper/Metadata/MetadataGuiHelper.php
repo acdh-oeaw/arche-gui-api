@@ -167,7 +167,6 @@ class MetadataGuiHelper
 
                     $this->result['properties'][$tableClass][$v->label[$this->siteLang]][$key] = $this->metadataGuiCardinality($v);
                 }
-                //$this->result['properties'][$tableClass][$v->label[$this->siteLang]][$key] = $this->metadataGuiCardinalityByMartina($v);
             }
         }
 
@@ -287,39 +286,7 @@ class MetadataGuiHelper
         return $val;
     }
 
-    /*
-      - if we have minCardinality and minCardinality >=1 => m
-      - if we have minCardinality and it is 0 or empty => o
-      - if we have recommendedClass and it is not empty => r
-      - if we have cardinality and it is 1 => m
-      - if we have (maxCardinality and it is empty) and (if we don't have cardinality (cardinality not = 1) => *
-     */
-
-    private function metadataGuiCardinalityByMartina(object $data): string
-    {
-        $cardinality = '';
-        //- if we have minCardinality and minCardinality >=1 => m
-        //if we have cardinality and it is 1 => m
-        if (isset($data->min) && $data->min >= 1) {
-            $cardinality = 'm';
-        }
-        //if we have minCardinality and it is 0 or empty => o
-        if (isset($data->min) || $data->min == 0) {
-            $cardinality = 'o';
-        }
-        //if we have recommendedClass and it is not empty => r
-        if (isset($data->recommended) && $data->recommended === true) {
-            $cardinality = 'r';
-        }
-
-        //if we have (maxCardinality and it is empty) and (if we don't have cardinality (cardinality not = 1) => *
-        if ((isset($data->max) && $data->max > 1) || (isset($data->max) && empty($data->max))) {
-            $cardinality .= '*';
-        }
-
-        return $cardinality;
-    }
-
+   
     /**
      * Get the root table data
      *
@@ -384,16 +351,24 @@ class MetadataGuiHelper
         $html .= '<th><b>Automated Fill</b></th>';
         $html .= '<th><b>Default Value</b></th>';
         $html .= '<th><b>LangTag</b></th>';
+        $html .= '<th><b>Comment</b></th>';
         $html .= "</thead >";
         $html .= '</tr>';
             
         return $html;
     }
     
-    
+    /**
+     * Create the root table td values
+     * @param array $value
+     * @param string $key
+     * @return string
+     */
     private function createRootTableTd(array $value, string $key = null): string
-    {
-        if (isset($value[$key])) {
+    {        
+        if (isset($value[$key]['en'])) {
+            return '<td>' . $value[$key]['en'] . 'en</td>';
+        } elseif (isset($value[$key])) {
             return '<td>' . $value[$key] . '</td>';
         } else {
             return '<td></td>';
@@ -435,6 +410,7 @@ class MetadataGuiHelper
                 $html .= $this->createRootTableTd($type['main'], 'automatedFill');
                 $html .= $this->createRootTableTd($type['main'], 'defaultValue');
                 $html .= $this->createRootTableTd($type['main'], 'langTag');
+                $html .= $this->createRootTableTd($type['main'], 'comment');
                 
                 $html .= '</tr>';
             }
@@ -595,6 +571,7 @@ class MetadataGuiHelper
                         $this->getOntologyObjData($v, $kt, 'defaultValue', 'defaultValue');
                         $this->data[$v->ordering]['main']['order'] = $v->ordering;
                         $this->getOntologyObjData($v, $kt, 'langTag', 'langTag');
+                        $this->getOntologyObjData($v, $kt, 'comment', 'comment');
                         $this->data[$v->ordering]['main']['domain'] = $domain;
                     }
                 }
