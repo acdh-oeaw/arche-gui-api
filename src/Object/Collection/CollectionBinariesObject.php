@@ -105,7 +105,6 @@ class CollectionBinariesObject extends \Drupal\arche_gui_api\Object\MainObject
         ini_set('max_execution_time', 1800);
         
         foreach ($binaries as $b) {
-            
             if (isset($b['path']) && isset($b['filename'])) {
                 $url = $this->repo->getBaseUrl() . "/" . $b['uri'];
                 $path = $b['path'];
