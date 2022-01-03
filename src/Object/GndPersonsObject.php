@@ -86,11 +86,11 @@ class GndPersonsObject extends \Drupal\arche_gui_api\Object\MainObject
      * @return int
      */
     private function getRepoId(array $ids): int
-    {    
+    {
         foreach ($ids as $id) {
             if (str_starts_with($id['value'], $this->repo->getBaseUrl())) {
                 return (int)str_replace($this->repo->getBaseUrl(), "", $id['value']);
-            } 
+            }
         }
         return 0;
     }
@@ -117,12 +117,12 @@ class GndPersonsObject extends \Drupal\arche_gui_api\Object\MainObject
         foreach ($ids as $id) {
             if (str_starts_with($id['value'], $this->repo->getSchema()->namespaces->id)) {
                 $result['acdhId'] = $id['value'];
-            } else if (str_starts_with($id['value'], $this->repo->getSchema()->drupal->epicResolver)) {
+            } elseif (str_starts_with($id['value'], $this->repo->getSchema()->drupal->epicResolver)) {
                 $result['pid'] = $id['value'];
             } else {
                 $result['acdhGuiId'] = $this->host . $this->getRepoId($ids);
-            }            
-        }       
+            }
+        }
         return $result;
-    }    
+    }
 }
