@@ -42,7 +42,8 @@ class GndPersonsObject extends \Drupal\arche_gui_api\Object\MainObject
         if (count((array) $data) > 0) {
             foreach ($data as $val) {
                 if (count($val[$this->repo->getSchema()->id] ?? []) > 0) {
-                    $this->text .= $this->getGNDIdentifier($val[$this->repo->getSchema()->id]) . "|" . $this->host . $this->getRepoId($val[$this->repo->getSchema()->id]) . " \n";
+                    //$this->text .= $this->getGNDIdentifier($val[$this->repo->getSchema()->id]) . "|" . $this->host . $this->getRepoId($val[$this->repo->getSchema()->id]) . " \n";
+                    $this->text .= $this->getGNDIdentifier($val[$this->repo->getSchema()->id]) . "|" . $this->getResourceUrl($val[$this->repo->getSchema()->id]) . " \n";
                 }
             }
             return $this->createFileContent();
@@ -64,6 +65,11 @@ class GndPersonsObject extends \Drupal\arche_gui_api\Object\MainObject
         }
     }
     
+    /**
+     * Get the GND identifier from the data array
+     * @param array $ids
+     * @return string
+     */
     private function getGNDIdentifier(array $ids): string
     {
         foreach ($ids as $id) {
@@ -74,16 +80,49 @@ class GndPersonsObject extends \Drupal\arche_gui_api\Object\MainObject
         return "";
     }
     
-    
-
+    /**
+     * Get the ARCHE GUI Detail view url
+     * @param array $ids
+     * @return int
+     */
     private function getRepoId(array $ids): int
-    {
-        $apiUrl = $this->repo->getBaseUrl();
+    {    
         foreach ($ids as $id) {
-            if (str_starts_with($id['value'], $apiUrl)) {
-                return (int)str_replace($apiUrl, "", $id['value']);
-            }
+            if (str_starts_with($id['value'], $this->repo->getBaseUrl())) {
+                return (int)str_replace($this->repo->getBaseUrl(), "", $id['value']);
+            } 
         }
         return 0;
     }
+    
+    /**
+     * Return the id.acdh.oeaw.ac.at/pid/gui url
+     * @param array $ids
+     * @return string
+     */
+    private function getResourceUrl(array $ids): string
+    {
+        $urls = $this->fetchUrls($ids);
+        return isset($urls['acdhId']) ? $urls['acdhId'] : (isset($urls['pid']) ? $urls['pid'] : (isset($urls['acdhGuiId']) ? $urls['acdhGuiId'] : ""));
+    }
+    
+    /**
+     * Collect the urls from the identifiers array
+     * @param array $ids
+     * @return array
+     */
+    private function fetchUrls(array $ids): array
+    {
+        $result = [];
+        foreach ($ids as $id) {
+            if (str_starts_with($id['value'], $this->repo->getSchema()->namespaces->id)) {
+                $result['acdhId'] = $id['value'];
+            } else if (str_starts_with($id['value'], $this->repo->getSchema()->drupal->epicResolver)) {
+                $result['pid'] = $id['value'];
+            } else {
+                $result['acdhGuiId'] = $this->host . $this->getRepoId($ids);
+            }            
+        }       
+        return $result;
+    }    
 }
