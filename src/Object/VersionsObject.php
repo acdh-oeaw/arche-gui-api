@@ -9,7 +9,6 @@ namespace Drupal\arche_gui_api\Object;
  */
 class VersionsObject extends \Drupal\arche_gui_api\Object\MainObject
 {
-    
     protected $model;
 
     protected function createModel(): void
@@ -29,7 +28,6 @@ class VersionsObject extends \Drupal\arche_gui_api\Object\MainObject
     {
         $this->result = array();
         if (count($data) > 0) {
-            
             $this->result = $this->createTreeData($data);
         } else {
             $this->result[0] = array("uri" => 0, "text" => "There are no child elements",
@@ -39,9 +37,9 @@ class VersionsObject extends \Drupal\arche_gui_api\Object\MainObject
     }
 
    
-     private function createTreeData(array $data): array
+    private function createTreeData(array $data): array
     {
-        $tree = array();       
+        $tree = array();
         $first = array(
             "id" => $data[0]->id,
             "uri" => $data[0]->id,
@@ -64,7 +62,7 @@ class VersionsObject extends \Drupal\arche_gui_api\Object\MainObject
             $a = (array) $a;
             $a['dir'] = false;
             $a['userAllowedToDL'] = true;
-            if(isset($a['avdate'])) {
+            if (isset($a['avdate'])) {
                 $a['text'] = $this->getDateFromDateTime($a['avdate']).' - '.$a['version'];
             }
             $new[$a['previd']][] = $a;
@@ -77,7 +75,7 @@ class VersionsObject extends \Drupal\arche_gui_api\Object\MainObject
     private function getDateFromDateTime(string $date) :string
     {
         $time = strtotime($date);
-        return date('Y-m-d',$time);
+        return date('Y-m-d', $time);
     }
     
     /**
