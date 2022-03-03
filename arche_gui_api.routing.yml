@@ -74,4 +74,13 @@ arche_api_root_table:
     requirements:
         uri: '^[^\?]*$'
         _permission: 'access content'
-        _access: 'TRUE'            
+        _access: 'TRUE'       
+        
+arche_api_get_versions:    
+    path: '/api/versions/{repoid}/{lang}'
+    defaults:
+        _controller: '\Drupal\arche_gui_api\Controller\ArcheApiMainController::api_versions'
+    requirements:
+        uri: '^[^\?]*$'
+        _permission: 'access content'
+        _access: 'TRUE'        
