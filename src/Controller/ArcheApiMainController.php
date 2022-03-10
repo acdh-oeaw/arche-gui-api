@@ -123,4 +123,10 @@ class ArcheApiMainController extends \Drupal\Core\Controller\ControllerBase
         $controller = new \Drupal\arche_gui_api\Controller\Metadata\MetadataGuiController();
         return $controller->execute($lang);
     }
+    
+    public function api_versions(string $repoid): JsonResponse
+    {
+        $controller = new \Drupal\arche_gui_api\Controller\VersionsController();
+        return $controller->execute($repoid);
+    }
 }
