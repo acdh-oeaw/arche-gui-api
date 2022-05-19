@@ -21,17 +21,9 @@ class RootTableModel extends \Drupal\arche_gui_api\Model\ArcheApiModel
 
         $conn = new \PDO($dbconnStr);
         $cfg = (object) [
-                    'skipNamespace' => $this->repo->getBaseUrl() . '%', // don't forget the '%' at the end!
                     'ontologyNamespace' => $schema->namespaces->ontology,
                     'parent' => $schema->parent,
                     'label' => $schema->label,
-                    'order' => $schema->ontology->order,
-                    'cardinality' => $this->repo->getSchema()->namespaces->ontology . 'cardinality',
-                    'recommended' => $schema->ontology->recommended,
-                    'langTag' => $schema->ontology->langTag,
-                    'vocabs' => $schema->ontology->vocabs,
-                    'label' => 'http://www.w3.org/2004/02/skos/core#altLabel',
-                    'comment' => $this->repo->getSchema()->namespaces->rdfs.'comment'
         ];
        
         $ontology = new \acdhOeaw\arche\lib\schema\Ontology($conn, $cfg);
