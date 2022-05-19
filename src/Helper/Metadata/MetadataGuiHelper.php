@@ -446,7 +446,7 @@ class MetadataGuiHelper
      */
     private function getRtTypeDomain(array $type): string
     {
-        $types = array('project' => 'p', 'topcollection' => 'tc', 'collection' => 'c', 'resource' => 'r', 'metadata' => 'm', 'publication' => 'pub', 'place' => 'pl', 'organisation' => 'o', 'person' => 'pe');
+        $types = array('project' => 'p', 'topCollection' => 'tc', 'collection' => 'c', 'resource' => 'r', 'metadata' => 'm', 'publication' => 'pub', 'place' => 'pl', 'organisation' => 'o', 'person' => 'pe');
         $html = '';
         foreach ($types as $t => $v) {
             if (isset($type[$t]['domain'])) {
