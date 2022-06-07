@@ -129,4 +129,10 @@ class ArcheApiMainController extends \Drupal\Core\Controller\ControllerBase
         $controller = new \Drupal\arche_gui_api\Controller\VersionsController();
         return $controller->execute($repoid);
     }
+    
+    public function api_versions_list(string $repoid): Response
+    {
+        $controller = new \Drupal\arche_gui_api\Controller\VersionsController();
+        return $controller->executeList($repoid);
+    }
 }
