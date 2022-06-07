@@ -70,7 +70,7 @@ class VersionsController
                 $data = [];
             }
         } else {
-           $data = []; 
+            $data = [];
         }
        
         $build = [
@@ -85,8 +85,6 @@ class VersionsController
         ];
        
         return new Response(render($build));
-        
-        
     }
     
     
@@ -98,7 +96,6 @@ class VersionsController
      */
     private function checkVersions(string $id): string
     {
-        
         echo '<pre>';
         var_dump($data);
         echo '</pre>';
