@@ -65,14 +65,19 @@ class VersionsController
         $params = array('identifier' => $repoid, 'lang' => $lang);
         $data = $blockModel->getViewData("versions", $params);
         
-        if (count((array) $data) > 1) {
-            if ($data[0]->id == $repoid) {
+        if (count((array) $data) < 2) {
                 $data = [];
-            }
         } else {
-            $data = [];
+            foreach($data as $k => $v) {
+                if($v->id === $repoid) {
+                    $data[$k]->actual = 'version-highlighted';
+                    goto end;
+                }
+            }
         }
        
+        end:
+            
         $build = [
             '#theme' => 'acdh-repo-gui-detail-versions-block',
             '#result' => (array) $data,
@@ -85,6 +90,8 @@ class VersionsController
         ];
        
         return new Response(render($build));
+        
+        
     }
     
     
@@ -96,6 +103,7 @@ class VersionsController
      */
     private function checkVersions(string $id): string
     {
+        
         echo '<pre>';
         var_dump($data);
         echo '</pre>';
