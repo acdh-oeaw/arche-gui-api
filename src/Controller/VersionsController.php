@@ -66,10 +66,10 @@ class VersionsController
         $data = $blockModel->getViewData("versions", $params);
         
         if (count((array) $data) < 2) {
-                $data = [];
+            $data = [];
         } else {
-            foreach($data as $k => $v) {
-                if($v->id === $repoid) {
+            foreach ($data as $k => $v) {
+                if ($v->id === $repoid) {
                     $data[$k]->actual = 'version-highlighted';
                     goto end;
                 }
@@ -90,8 +90,6 @@ class VersionsController
         ];
        
         return new Response(render($build));
-        
-        
     }
     
     
@@ -103,7 +101,6 @@ class VersionsController
      */
     private function checkVersions(string $id): string
     {
-        
         echo '<pre>';
         var_dump($data);
         echo '</pre>';
