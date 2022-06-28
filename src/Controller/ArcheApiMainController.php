@@ -163,10 +163,9 @@ class ArcheApiMainController extends \Drupal\Core\Controller\ControllerBase
         $orderby = (empty($_POST['order'][0]['column'])) ? 1 : (int)$_POST['order'][0]['column'] + 1;
         $order = (empty($_POST['order'][0]['dir'])) ? 'asc' : $_POST['order'][0]['dir'];
         $searchProps = [
-            'offset' => $offset, 'limit' => $limit, 'draw' => $draw, 'search' => $search, 
+            'offset' => $offset, 'limit' => $limit, 'draw' => $draw, 'search' => $search,
             'orderby' => $orderby, 'order' => $order
         ];
         return $controller->execute($repoid, $searchProps, $lang);
     }
-    
 }

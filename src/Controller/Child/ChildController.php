@@ -45,5 +45,5 @@ class ChildController
         );
         $response->headers->set('Content-Type', 'application/json');
         return $response;
-    }    
+    }
 }
