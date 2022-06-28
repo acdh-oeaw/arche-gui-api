@@ -15,7 +15,7 @@ class InverseDataController
     {
         /*
          * Usage:
-         *  https://domain.com/browser/api/v2/getInverseData/value?_format=json
+         *  https://domain.com/browser/api/getInverseData/value?_format=json
          */
         $repoid = \Drupal\Component\Utility\Xss::filter(preg_replace('/[^0-9]/', '', $repoid));
         
