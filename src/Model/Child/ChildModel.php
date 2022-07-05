@@ -15,7 +15,7 @@ class ChildModel extends \Drupal\arche_gui_api\Model\ArcheApiModel
         parent::__construct();
     }
     
-    public function getData(string $repoid,  array $sqlTypes, int $offset, int $limit, string $search = "", int $orderby = 1, string $order = 'asc', string $lang = "en"): array
+    public function getData(string $repoid, array $sqlTypes, int $offset, int $limit, string $search = "", int $orderby = 1, string $order = 'asc', string $lang = "en"): array
     {
         $result = array();
         //run the actual query
@@ -33,20 +33,19 @@ class ChildModel extends \Drupal\arche_gui_api\Model\ArcheApiModel
                     . " where LOWER(title) like  LOWER('%' || :search || '%') "
                     . " order by $orderby $order "
                     . " limit :limit offset :offset;",
-                    array(
+                array(
                         ':repoid' => $repoid,
                         ':lang' => $lang,
                         ':search' => $search,
                         ':limit' => $limit,
                         ':offset' => $offset
                 ),
-                    ['allow_delimiter_in_query' => true, 'allow_square_brackets' => true]
-                 
+                ['allow_delimiter_in_query' => true, 'allow_square_brackets' => true]
             );
             
-            $result = $query->fetchAll(\PDO::FETCH_CLASS);           
+            $result = $query->fetchAll(\PDO::FETCH_CLASS);
         } catch (Exception $ex) {
-            \Drupal::logger('arche_gui_api')->notice($ex->getMessage());           
+            \Drupal::logger('arche_gui_api')->notice($ex->getMessage());
             $result = array();
         } catch (\Drupal\Core\Database\DatabaseExceptionWrapper $ex) {
             \Drupal::logger('arche_gui_api')->notice($ex->getMessage());
@@ -57,7 +56,7 @@ class ChildModel extends \Drupal\arche_gui_api\Model\ArcheApiModel
     }
     
     private function formatTypeFilter(array $sqlTypes): void
-    {   
+    {
         $count = count($sqlTypes);
         if ($count > 0) {
             $this->sqlTypes .= 'ARRAY [ ';
