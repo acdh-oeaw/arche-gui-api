@@ -93,3 +93,20 @@ arche_api_get_versions_list:
         uri: '^[^\?]*$'
         _permission: 'access content'
         _access: 'TRUE'         
+
+arche_api_versions_alert:    
+    path: '/api/versions_alert/{repoid}/{lang}'
+    defaults:
+        _controller: '\Drupal\arche_gui_api\Controller\ArcheApiMainController::api_versions_alert'
+    requirements:
+        uri: '^[^\?]*$'
+        _permission: 'access content'
+        _access: 'TRUE'   
+
+
+arche_api_get_hasActor:    
+    path: '/api/getHasActors/{repoid}/{lng}'
+    defaults:
+        _controller: '\Drupal\arche_gui_api\Controller\ArcheApiMainController::api_get_hasActor'
+    requirements:
+        _access: 'TRUE'           

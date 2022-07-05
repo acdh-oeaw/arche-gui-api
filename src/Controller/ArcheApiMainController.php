@@ -136,6 +136,18 @@ class ArcheApiMainController extends \Drupal\Core\Controller\ControllerBase
     }
     
     /**
+     * Fetch the newer verison for the alert div
+     * @param string $repoid
+     * @param string $lang
+     * @return Response
+     */
+    public function api_versions_alert(string $repoid, string $lang = "en"): Response
+    {
+        $controller = new \Drupal\arche_gui_api\Controller\VersionsController();
+        return $controller->getAlertDiv($repoid, $lang);        
+    }
+    
+    /**
      * fetch the versions list
      * @param string $repoid
      * @return Response

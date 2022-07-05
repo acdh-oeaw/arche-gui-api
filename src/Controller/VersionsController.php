@@ -66,10 +66,10 @@ class VersionsController
         $data = $blockModel->getViewData("versions", $params);
         
         if (count((array) $data) < 2) {
-            $data = [];
+                $data = [];
         } else {
-            foreach ($data as $k => $v) {
-                if ($v->id === $repoid) {
+            foreach($data as $k => $v) {
+                if($v->id === $repoid) {
                     $data[$k]->actual = 'version-highlighted';
                     goto end;
                 }
@@ -90,25 +90,54 @@ class VersionsController
         ];
        
         return new Response(render($build));
+        
+        
     }
-    
-    
     
     /**
-     * Check if the actual resource has a newer version
-     * @param string $id
-     * @return bool
+     * Get the alert div Id for the gui detail page header
+     * @param string $repoid
+     * @param string $lang
+     * @return Response
      */
-    private function checkVersions(string $id): string
+    public function getAlertDiv(string $repoid, string $lang = "en"): Response
     {
-        echo '<pre>';
-        var_dump($data);
-        echo '</pre>';
-        if (count((array) $data) > 1) {
-            if ($data[0]->id != $id) {
-                return $data[0]->id;
+        /*
+         * Usage:
+         *  https://domain.com/browser/api/versions_alert/repoid/lang?_format=json
+         */
+
+        $repoid = \Drupal\Component\Utility\Xss::filter(preg_replace('/[^0-9]/', '', $repoid));
+     
+        if (empty($repoid)) {
+            return new JsonResponse(array("Please provide a repoid string"), 404, ['Content-Type' => 'application/json']);
+        }
+        
+        $blockModel = new \Drupal\acdh_repo_gui\Model\BlocksModel();
+        $params = array('identifier' => $repoid, 'lang' => $lang);
+        $data = $blockModel->getViewData("versions", $params);
+        $content = null;
+        if(count($data) > 0) {
+            foreach($data as $k => $o) {
+                if(isset($o->id) && $o->id == $repoid) {
+                    if(isset($o->previd) && !empty($o->previd) && !is_null($o->previd)) {
+                        $content = $o->previd;     
+                    }
+                }
             }
         }
-        return "";
+       
+       $build = [
+            '#theme' => 'acdh-repo-gui-detail-versions-alert',
+            '#result' => $content,
+            '#cache' => ['max-age' => 0],
+            '#attached' => [
+                'library' => [
+                    'acdh_repo_gui/repo-styles',
+                ]
+            ]
+        ];
+        return new Response(render($build));
     }
+    
 }
