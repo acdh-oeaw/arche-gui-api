@@ -20,7 +20,7 @@ class CollectionScriptController extends \Drupal\Core\Controller\ControllerBase
         $repoid = \Drupal\Component\Utility\Xss::filter(preg_replace('/[^0-9]/', '', $repoid));
         
         if (empty($repoid)) {
-            return new Response(array("Repoid is not valid!"), 404, ['Content-Type' => 'application/json']);
+            return new Response(array("Repoid is not valid!"), 204, ['Content-Type' => 'application/json']);
         }
         
         $object = new \Drupal\arche_gui_api\Object\Collection\CollectionScriptObject();

@@ -27,23 +27,19 @@ class ChildController
         
         $object = new \Drupal\arche_gui_api\Object\Child\ChildObject();
         $content = $object->init($repoid, $lang, $searchProps);
-        
-        if (count($content) == 0) {
-            return new JsonResponse(array("There is no resource"), 404, ['Content-Type' => 'application/json']);
-        }
-
+     
         $response = new Response();
         $response->setContent(
             json_encode(
                 array(
                     "aaData" => $content,
-                    "iTotalRecords" => ($content[0]['sumcount']) ?  $content[0]['sumcount'] : 0,
-                    "iTotalDisplayRecords" => ($content[0]['sumcount']) ?  $content[0]['sumcount'] : 0,
-                    "draw" => intval($searchProps['draw']),
+                    "iTotalRecords" => (isset($content[0]['sumcount'])) ?  $content[0]['sumcount'] : 0,
+                    "iTotalDisplayRecords" => (isset($content[0]['sumcount'])) ?  $content[0]['sumcount'] : 0,
+                    "draw" => (intval($searchProps['draw'])) ? intval($searchProps['draw']) : 0,
                 )
             )
         );
         $response->headers->set('Content-Type', 'application/json');
         return $response;
-    }
+    }    
 }

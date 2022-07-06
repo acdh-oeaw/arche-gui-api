@@ -22,7 +22,7 @@ class RootTableController
         $content = $object->init();
 
         if (empty($content)) {
-            return new \Symfony\Component\HttpFoundation\Response(array("There is no resource"), 404, ['Content-Type' => 'application/json']);
+            return new \Symfony\Component\HttpFoundation\Response(array("There is no resource"), 204, ['Content-Type' => 'application/json']);
         }
         $response = new \Symfony\Component\HttpFoundation\Response();
         $response->setContent('No data!');
