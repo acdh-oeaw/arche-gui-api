@@ -66,10 +66,10 @@ class VersionsController
         $data = $blockModel->getViewData("versions", $params);
         
         if (count((array) $data) < 2) {
-                $data = [];
+            $data = [];
         } else {
-            foreach($data as $k => $v) {
-                if($v->id === $repoid) {
+            foreach ($data as $k => $v) {
+                if ($v->id === $repoid) {
                     $data[$k]->actual = 'version-highlighted';
                     goto end;
                 }
@@ -90,8 +90,6 @@ class VersionsController
         ];
        
         return new Response(render($build));
-        
-        
     }
     
     /**
@@ -117,17 +115,17 @@ class VersionsController
         $params = array('identifier' => $repoid, 'lang' => $lang);
         $data = $blockModel->getViewData("versions", $params);
         $content = null;
-        if(count($data) > 0) {
-            foreach($data as $k => $o) {
-                if(isset($o->id) && $o->id == $repoid) {
-                    if(isset($o->previd) && !empty($o->previd) && !is_null($o->previd)) {
-                        $content = $o->previd;     
+        if (count($data) > 0) {
+            foreach ($data as $k => $o) {
+                if (isset($o->id) && $o->id == $repoid) {
+                    if (isset($o->previd) && !empty($o->previd) && !is_null($o->previd)) {
+                        $content = $o->previd;
                     }
                 }
             }
         }
        
-       $build = [
+        $build = [
             '#theme' => 'acdh-repo-gui-detail-versions-alert',
             '#result' => $content,
             '#cache' => ['max-age' => 0],
@@ -139,5 +137,4 @@ class VersionsController
         ];
         return new Response(render($build));
     }
-    
 }
