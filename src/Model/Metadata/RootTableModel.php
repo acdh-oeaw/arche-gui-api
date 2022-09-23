@@ -27,11 +27,11 @@ class RootTableModel extends \Drupal\arche_gui_api\Model\ArcheApiModel
         ];
        
         $ontology = new \acdhOeaw\arche\lib\schema\Ontology($conn, $cfg);
+      
         $classesDesc = [];
         foreach (['project', 'collection', 'topCollection', 'resource', 'metadata', 'publication', 'place', 'organisation', 'person'] as $i) {
             $classesDesc[$i] = $ontology->getClass($schema->classes->$i)->properties ?? "";
         }
-        
         return $classesDesc;
     }
 }

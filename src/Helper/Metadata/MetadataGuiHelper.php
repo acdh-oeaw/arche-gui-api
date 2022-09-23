@@ -382,56 +382,57 @@ class MetadataGuiHelper
     private function createRootTableHtml(): string
     {
         $html = '';
-
+        
+      
         if (count($this->data) > 0) {
             // Open the table
-
             $html .= $this->createRootTableHeader();
 
             // Cycle through the array
+            foreach ($this->data as $id => $type) {
+                
+                foreach($type['main'] as $mk => $mv) {
+                    $html .= '<tr>';
+                    if (isset($type['main'][$mk]['title'])) {
+                        $html .= '<td class="sticky"><b>' . $type['main'][$mk]['title'] . '</b></td>';
+                    } else {
+                        $html .= '<td class="sticky">TITLE MISSING</td>';
+                    }
+                    //create the type values
+                    $html .= $this->getRtTypeValues($type, $mk);
 
-            foreach ($this->data as $type) {
-                $html .= '<tr>';
+                    $html .= $this->createRootTableTd($type['main'][$mk], 'order');
+                    $html .= '<td>' . $this->getRtTypeDomain($type, $mk) . '</td>';
+                    $html .= '<td>' . $this->getRtTypeRange($type, $mk) . '</td>';
+                    $html .= $this->createRootTableTd($type['main'][$mk], 'vocabs');
+                    $html .= '<td>' . $this->getRtTypeRecommended($type, $mk) . '</td>';
 
-                if (isset($type['main']['title'])) {
-                    $html .= '<td class="sticky"><b>' . $type['main']['title'] . '</b></td>';
-                } else {
-                    $html .= '<td class="sticky">TITLE MISSING</td>';
+                    $html .= $this->createRootTableTd($type['main'][$mk], 'automatedFill');
+                    $html .= $this->createRootTableTd($type['main'][$mk], 'defaultValue');
+                    $html .= $this->createRootTableTd($type['main'][$mk], 'langTag');
+                    $html .= $this->createRootTableTd($type['main'][$mk], 'comment');
+                    $html .= '</tr>';
                 }
-                //create the type values
-                $html .= $this->getRtTypeValues($type);
-
-                $html .= $this->createRootTableTd($type['main'], 'order');
-                $html .= '<td>' . $this->getRtTypeDomain($type) . '</td>';
-                $html .= '<td>' . $this->getRtTypeRange($type) . '</td>';
-                $html .= $this->createRootTableTd($type['main'], 'vocabs');
-                $html .= '<td>' . $this->getRtTypeRecommended($type) . '</td>';
-                
-                $html .= $this->createRootTableTd($type['main'], 'automatedFill');
-                $html .= $this->createRootTableTd($type['main'], 'defaultValue');
-                $html .= $this->createRootTableTd($type['main'], 'langTag');
-                $html .= $this->createRootTableTd($type['main'], 'comment');
-                
-                $html .= '</tr>';
             }
             $html .= "</table>";
         }
-
         return $html;
     }
+    
+    
 
     /**
      * Create the HTML table acdh class values
      * @param array $type
      * @return string
      */
-    private function getRtTypeValues(array $type): string
+    private function getRtTypeValues(array $type, int $i): string
     {
         $types = array('project', 'topCollection', 'collection', 'resource', 'metadata', 'publication', 'place', 'organisation', 'person');
         $html = '';
         foreach ($types as $t) {
-            if (isset($type[$t]['value'])) {
-                $html .= '<td>' . $type[$t]['value'] . '</td>';
+            if (isset($type[$t][$i]['value'])) {
+                $html .= '<td>' . $type[$t][$i]['value'] . '</td>';
             } else {
                 $html .= '<td>x</td>';
             }
@@ -444,12 +445,12 @@ class MetadataGuiHelper
      * @param array $type
      * @return string
      */
-    private function getRtTypeDomain(array $type): string
+    private function getRtTypeDomain(array $type, int $i): string
     {
         $types = array('project' => 'p', 'topCollection' => 'tc', 'collection' => 'c', 'resource' => 'r', 'metadata' => 'm', 'publication' => 'pub', 'place' => 'pl', 'organisation' => 'o', 'person' => 'pe');
         $html = '';
         foreach ($types as $t => $v) {
-            if (isset($type[$t]['domain'])) {
+            if (isset($type[$t][$i]['domain'])) {
                 $html .= '' . $v . ',';
             }
         }
@@ -461,12 +462,12 @@ class MetadataGuiHelper
      * @param array $type
      * @return string
      */
-    private function getRtTypeRecommended(array $type): string
+    private function getRtTypeRecommended(array $type, int $i): string
     {
         $types = array('project' => 'p', 'topCollection' => 'tc', 'collection' => 'c', 'resource' => 'r', 'metadata' => 'm', 'publication' => 'pub', 'place' => 'pl', 'organisation' => 'o', 'person' => 'pe');
         $html = '';
         foreach ($types as $t => $v) {
-            if (isset($t) && isset($type[$t]['recommended']) && $type[$t]['recommended'] == true) {
+            if (isset($t) && isset($type[$t][$i]['recommended']) && $type[$t][$i]['recommended'] == true) {
                 $html .= '' . $v . ',';
             }
         }
@@ -478,14 +479,14 @@ class MetadataGuiHelper
      * @param array $type
      * @return string
      */
-    private function getRtTypeRange(array $type): string
+    private function getRtTypeRange(array $type, int $i): string
     {
         $types = array('project' => 'p', 'topCollection' => 'tc', 'collection' => 'c', 'resource' => 'r', 'metadata' => 'm', 'publication' => 'pub', 'place' => 'pl', 'organisation' => 'o', 'person' => 'pe');
         $html = '';
         $values = array();
         foreach ($types as $t => $v) {
-            if (isset($type[$t]['range']) && count($type[$t]['range']) > 0) {
-                foreach ($type[$t]['range'] as $r) {
+            if (isset($type[$t][$i]['range']) && count($type[$t][$i]['range']) > 0) {
+                foreach ($type[$t][$i]['range'] as $r) {
                     if (strpos($r, '/api/') === false) {
                         $values[] = $r;
                     }
@@ -523,6 +524,28 @@ class MetadataGuiHelper
         }
         return 'x';
     }
+    
+    /**
+     * Because of the rdf we have a lot of duplicates in the resource array, we have to remove them
+     * @param array $data
+     * @return type
+     */
+    private function removeDuplicatesFromOntology(array $data) {
+        $nd = [];
+        
+        foreach($data as $dk => $dv) {
+           $nd[$dk]['keys'] = array();
+            foreach($dv as $k => $v) {
+                //we can have more properties for the same ordering id....
+                if(!in_array($v->uri, $nd[$dk]['keys'])) {
+                    $nd[$dk]['keys'][] = $v->uri;
+                    $nd[$dk][$v->ordering][] = $v;
+                }
+            }
+            ksort($nd[$dk]);
+        }
+        return $nd;
+    }
 
     /**
      * Reorder the root table result
@@ -531,53 +554,68 @@ class MetadataGuiHelper
      */
     private function reorderRootTable(array $data): void
     {
+        
+        $data = $this->removeDuplicatesFromOntology($data);
+        
         $uris = array();
         foreach ($data as $kt => $kv) {
             $domain = '';
             $domain .= $kt . ' ';
-            
+           
             if (is_array($kv)) {
-                foreach ($kv as $v) {
-                    if (isset($v->ordering) && isset($v->uri)) {
-                       
-                        //handle the duplicated ids
-                        if ($v->ordering == 99999) {
-                            if (count($uris) == 0) {
-                                $uris[$v->uri] = $v->ordering;
-                            } elseif (count($uris) > 0) {
-                                if (key_exists($v->uri, $uris)) {
-                                    $v->ordering = (int)$uris[$v->uri];
+                foreach ($kv as $ak => $av) {
+                    if(is_int($ak)) {
+                        $i = 0;
+                        foreach($av as $v) {
+                            
+                            if (isset($v->ordering) && isset($v->uri)) {
+                                if(isset($this->data[$v->ordering]) && $this->data[$v->ordering]['main'][$i]['uri'] !== $v->uri) {
+                                    $i++;
                                 } else {
-                                    $uris[$v->uri] = (int)max(array_keys($this->data)) + 1;
-                                    $v->ordering = (int)$uris[$v->uri];
+                                    $i = 0;
                                 }
+                                //handle the duplicated ids
+                                if ($v->ordering == 99999) {
+                                    if (count($uris) == 0) {
+                                        $uris[$v->uri] = $v->ordering;
+                                    } elseif (count($uris) > 0) {
+                                        if (key_exists($v->uri, $uris)) {
+                                            $v->ordering = (int)$uris[$v->uri];
+                                        } else {
+                                            $uris[$v->uri] = (int)max(array_keys($this->data)) + 1;
+                                            $v->ordering = (int)$uris[$v->uri];
+                                        }
+                                    }
+                                }
+
+                                //if we have already an undefined value with id 99999 then we have to change the
+                                //orderid, because we use the order to generate the table
+                                $this->createRootTablePropertyTitle($v, $kt, $i);
+                                $this->createRootTablePropertyMinMax($v, $kt, $i);
+
+                                if (isset($v->domain)) {
+                                    $this->data[$v->ordering][$kt][$i]['domain'] = $v->domain;
+                                }
+                                if (isset($v->uri)) {
+                                    $this->data[$v->ordering]['main'][$i]['uri'] = $v->uri;
+                                }
+
+                                $this->getOntologyObjData($v, $kt, 'range', 'range', $i);
+                                $this->getOntologyObjData($v, $kt, 'vocabs', 'vocabs', $i);
+                                $this->getOntologyObjData($v, $kt, 'recommended', 'recommendedClass', $i);
+                                $this->getOntologyObjData($v, $kt, 'automatedFill', 'automatedFill', $i);
+                                $this->getOntologyObjData($v, $kt, 'defaultValue', 'defaultValue', $i);
+                                $this->data[$v->ordering]['main'][$i]['order'] = $v->ordering;
+                                $this->getOntologyObjData($v, $kt, 'langTag', 'langTag', $i);
+                                $this->getOntologyObjData($v, $kt, 'comment', 'comment', $i);
+                                $this->data[$v->ordering]['main'][$i]['domain'] = $domain;                             
                             }
                         }
-                        
-                        //if we have already an undefined value with id 99999 then we have to change the
-                        //orderid, because we use the order to generate the table
-                        
-                        $this->createRootTablePropertyTitle($v, $kt);
-                        $this->createRootTablePropertyMinMax($v, $kt);
-                        
-                        if (isset($v->domain)) {
-                            $this->data[$v->ordering][$kt]['domain'] = $v->domain;
-                        }
- 
-                        $this->getOntologyObjData($v, $kt, 'range', 'range');
-                        $this->getOntologyObjData($v, $kt, 'vocabs', 'vocabs');
-                        $this->getOntologyObjData($v, $kt, 'recommended', 'recommendedClass');
-                        $this->getOntologyObjData($v, $kt, 'automatedFill', 'automatedFill');
-                        $this->getOntologyObjData($v, $kt, 'defaultValue', 'defaultValue');
-                        $this->data[$v->ordering]['main']['order'] = $v->ordering;
-                        $this->getOntologyObjData($v, $kt, 'langTag', 'langTag');
-                        $this->getOntologyObjData($v, $kt, 'comment', 'comment');
-                        $this->data[$v->ordering]['main']['domain'] = $domain;
                     }
                 }
-                ksort($this->data);
             }
         }
+        ksort($this->data);
     }
     
     /**
@@ -588,11 +626,11 @@ class MetadataGuiHelper
      * @param string $vKey
      * @return void
      */
-    private function getOntologyObjData(object &$v, string &$kt, string $dKey, string $vKey): void
+    private function getOntologyObjData(object &$v, string &$kt, string $dKey, string $vKey, int $i): void
     {
         if (isset($v->$vKey)) {
-            $this->data[$v->ordering]['main'][$dKey] = $v->$vKey;
-            $this->data[$v->ordering][$kt][$dKey] = $v->$vKey;
+            $this->data[$v->ordering]['main'][$i][$dKey] = $v->$vKey;
+            $this->data[$v->ordering][$kt][$i][$dKey] = $v->$vKey;
         }
     }
 
@@ -602,13 +640,13 @@ class MetadataGuiHelper
      * @param string $kt
      * @return void
      */
-    private function createRootTablePropertyTitle(object &$v, string &$kt): void
+    private function createRootTablePropertyTitle(object &$v, string &$kt, int $i): void
     {
-        $this->data[$v->ordering]['main']['title'] = preg_replace('|^.*[/#]|', '', $v->uri);
+        $this->data[$v->ordering]['main'][$i]['title'] = preg_replace('|^.*[/#]|', '', $v->uri);
         if (isset($v->label['en'])) {
-            $this->data[$v->ordering][$kt]['title'] = $v->label['en'];
+            $this->data[$v->ordering][$kt][$i]['title'] = $v->label['en'];
         } else {
-            $this->data[$v->ordering][$kt]['title'] = preg_replace('|^.*[/#]|', '', $v->uri);
+            $this->data[$v->ordering][$kt][$i]['title'] = preg_replace('|^.*[/#]|', '', $v->uri);
         }
     }
 
@@ -618,16 +656,16 @@ class MetadataGuiHelper
      * @param string $kt
      * @return void
      */
-    private function createRootTablePropertyMinMax(object &$v, string &$kt): void
+    private function createRootTablePropertyMinMax(object &$v, string &$kt, int $i): void
     {
         if (isset($v->min) || isset($v->max)) {
-            $this->data[$v->ordering][$kt]['value'] = $this->rtCardinality($v->min, $v->max);
-            $this->data[$v->ordering]['main']['min'] = $v->min;
-            $this->data[$v->ordering]['main']['max'] = $v->max;
-            $this->data[$v->ordering][$kt]['min'] = $v->min;
-            $this->data[$v->ordering][$kt]['max'] = $v->max;
+            $this->data[$v->ordering][$kt][$i]['value'] = $this->rtCardinality($v->min, $v->max);
+            $this->data[$v->ordering]['main'][$i]['min'] = $v->min;
+            $this->data[$v->ordering]['main'][$i]['max'] = $v->max;
+            $this->data[$v->ordering][$kt][$i]['min'] = $v->min;
+            $this->data[$v->ordering][$kt][$i]['max'] = $v->max;
         } elseif ((is_null($v->min) && is_null($v->max))) {
-            $this->data[$v->ordering][$kt]['value'] = '0-n';
+            $this->data[$v->ordering][$kt][$i]['value'] = '0-n';
         }
     }
 }
