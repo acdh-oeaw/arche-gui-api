@@ -20,14 +20,14 @@ class CollectionController extends \Drupal\Core\Controller\ControllerBase
         $repoid = \Drupal\Component\Utility\Xss::filter(preg_replace('/[^0-9]/', '', $repoid));
         
         if (empty($repoid)) {
-            return new JsonResponse(array("Repoid is not valid!"), 204, ['Content-Type' => 'application/json']);
+            return new JsonResponse(array("Repoid is not valid!"), 404, ['Content-Type' => 'application/json']);
         }
         
         $object = new \Drupal\arche_gui_api\Object\Collection\CollectionObject();
         $content = $object->init($repoid, $lang);
         
         if (count($content) == 0) {
-            return new JsonResponse(array("There is no resource"), 204, ['Content-Type' => 'application/json']);
+            return new JsonResponse(array("There is no resource"), 404, ['Content-Type' => 'application/json']);
         }
         
         return new JsonResponse($content, 200, ['Content-Type' => 'application/json']);

@@ -26,12 +26,12 @@ class CollectionBinariesController extends \Drupal\Core\Controller\ControllerBas
         $this->setRepoid($repoid);
      
         if (empty($this->repoid)) {
-            return new JsonResponse(array("Repoid is not valid!"), 204, ['Content-Type' => 'application/json']);
+            return new JsonResponse(array("Repoid is not valid!"), 404, ['Content-Type' => 'application/json']);
         }
         $this->createBinariesData($_POST['jsonData']);
                 
         if (count($this->binaries) == 0) {
-            return new JsonResponse(array("POST was empty"), 204, ['Content-Type' => 'application/json']);
+            return new JsonResponse(array("POST was empty"), 404, ['Content-Type' => 'application/json']);
         }
         
         $this->setUsername($_POST['username']);
@@ -41,7 +41,7 @@ class CollectionBinariesController extends \Drupal\Core\Controller\ControllerBas
         $content = $object->init($this->binaries, $this->repoid, $this->username, $this->password);
         
         if (empty($content)) {
-            return new JsonResponse(array("Error! Collection binaries download error!"), 204, ['Content-Type' => 'application/json']);
+            return new JsonResponse(array("Error! Collection binaries download error!"), 404, ['Content-Type' => 'application/json']);
         }
         
         return new JsonResponse($content, 200, ['Content-Type' => 'application/json']);

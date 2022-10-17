@@ -28,14 +28,14 @@ class VersionsController
         $repoid = \Drupal\Component\Utility\Xss::filter(preg_replace('/[^0-9]/', '', $repoid));
          
         if (empty($repoid)) {
-            return new JsonResponse(array("Please provide a repoid string"), 204, ['Content-Type' => 'application/json']);
+            return new JsonResponse(array("Please provide a repoid string"), 404, ['Content-Type' => 'application/json']);
         }
         
         $object = new \Drupal\arche_gui_api\Object\VersionsObject();
         $content = $object->init($repoid, $lang);
 
         if (count($content) == 0) {
-            return new JsonResponse(array("There is no resource"), 204, ['Content-Type' => 'application/json']);
+            return new JsonResponse(array("There is no resource"), 404, ['Content-Type' => 'application/json']);
         }
 
         return new JsonResponse($content, 200, ['Content-Type' => 'application/json']);
@@ -58,7 +58,7 @@ class VersionsController
         $repoid = \Drupal\Component\Utility\Xss::filter(preg_replace('/[^0-9]/', '', $repoid));
      
         if (empty($repoid)) {
-            return new Response(array("Please provide a repoid string"), 204, ['Content-Type' => 'application/json']);
+            return new Response(array("Please provide a repoid string"), 404, ['Content-Type' => 'application/json']);
         }
         
         $blockModel = new \Drupal\acdh_repo_gui\Model\BlocksModel();
@@ -108,7 +108,7 @@ class VersionsController
         $repoid = \Drupal\Component\Utility\Xss::filter(preg_replace('/[^0-9]/', '', $repoid));
      
         if (empty($repoid)) {
-            return new JsonResponse(array("Please provide a repoid string"), 204, ['Content-Type' => 'application/json']);
+            return new JsonResponse(array("Please provide a repoid string"), 404, ['Content-Type' => 'application/json']);
         }
         
         $blockModel = new \Drupal\acdh_repo_gui\Model\BlocksModel();

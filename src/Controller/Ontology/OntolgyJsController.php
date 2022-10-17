@@ -22,7 +22,7 @@ class OntolgyJsController
         $content = $object->init($lang);
 
         if (count($content) == 0) {
-            return new JsonResponse(array("There is no resource"), 204, ['Content-Type' => 'application/json']);
+            return new JsonResponse(array("There is no resource"), 404, ['Content-Type' => 'application/json']);
         }
 
         return new JsonResponse($content, 200, ['Content-Type' => 'application/json']);
