@@ -390,8 +390,7 @@ class MetadataGuiHelper
 
             // Cycle through the array
             foreach ($this->data as $id => $type) {
-                
-                foreach($type['main'] as $mk => $mv) {
+                foreach ($type['main'] as $mk => $mv) {
                     $html .= '<tr>';
                     if (isset($type['main'][$mk]['title'])) {
                         $html .= '<td class="sticky"><b>' . $type['main'][$mk]['title'] . '</b></td>';
@@ -530,14 +529,15 @@ class MetadataGuiHelper
      * @param array $data
      * @return type
      */
-    private function removeDuplicatesFromOntology(array $data) {
+    private function removeDuplicatesFromOntology(array $data)
+    {
         $nd = [];
         
-        foreach($data as $dk => $dv) {
-           $nd[$dk]['keys'] = array();
-            foreach($dv as $k => $v) {
+        foreach ($data as $dk => $dv) {
+            $nd[$dk]['keys'] = array();
+            foreach ($dv as $k => $v) {
                 //we can have more properties for the same ordering id....
-                if(!in_array($v->uri, $nd[$dk]['keys'])) {
+                if (!in_array($v->uri, $nd[$dk]['keys'])) {
                     $nd[$dk]['keys'][] = $v->uri;
                     $nd[$dk][$v->ordering][] = $v;
                 }
@@ -554,7 +554,6 @@ class MetadataGuiHelper
      */
     private function reorderRootTable(array $data): void
     {
-        
         $data = $this->removeDuplicatesFromOntology($data);
         
         $uris = array();
@@ -564,12 +563,11 @@ class MetadataGuiHelper
            
             if (is_array($kv)) {
                 foreach ($kv as $ak => $av) {
-                    if(is_int($ak)) {
+                    if (is_int($ak)) {
                         $i = 0;
-                        foreach($av as $v) {
-                            
+                        foreach ($av as $v) {
                             if (isset($v->ordering) && isset($v->uri)) {
-                                if(isset($this->data[$v->ordering]) && $this->data[$v->ordering]['main'][$i]['uri'] !== $v->uri) {
+                                if (isset($this->data[$v->ordering]) && $this->data[$v->ordering]['main'][$i]['uri'] !== $v->uri) {
                                     $i++;
                                 } else {
                                     $i = 0;
@@ -608,7 +606,7 @@ class MetadataGuiHelper
                                 $this->data[$v->ordering]['main'][$i]['order'] = $v->ordering;
                                 $this->getOntologyObjData($v, $kt, 'langTag', 'langTag', $i);
                                 $this->getOntologyObjData($v, $kt, 'comment', 'comment', $i);
-                                $this->data[$v->ordering]['main'][$i]['domain'] = $domain;                             
+                                $this->data[$v->ordering]['main'][$i]['domain'] = $domain;
                             }
                         }
                     }
