@@ -1,0 +1,12 @@
+name: Arche GUI Api
+type: module
+version: 1.0
+description: 'ACDH-CH ARCE REPO Gui API plugin'
+core_version_requirement: ^8.8 || ^9
+package: Custom
+
+configure: arche_gui_api.settings_form
+libraries:
+    - arche_gui_api/main-styles
+'interface translation project': arche_gui_api
+'interface translation server pattern': modules/contrib/arche-gui-api/translations/arche_gui_api-%language.po    
