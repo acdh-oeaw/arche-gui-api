@@ -14,7 +14,8 @@ class MetadataGuiHTMLController
 {
     private $helper;
     
-    public function __construct() {
+    public function __construct()
+    {
         $this->helper = new \Drupal\arche_gui_api\Helper\Metadata\MetadataGuiHTMLHelper();
     }
     
@@ -36,10 +37,4 @@ class MetadataGuiHTMLController
 
         return new JsonResponse($content, 200, ['Content-Type' => 'application/json']);
     }
-    
-    
-    
-    
-    
-    
 }

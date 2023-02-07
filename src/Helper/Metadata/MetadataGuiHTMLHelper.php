@@ -7,14 +7,16 @@ namespace Drupal\arche_gui_api\Helper\Metadata;
  *
  * @author norbertczirjak
  */
-class MetadataGuiHTMLHelper {
+class MetadataGuiHTMLHelper
+{
  
     /**
      * Fetch the whole table
      * @param array $data
      * @return string
      */
-    public function fetchHtmlContent(array $data): string {
+    public function fetchHtmlContent(array $data): string
+    {
         $rows = '';
         $html = $this->createHeader();
         $html .= $this->createRows($data['properties']['basic']) . '<tr class="table-row-acdhBlue"><td colspan="6" style="text-align">ACTORS INVOLVED</td></tr>';
@@ -33,21 +35,22 @@ class MetadataGuiHTMLHelper {
      * @param array $data
      * @return string
      */
-    private function createRows(array $data): string {
+    private function createRows(array $data): string
+    {
         ksort($data);
        
-        foreach($data as $key => $val) {
-            foreach($val as $k => $v) {
+        foreach ($data as $key => $val) {
+            foreach ($val as $k => $v) {
                 //project
-                $project = $val[$k]['project'] ? $val[$k]['project'] : '-';     
+                $project = $val[$k]['project'] ? $val[$k]['project'] : '-';
                 //topcollection
                 //$topCollection = $val[$k]['topCollection'] ? $val[$k]['topCollection'] : '-';
                 //collection
-                $collection = $val[$k]['collection'] ? $val[$k]['collection'] : '-';        
+                $collection = $val[$k]['collection'] ? $val[$k]['collection'] : '-';
                 //resource
                 $resource = $val[$k]['resource'] ? $val[$k]['resource'] : '-';
                 
-                if( $project === "-" && $topCollection === "-" && $collection === "-" && $resource === "-" ) {
+                if ($project === "-" && $topCollection === "-" && $collection === "-" && $resource === "-") {
                     //has no class
                 } else {
                     //property
@@ -59,7 +62,6 @@ class MetadataGuiHTMLHelper {
                     $rows .= '<td style="text-align: center;">'.$collection.'</td>';
                     $rows .= '<td style="text-align: center;">'.$resource.'</td>';
                 }
-                
             }
         }
         
@@ -71,7 +73,8 @@ class MetadataGuiHTMLHelper {
      * Create the Header for the HTML table
      * @return string
      */
-    private function createHeader(): string {
+    private function createHeader(): string
+    {
         $str = '<table class="metadata-table" style="max-width:99%;">';
         $str .= '<thead><tr class="table-firstrow">';
         $str .= '<th style="text-align: left;">PROPERTY</th> '
