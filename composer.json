@@ -12,6 +12,7 @@
     ],
     "require": {
         "acdh-oeaw/arche-lib": "^4.0.3",
+        "acdh-oeaw/arche-assets": "^3.9.6",
         "acdh-oeaw/arche-lib-disserv": "^3.0.2",
         "acdh-oeaw/arche-lib-schema": "^6.0.2",
         "acdh-oeaw/easyrdf": ">= 0.15.5 <1",

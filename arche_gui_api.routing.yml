@@ -65,7 +65,14 @@ arche_api_metadataGui:
     defaults:
         _controller: '\Drupal\arche_gui_api\Controller\ArcheApiMainController::api_getMetadataGui'
     requirements:        
-        _access: 'TRUE'      
+        _access: 'TRUE'     
+        
+arche_api_metadataGuiHTML:    
+    path: '/api/getMetadataGuiHTML/{lang}'
+    defaults:
+        _controller: '\Drupal\arche_gui_api\Controller\ArcheApiMainController::api_getMetadataGuiHTML'
+    requirements:        
+        _access: 'TRUE'             
 
 arche_api_root_table:
     path: '/api/getRootTable/{lang}'

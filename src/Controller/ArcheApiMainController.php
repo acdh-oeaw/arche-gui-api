@@ -124,6 +124,13 @@ class ArcheApiMainController extends \Drupal\Core\Controller\ControllerBase
         return $controller->execute($lang);
     }
     
+    
+    public function api_getMetadataGuiHTML(string $lang): JsonResponse
+    {
+        $controller = new \Drupal\arche_gui_api\Controller\Metadata\MetadataGuiHTMLController();
+        return $controller->execute($lang);
+    }
+    
     /**
      * Fetch the versions data for the tree
      * @param string $repoid
