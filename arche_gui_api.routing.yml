@@ -72,7 +72,14 @@ arche_api_metadataGuiHTML:
     defaults:
         _controller: '\Drupal\arche_gui_api\Controller\ArcheApiMainController::api_getMetadataGuiHTML'
     requirements:        
-        _access: 'TRUE'             
+        _access: 'TRUE'   
+        
+arche_api_fileFormatsHTML:    
+    path: '/api/getFileFormatsHTML/{lang}'
+    defaults:
+        _controller: '\Drupal\arche_gui_api\Controller\ArcheApiMainController::api_getFileFormatsHTML'
+    requirements:        
+        _access: 'TRUE'           
 
 arche_api_root_table:
     path: '/api/getRootTable/{lang}'
