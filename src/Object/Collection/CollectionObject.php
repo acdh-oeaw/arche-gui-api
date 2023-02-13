@@ -76,8 +76,9 @@ class CollectionObject extends \Drupal\arche_gui_api\Object\MainObject
      */
     private function isDirOrFile(&$v): void
     {
+        $allowedFormats = [$this->repo->getSchema()->classes->resource, $this->repo->getSchema()->classes->metadata];
         
-        if (!empty($v['rdftype']) && $v['rdftype'] == $this->repo->getSchema()->classes->resource) {
+        if (!empty($v['rdftype']) && in_array($v['rdftype'], $allowedFormats)) {
             $v['dir'] = false;
             $v['icon'] = "jstree-file";
         } else {
