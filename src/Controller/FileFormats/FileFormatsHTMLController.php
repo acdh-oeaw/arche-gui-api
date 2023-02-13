@@ -14,7 +14,8 @@ class FileFormatsHTMLController
 {
     private $helper;
     
-    public function __construct() {
+    public function __construct()
+    {
         $this->helper = new \Drupal\arche_gui_api\Helper\FileFormats\FileFormatsHTMLHelper();
     }
     
@@ -28,12 +29,11 @@ class FileFormatsHTMLController
         
         $files = \acdhOeaw\ArcheFileFormats::getAll();
         $fileObjs = [];
-        foreach($files as $k => $v) {
+        foreach ($files as $k => $v) {
             $ff = new \Drupal\arche_gui_api\Object\FileFormatObject($v);
-            if($ff->isValid()) {
+            if ($ff->isValid()) {
                 $fileObjs[] = $ff;
             }
-          
         }
         
        
@@ -45,10 +45,4 @@ class FileFormatsHTMLController
 
         return new JsonResponse($content, 200, ['Content-Type' => 'application/json']);
     }
-    
-    
-    
-    
-    
-    
 }
