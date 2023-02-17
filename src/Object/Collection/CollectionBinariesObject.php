@@ -91,6 +91,21 @@ class CollectionBinariesObject extends \Drupal\arche_gui_api\Object\MainObject
         }
         return true;
     }
+    
+    /**
+     * We have to remove the special chars from the path string
+     * @param string $path
+     * @return string
+     */
+    private function createPathString(string $path): string 
+    {
+        $pathArr = explode('/', $path);
+        $pathStr = "";
+        foreach($pathArr as $p) {
+            $pathStr .= preg_replace('/[^a-z0-9]/i', '_', $p).'/';
+        }
+        return $pathStr;
+    }
 
     /**
      * Download the selected binaries
@@ -103,11 +118,12 @@ class CollectionBinariesObject extends \Drupal\arche_gui_api\Object\MainObject
     {
         $client = new \GuzzleHttp\Client(['auth' => [$username, $password], 'verify' => false]);
         ini_set('max_execution_time', 1800);
-        
         foreach ($binaries as $b) {
             if (isset($b['path']) && isset($b['filename'])) {
                 $url = $this->repo->getBaseUrl() . "/" . $b['uri'];
-                $path = $b['path'];
+                
+                $path = $this->createPathString($b['path']);
+                
                 $filename = $this->createFileNameForCollectionDownload($b['filename']);
                 $this->createCollectionDir($path);
 
