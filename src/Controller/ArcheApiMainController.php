@@ -13,6 +13,21 @@ use Drupal\Component\Utility\Xss;
  */
 class ArcheApiMainController extends \Drupal\Core\Controller\ControllerBase
 {
+    
+    private function setProps(): array {
+        $offset = (empty($_POST['start'])) ? 0 : $_POST['start'];
+        $limit = (empty($_POST['length'])) ? 10 : $_POST['length'];
+        $draw = (empty($_POST['draw'])) ? 0 : $_POST['draw'];
+        $search = (empty($_POST['search']['value'])) ? "" : $_POST['search']['value'];
+        //datatable start columns from 0 but in db we have to start it from 1
+        $orderby = (empty($_POST['order'][0]['column'])) ? 1 : (int)$_POST['order'][0]['column'] + 1;
+        $order = (empty($_POST['order'][0]['dir'])) ? 'asc' : $_POST['order'][0]['dir'];
+        return [
+            'offset' => $offset, 'limit' => $limit, 'draw' => $draw, 'search' => $search,
+            'orderby' => $orderby, 'order' => $order
+        ];
+    }
+    
     /**
      * GUI GND persons file generator API
      * @return JsonResponse
@@ -182,17 +197,21 @@ class ArcheApiMainController extends \Drupal\Core\Controller\ControllerBase
     public function api_get_hasActor(string $repoid, string $lang = "en"): Response
     {
         $controller = new \Drupal\arche_gui_api\Controller\Child\ChildController();
-        $offset = (empty($_POST['start'])) ? 0 : $_POST['start'];
-        $limit = (empty($_POST['length'])) ? 10 : $_POST['length'];
-        $draw = (empty($_POST['draw'])) ? 0 : $_POST['draw'];
-        $search = (empty($_POST['search']['value'])) ? "" : $_POST['search']['value'];
-        //datatable start columns from 0 but in db we have to start it from 1
-        $orderby = (empty($_POST['order'][0]['column'])) ? 1 : (int)$_POST['order'][0]['column'] + 1;
-        $order = (empty($_POST['order'][0]['dir'])) ? 'asc' : $_POST['order'][0]['dir'];
-        $searchProps = [
-            'offset' => $offset, 'limit' => $limit, 'draw' => $draw, 'search' => $search,
-            'orderby' => $orderby, 'order' => $order
-        ];
-        return $controller->execute($repoid, $searchProps, $lang);
+        return $controller->execute($repoid, $this->setProps(), $lang);
     }
+    
+    public function api_searchBlock(string $lang): Response
+    {
+        $controller = new \Drupal\arche_gui_api\Controller\SearchBlock\MainController();
+        return $controller->getData($lang);
+    }
+    
+    public function api_getHPTop(string $lang): Response
+    {
+        $controller = new \Drupal\arche_gui_api\Controller\Metadata\MetadataController();
+        return $controller->getTopThreeTopCollection($lang, $this->setProps());
+    }
+    
+    
+    
 }

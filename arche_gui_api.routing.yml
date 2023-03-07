@@ -123,4 +123,22 @@ arche_api_get_hasActor:
     defaults:
         _controller: '\Drupal\arche_gui_api\Controller\ArcheApiMainController::api_get_hasActor'
     requirements:
-        _access: 'TRUE'           
+        _access: 'TRUE'          
+        
+###Search Block
+arche_api_get_searchBlock:    
+    path: '/api/getSearchBlock/{lang}'
+    defaults:
+        _controller: '\Drupal\arche_gui_api\Controller\ArcheApiMainController::api_searchBlock'
+    requirements:
+        _access: 'TRUE'          
+        
+arche_api_get_hp_top_resources:    
+    path: '/api/getHPTop/{lang}'
+    defaults:
+        _controller: '\Drupal\arche_gui_api\Controller\ArcheApiMainController::api_getHPTop'
+    requirements:
+        _access: 'TRUE'              
+        
+        
+        

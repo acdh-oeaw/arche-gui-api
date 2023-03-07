@@ -97,11 +97,11 @@ class CollectionBinariesObject extends \Drupal\arche_gui_api\Object\MainObject
      * @param string $path
      * @return string
      */
-    private function createPathString(string $path): string
+    private function createPathString(string $path): string 
     {
         $pathArr = explode('/', $path);
         $pathStr = "";
-        foreach ($pathArr as $p) {
+        foreach($pathArr as $p) {
             $pathStr .= preg_replace('/[^a-z0-9]/i', '_', $p).'/';
         }
         return $pathStr;
