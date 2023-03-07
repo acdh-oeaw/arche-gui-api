@@ -38,7 +38,6 @@ class MetadataModel extends \Drupal\arche_gui_api\Model\ArcheApiModel
             //$this->sqlResult = $query->fetchAll();
            
             $result = $query->fetchAll(\PDO::FETCH_OBJ);
-           
         } catch (\Exception $ex) {
             \Drupal::logger('acdh_repo_gui')->notice($ex->getMessage());
             $result = array();

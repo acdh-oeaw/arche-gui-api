@@ -13,8 +13,8 @@ use Drupal\Component\Utility\Xss;
  */
 class ArcheApiMainController extends \Drupal\Core\Controller\ControllerBase
 {
-    
-    private function setProps(): array {
+    private function setProps(): array
+    {
         $offset = (empty($_POST['start'])) ? 0 : $_POST['start'];
         $limit = (empty($_POST['length'])) ? 10 : $_POST['length'];
         $draw = (empty($_POST['draw'])) ? 0 : $_POST['draw'];
@@ -211,7 +211,4 @@ class ArcheApiMainController extends \Drupal\Core\Controller\ControllerBase
         $controller = new \Drupal\arche_gui_api\Controller\Metadata\MetadataController();
         return $controller->getTopThreeTopCollection($lang, $this->setProps());
     }
-    
-    
-    
 }

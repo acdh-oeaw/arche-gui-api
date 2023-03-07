@@ -7,13 +7,15 @@ namespace Drupal\arche_gui_api\Model\SearchBlock;
  *
  * @author nczirjak
  */
-class EntityTestModel extends \Drupal\arche_gui_api\Model\ArcheApiModel {
-
-    public function __construct() {
+class EntityTestModel extends \Drupal\arche_gui_api\Model\ArcheApiModel
+{
+    public function __construct()
+    {
         parent::__construct();
     }
     
-    private function getAllRdfType(): array {
+    private function getAllRdfType(): array
+    {
         $schema = $this->repo->getSchema();
         $searchTerm = new \acdhOeaw\arche\lib\SearchTerm($schema->namespaces->rdfs . 'type');
         $searchCfg = new \acdhOeaw\arche\lib\SearchConfig();
@@ -27,14 +29,11 @@ class EntityTestModel extends \Drupal\arche_gui_api\Model\ArcheApiModel {
         $result = [];
 
         while ($triple = $pdoStmt->fetchObject()) {
-            
             if ($triple->property === $schema->namespaces->rdfs . 'type') {
-                if(!in_array($triple->value, $result) && strpos($triple->value, 'https://vocabs.acdh.oeaw.ac.at/schema#') !== false) {
+                if (!in_array($triple->value, $result) && strpos($triple->value, 'https://vocabs.acdh.oeaw.ac.at/schema#') !== false) {
                     $result[] = $triple->value;
-                    
                 }
             }
-           
         }
       
         echo "<pre>";
@@ -45,8 +44,8 @@ class EntityTestModel extends \Drupal\arche_gui_api\Model\ArcheApiModel {
         return [];
     }
 
-    public function getData(): array {
-
+    public function getData(): array
+    {
         $this->getAllRdfType();
         
         $schema = $this->repo->getSchema();
@@ -88,8 +87,8 @@ class EntityTestModel extends \Drupal\arche_gui_api\Model\ArcheApiModel {
             }
             
             echo "<pre>";
-        var_dump($triple);
-        echo "</pre>";
+            var_dump($triple);
+            echo "</pre>";
             
             # map prop name according to the context
             $prop = $context[$triple->property];
@@ -120,23 +119,23 @@ class EntityTestModel extends \Drupal\arche_gui_api\Model\ArcheApiModel {
             }
         }
         /*
-         * 
+         *
         $nodes = array_combine(
   array_map(fn($x) => $x->order, $nodes),
   $nodes
 )
 ksort($nodes);
-        
+
 */
         # find and display nodes matching the search
         //$matches = array_filter($nodes, fn($x) => isset($x->__match__));
       
-/*
-        echo "<pre>";
-        var_dump($nodes);
-        var_dump($searchCfg->count);
-        echo "</pre>";
-*/
+        /*
+                echo "<pre>";
+                var_dump($nodes);
+                var_dump($searchCfg->count);
+                echo "</pre>";
+        */
         die();
 
         $requestUrl = $this->repo->getBaseUrl() . "search?"
@@ -159,9 +158,10 @@ ksort($nodes);
         return array();
     }
 
-    private function getQueryPropVal(): string {
+    private function getQueryPropVal(): string
+    {
         return http_build_query(
-                array(
+            array(
                     'property' => array(
                         $this->repo->getSchema()->__get('namespaces')->rdfs . "type",
                         $this->repo->getSchema()->__get('namespaces')->ontology . "hasIdentifier"
@@ -174,5 +174,4 @@ ksort($nodes);
                 )
         );
     }
-
 }

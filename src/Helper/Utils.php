@@ -21,10 +21,11 @@ class Utils
         ($cfg && is_string($cfg)) ?  $this->config = $cfg : $this->config = \Drupal::service('extension.list.module')->getPath('acdh_repo_gui').'/config/config.yaml';
         $this->repo = \acdhOeaw\arche\lib\Repo::factory($this->config);
         $this->properties = $this->rdfProps();
-         (isset($_SESSION['language'])) ? $this->siteLang = strtolower($_SESSION['language'])  : $this->siteLang = "en";
+        (isset($_SESSION['language'])) ? $this->siteLang = strtolower($_SESSION['language'])  : $this->siteLang = "en";
     }
     
-    private function rdfProps(): array  {
+    private function rdfProps(): array
+    {
         return [
             'version' => array('shortcut' => 'acdh:hasVersion', 'property' => $this->repo->getSchema()->__get('namespaces')->ontology. "hasVersion"),
             'acdhtype' => array('shortcut' => 'rdf:type', 'property' => $this->repo->getSchema()->__get('namespaces')->rdfs . "type"),
@@ -37,20 +38,19 @@ class Utils
         ];
     }
     
-    public function convertSqlToRdfProps(array $data, string $lang): array 
+    public function convertSqlToRdfProps(array $data, string $lang): array
     {
         $obj = [];
-        foreach($data as $k => $v) {
-            
+        foreach ($data as $k => $v) {
             $this->formatResultToGui($v);
-            if(array_key_exists($k, $this->properties)) {
+            if (array_key_exists($k, $this->properties)) {
                 $obj[$this->properties[$k]['shortcut']][$lang][] = $v;
             }
         }
         return $obj;
     }
     
-     private function fetchProperties(string $k, object $v, string $lang): void
+    private function fetchProperties(string $k, object $v, string $lang): void
     {
         foreach ($this->properties as $pk => $pv) {
             if (isset($v->$pk)) {
@@ -72,7 +72,7 @@ class Utils
         }
     }
     
-     private function setLanguage(object &$v): string
+    private function setLanguage(object &$v): string
     {
         if (isset($v->language)) {
             if (!empty($v->language)) {
@@ -94,7 +94,7 @@ class Utils
         );
     }
     
-     private function createObj(int $id, string $property, string $title, string $value): object
+    private function createObj(int $id, string $property, string $title, string $value): object
     {
         $obj = new \stdClass();
         $obj->id = $id;
@@ -106,7 +106,6 @@ class Utils
     
     public function formatResultToGui(array $data)
     {
-       
         if (count((array) $data) > 0) {
             foreach ($data as $k => $v) {
                 $lang = $this->setLanguage($v);

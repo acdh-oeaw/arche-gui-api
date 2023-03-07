@@ -21,7 +21,7 @@ class ArcheApiModel
         (isset($_SESSION['language'])) ? $this->siteLang = strtolower($_SESSION['language']) : $this->siteLang = "en";
         try {
             $this->repo = \acdhOeaw\arche\lib\Repo::factory($this->config);
-             $this->repoliDB = \acdhOeaw\arche\lib\RepoDb::factory($this->config);
+            $this->repoliDB = \acdhOeaw\arche\lib\RepoDb::factory($this->config);
         } catch (\Exception $ex) {
             \Drupal::messenger()->addWarning($this->t('Error during the BaseController initialization!').' '.$ex->getMessage());
             return array();

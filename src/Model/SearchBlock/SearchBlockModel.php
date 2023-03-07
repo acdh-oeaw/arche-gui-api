@@ -7,16 +7,19 @@ namespace Drupal\arche_gui_api\Model\SearchBlock;
  *
  * @author nczirjak
  */
-class SearchBlockModel extends \Drupal\arche_gui_api\Model\ArcheApiModel {
-    public function __construct() {
+class SearchBlockModel extends \Drupal\arche_gui_api\Model\ArcheApiModel
+{
+    public function __construct()
+    {
         parent::__construct();
     }
     
-    public function getData() {
+    public function getData()
+    {
         $entity = $this->getEntityData();
         $years = $this->getYearsData();
         $category = $this->getCategoryData();
-       return ['entity' => $entity, 'year' => $years, 'category' => $category ];
+        return ['entity' => $entity, 'year' => $years, 'category' => $category ];
     }
     
     
@@ -113,7 +116,4 @@ class SearchBlockModel extends \Drupal\arche_gui_api\Model\ArcheApiModel {
         $this->changeBackDBConnection();
         return $result;
     }
-    
-    
-    
 }

@@ -21,7 +21,7 @@ class SearchBlockObject extends \Drupal\arche_gui_api\Object\MainObject
         $this->createModel();
         $this->processData($this->model->getData($lang));
         
-        if(count($this->data['category']) < 0 && count($this->data['year']) < 0 && count($this->data['entity']) < 0 ) {
+        if (count($this->data['category']) < 0 && count($this->data['year']) < 0 && count($this->data['entity']) < 0) {
             return false;
         }
         
@@ -29,38 +29,42 @@ class SearchBlockObject extends \Drupal\arche_gui_api\Object\MainObject
     }
 
     private function processData(array $data): void
-    {   
+    {
         $this->data = $data;
         $this->extendValuesForForm();
     }
     
-    public function getCategories(): array {
+    public function getCategories(): array
+    {
         return $this->data['category'];
     }
     
-     public function getYears(): array {
+    public function getYears(): array
+    {
         return $this->data['year'];
     }
     
-     public function getEntities(): array {
+    public function getEntities(): array
+    {
         return $this->data['entity'];
     }
 
     /**
-     * 
+     *
      * // name = searchbox_types[acdh:Collection] value = acdh:Collection
      *   // name = searchbox_category[3d-data:17683] value = 3d-data:17683
      *    // name = datebox_years[2022] value = 2022
      */
-    private function extendValuesForForm(): void {
+    private function extendValuesForForm(): void
+    {
         $this->extendEntity();
-       $this->extendCategory();
-       $this->extendYears();
-       
+        $this->extendCategory();
+        $this->extendYears();
     }
     
-    private function extendYears() {
-        foreach($this->data['year'] as $k => $v) {
+    private function extendYears()
+    {
+        foreach ($this->data['year'] as $k => $v) {
             $v = (array)$v;
             $v['inputName'] = 'datebox_years['.$v["year"].']';
             $v['inputValue'] = $v["year"];
@@ -69,8 +73,9 @@ class SearchBlockObject extends \Drupal\arche_gui_api\Object\MainObject
         }
     }
     
-    private function extendCategory(): void {
-        foreach($this->data['category'] as $k => $v) {
+    private function extendCategory(): void
+    {
+        foreach ($this->data['category'] as $k => $v) {
             $v = (array)$v;
             $name = $this->formatCategoryTitleForValue($v["value"]);
             $v['inputName'] = 'searchbox_category['.$name.':'.$v["count"].']';
@@ -80,8 +85,9 @@ class SearchBlockObject extends \Drupal\arche_gui_api\Object\MainObject
         }
     }
     
-    private function extendEntity(): void {
-        foreach($this->data['entity'] as $k => $v) {
+    private function extendEntity(): void
+    {
+        foreach ($this->data['entity'] as $k => $v) {
             $v = (array)$v;
             $name = str_replace('https://vocabs.acdh.oeaw.ac.at/schema#', 'acdh:', $v["value"]);
             $v['inputName'] = 'searchbox_types['.$name.']';
@@ -89,7 +95,6 @@ class SearchBlockObject extends \Drupal\arche_gui_api\Object\MainObject
             $v['inputLabel'] = str_replace('acdh:', '', $name.' ('.$v["count"].')');
             $this->data['entity'][$k] = $v;
         }
-       
     }
 
     /**
