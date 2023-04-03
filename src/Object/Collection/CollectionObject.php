@@ -49,12 +49,12 @@ class CollectionObject extends \Drupal\arche_gui_api\Object\MainObject
     private function createBaseProperties(&$v): void
     {
         $v['uri'] = $v['id'];
-        $v['uri_dl'] = $this->repo->getBaseUrl() . $v['id'];
+        $v['uri_dl'] = $this->repoDb->getBaseUrl() . $v['id'];
         $v['text'] = $v['title'];
         $v['resShortId'] = $v['id'];
         $v['accessRestriction'] = $v['accesres'];
-        $v['encodedUri'] = $this->repo->getBaseUrl() . $v['id'];
-        $v['a_attr'] = array("href" => str_replace('api/', 'browser/oeaw_detail/', $this->repo->getBaseUrl()) . $v['id']);
+        $v['encodedUri'] = $this->repoDb->getBaseUrl() . $v['id'];
+        $v['a_attr'] = array("href" => str_replace('api/', 'browser/oeaw_detail/', $this->repoDb->getBaseUrl()) . $v['id']);
     }
 
     /**
@@ -76,7 +76,7 @@ class CollectionObject extends \Drupal\arche_gui_api\Object\MainObject
      */
     private function isDirOrFile(&$v): void
     {
-        $allowedFormats = [$this->repo->getSchema()->classes->resource, $this->repo->getSchema()->classes->metadata];
+        $allowedFormats = [$this->repoDb->getSchema()->classes->resource, $this->repoDb->getSchema()->classes->metadata];
         
         if (!empty($v['rdftype']) && in_array($v['rdftype'], $allowedFormats)) {
             $v['dir'] = false;

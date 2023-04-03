@@ -18,7 +18,7 @@ class TurtleDissObject extends \Drupal\arche_gui_api\Object\MainObject
     {
         $client = new \GuzzleHttp\Client();
         try {
-            $request = $client->request('GET', $this->repo->getBaseUrl() . $repoid . '/metadata', ['Accept' => ['application/n-triples']]);
+            $request = $client->request('GET', $this->repoDb->getBaseUrl() . $repoid . '/metadata', ['Accept' => ['application/n-triples']]);
             if ($request->getStatusCode() == 200) {
                 return $this->processBody($request->getBody()->getContents());
             }

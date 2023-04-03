@@ -22,7 +22,7 @@ class MetadataModel extends \Drupal\arche_gui_api\Model\ArcheApiModel
         try {
             $this->setSqlTimeout('60000');
             
-            $query = $this->repodb->query(
+            $query = $this->drupalDb->query(
                 "SELECT 
                     id, title, avdate, string_agg(DISTINCT description, '.') as description, acdhid
                 from gui.root_views_func( :lang ) 
@@ -34,8 +34,6 @@ class MetadataModel extends \Drupal\arche_gui_api\Model\ArcheApiModel
                         ':lang' => $lang
                     )
             );
-
-            //$this->sqlResult = $query->fetchAll();
            
             $result = $query->fetchAll(\PDO::FETCH_OBJ);
         } catch (\Exception $ex) {
@@ -46,7 +44,7 @@ class MetadataModel extends \Drupal\arche_gui_api\Model\ArcheApiModel
             $result = array();
         }
 
-        $this->changeBackDBConnection();
+        $this->closeDBConnection();
         return $result;
     }
 }

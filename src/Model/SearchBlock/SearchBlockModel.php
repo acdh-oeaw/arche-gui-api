@@ -34,7 +34,7 @@ class SearchBlockModel extends \Drupal\arche_gui_api\Model\ArcheApiModel
         //run the actual query
         try {
             $this->setSqlTimeout();
-            $query = $this->repodb->query(
+            $query = $this->drupalDb->query(
                 "
                 select count(value), value
                 from metadata 
@@ -50,7 +50,7 @@ class SearchBlockModel extends \Drupal\arche_gui_api\Model\ArcheApiModel
             \Drupal::logger('acdh_repo_gui')->notice($ex->getMessage());
         }
 
-        $this->changeBackDBConnection();
+        $this->closeDBConnection();
         return $result;
     }
 
@@ -65,7 +65,7 @@ class SearchBlockModel extends \Drupal\arche_gui_api\Model\ArcheApiModel
         //run the actual query
         try {
             $this->setSqlTimeout();
-            $query = $this->repodb->query(
+            $query = $this->drupalDb->query(
                 "
                 select
                     count(EXTRACT(YEAR FROM to_date(value,'YYYY'))), 
@@ -82,7 +82,7 @@ class SearchBlockModel extends \Drupal\arche_gui_api\Model\ArcheApiModel
             \Drupal::logger('acdh_repo_gui')->notice($ex->getMessage());
         }
 
-        $this->changeBackDBConnection();
+        $this->closeDBConnection();
         return $result;
     }
     
@@ -91,7 +91,7 @@ class SearchBlockModel extends \Drupal\arche_gui_api\Model\ArcheApiModel
         $result = array();
         try {
             $this->setSqlTimeout();
-            $query = $this->repodb->query(
+            $query = $this->drupalDb->query(
                 "select count(mv.value),  mv2.value, mv2.id
                 from metadata_view as mv
                 left join metadata_view as mv2 on mv2.id = CAST(mv.value as int)
@@ -101,8 +101,8 @@ class SearchBlockModel extends \Drupal\arche_gui_api\Model\ArcheApiModel
                 group by mv2.value, mv2.id
                 order by mv2.value asc",
                 array(
-                    ':category' => $this->repo->getSchema()->__get('namespaces')->ontology.'hasCategory',
-                    ':title' => $this->repo->getSchema()->__get('label'),
+                    ':category' => $this->repoDb->getSchema()->__get('namespaces')->ontology.'hasCategory',
+                    ':title' => $this->repoDb->getSchema()->__get('label'),
                     ':lang' => $this->siteLang
                     )
             );
@@ -113,7 +113,7 @@ class SearchBlockModel extends \Drupal\arche_gui_api\Model\ArcheApiModel
             \Drupal::logger('acdh_repo_gui')->notice($ex->getMessage());
         }
 
-        $this->changeBackDBConnection();
+        $this->closeDBConnection();
         return $result;
     }
 }

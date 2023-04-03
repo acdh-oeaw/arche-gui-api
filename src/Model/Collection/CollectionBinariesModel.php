@@ -21,7 +21,7 @@ class CollectionBinariesModel extends \Drupal\arche_gui_api\Model\ArcheApiModel
         //run the actual query
         try {
             $this->setSqlTimeout('60000');
-            $query = $this->repodb->query(
+            $query = $this->drupalDb->query(
                 "select * from  gui.collection_v2_views_func(:id, :lang) order by title;",
                 array(
                         'id' => $repoid,
@@ -37,7 +37,7 @@ class CollectionBinariesModel extends \Drupal\arche_gui_api\Model\ArcheApiModel
             $result = array();
         }
 
-        $this->changeBackDBConnection();
+        $this->closeDBConnection();
         return $result;
     }
 }

@@ -48,7 +48,7 @@ class MetadataController extends \Drupal\arche_gui_api\Controller\ArcheApiBaseCo
         $guiData = $this->utils->formatResultToGui($data);
       
         foreach ($guiData as $v) {
-            $objects[] =  new \Drupal\acdh_repo_gui\Object\ResourceObject($v, $this->repo);
+            $objects[] =  new \Drupal\acdh_repo_gui\Object\ResourceObject($v, $this->repoDb);
         }
         
         
@@ -77,7 +77,7 @@ class MetadataController extends \Drupal\arche_gui_api\Controller\ArcheApiBaseCo
         $guiData = $this->utils->formatResultToGui($data);
       
         foreach ($guiData as $v) {
-            $objects[] =  json_encode((array)new \Drupal\acdh_repo_gui\Object\ResourceObject($v, $this->repo));
+            $objects[] =  json_encode((array)new \Drupal\acdh_repo_gui\Object\ResourceObject($v, $this->repoDb));
         }
         
         

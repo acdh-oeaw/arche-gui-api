@@ -20,7 +20,7 @@ class InverseDataModel extends \Drupal\arche_gui_api\Model\ArcheApiModel
         //run the actual query
         try {
             $this->setSqlTimeout('10000');
-            $query = $this->repodb->query(
+            $query = $this->drupalDb->query(
                 "SELECT * from gui.inverse_data_func(:repoid);",
                 array(
                     ':repoid' => $repoid
@@ -34,7 +34,7 @@ class InverseDataModel extends \Drupal\arche_gui_api\Model\ArcheApiModel
             \Drupal::logger('arche_gui_api')->notice($ex->getMessage());
             $result = array();
         }
-        $this->changeBackDBConnection();
+        $this->closeDBConnection();
         return $result;
     }
 }

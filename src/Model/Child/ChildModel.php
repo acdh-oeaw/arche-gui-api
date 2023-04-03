@@ -28,7 +28,7 @@ class ChildModel extends \Drupal\arche_gui_api\Model\ArcheApiModel
        
         try {
             $this->setSqlTimeout('10000');
-            $query = $this->repodb->query(
+            $query = $this->drupalDb->query(
                 "select * from gui.get_table_by_property_func(:repoid, :lang, $this->sqlTypes)"
                     . " where LOWER(title) like  LOWER('%' || :search || '%') "
                     . " order by $orderby $order "
@@ -51,7 +51,7 @@ class ChildModel extends \Drupal\arche_gui_api\Model\ArcheApiModel
             \Drupal::logger('arche_gui_api')->notice($ex->getMessage());
             $result = array();
         }
-        $this->changeBackDBConnection();
+        $this->closeDBConnection();
         return $result;
     }
     

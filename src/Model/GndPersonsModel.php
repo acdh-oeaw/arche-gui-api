@@ -16,7 +16,7 @@ class GndPersonsModel extends \Drupal\arche_gui_api\Model\ArcheApiModel
     
     public function getData(): array
     {
-        $requestUrl = $this->repo->getBaseUrl() . "search?"
+        $requestUrl = $this->repoDb->getBaseUrl() . "search?"
                 . $this->getQueryPropVal() . ""
                 . "&lang[]=" . $this->siteLang;
          
@@ -36,11 +36,11 @@ class GndPersonsModel extends \Drupal\arche_gui_api\Model\ArcheApiModel
         return http_build_query(
             array(
                 'property' => array(
-                    $this->repo->getSchema()->__get('namespaces')->rdfs . "type",
-                    $this->repo->getSchema()->__get('namespaces')->ontology . "hasIdentifier"
+                    $this->repoDb->getSchema()->__get('namespaces')->rdfs . "type",
+                    $this->repoDb->getSchema()->__get('namespaces')->ontology . "hasIdentifier"
                 ),
                 'value' => array(
-                    $this->repo->getSchema()->__get('namespaces')->ontology.'Person',
+                    $this->repoDb->getSchema()->__get('namespaces')->ontology.'Person',
                     'gnd'
                 ),
                 'operator' => array('=', '~')

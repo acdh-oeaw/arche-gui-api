@@ -43,7 +43,7 @@ class VersionsObject extends \Drupal\arche_gui_api\Object\MainObject
         $first = array(
             "id" => $data[0]->id,
             "uri" => $data[0]->id,
-            "uri_dl" => $this->repo->getBaseUrl() . $data[0]->id,
+            "uri_dl" => $this->repoDb->getBaseUrl() . $data[0]->id,
             "filename" => $this->getDateFromDateTime($data[0]->avdate).' - '.$data[0]->version,
             "resShortId" => $data[0]->id,
             "title" => $this->getDateFromDateTime($data[0]->avdate).' - '.$data[0]->version,
@@ -52,7 +52,7 @@ class VersionsObject extends \Drupal\arche_gui_api\Object\MainObject
             "userAllowedToDL" => true,
             "dir" => false,
             "accessRestriction" => 'public',
-            "encodedUri" => $this->repo->getBaseUrl() . $data[0]->id
+            "encodedUri" => $this->repoDb->getBaseUrl() . $data[0]->id
         );
 
         unset($data[0]);

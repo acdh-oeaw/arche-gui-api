@@ -29,7 +29,7 @@ class InverseDataObject extends \Drupal\arche_gui_api\Object\MainObject
             foreach ($data as $id => $obj) {
                 foreach ($obj as $o) {
                     $arr = array(
-                        str_replace($this->repo->getSchema()->namespaces->ontology, 'acdh:', $o->property),
+                        str_replace($this->repoDb->getSchema()->namespaces->ontology, 'acdh:', $o->property),
                         "<a id='archeHref' href='/browser/oeaw_detail/$id'>$o->title</a>"
                     );
                     $result[] = $arr;

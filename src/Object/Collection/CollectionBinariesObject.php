@@ -46,14 +46,14 @@ class CollectionBinariesObject extends \Drupal\arche_gui_api\Object\MainObject
         $this->collectionDownloadFiles($binaries, $username, $password);
         //3. add the turtle file into the collection
         if ($this->collectionGetTurtle($repoid) === false) {
-            \Drupal::logger('acdh_repo_gui')->notice('collection turtle file generating error' . $this->repoUrl);
+            \Drupal::logger('acdh_repo_gui')->notice('collection turtle file generating error' . $this->repoDbUrl);
         }
         //4. tar the files
         //5. remove the downloaded files and leave just the tar file.
         if ($this->collectionTarFiles() === false) {
             return false;
         }
-        $wwwurl = str_replace('/api/', '', $this->repo->getBaseUrl());
+        $wwwurl = str_replace('/api/', '', $this->repoDb->getBaseUrl());
         return $wwwurl . '/browser/sites/default/files/collections/' . $this->collectionDate . '/collection.tar';
     }
     
@@ -120,7 +120,7 @@ class CollectionBinariesObject extends \Drupal\arche_gui_api\Object\MainObject
         ini_set('max_execution_time', 1800);
         foreach ($binaries as $b) {
             if (isset($b['path']) && isset($b['filename'])) {
-                $url = $this->repo->getBaseUrl() . "/" . $b['uri'];
+                $url = $this->repoDb->getBaseUrl() . "/" . $b['uri'];
                 
                 $path = $this->createPathString($b['path']);
                 

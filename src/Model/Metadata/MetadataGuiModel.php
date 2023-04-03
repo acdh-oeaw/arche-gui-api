@@ -17,7 +17,7 @@ class MetadataGuiModel extends \Drupal\arche_gui_api\Model\ArcheApiModel
     public function getOntology(): array
     {
         $dbconnStr = yaml_parse_file(\Drupal::service('extension.list.module')->getPath('acdh_repo_gui').'/config/config.yaml')['dbConnStr']['guest'];
-        $schema = $this->repo->getSchema();
+        $schema = $this->repoDb->getSchema();
         
         $conn = new \PDO($dbconnStr);
         $cfg = (object) [

@@ -20,7 +20,7 @@ class RPRModel extends \Drupal\arche_gui_api\Model\ArcheApiModel
         //run the actual query
         try {
             $this->setSqlTimeout('10000');
-            $query = $this->repodb->query(
+            $query = $this->drupalDb->query(
                 "select * from gui.related_publications_resources_views_func(:repoid, :lang)",
                 array(
                     ':repoid' => $repoid,
@@ -36,7 +36,7 @@ class RPRModel extends \Drupal\arche_gui_api\Model\ArcheApiModel
             \Drupal::logger('arche_gui_api')->notice($ex->getMessage());
             $result = array();
         }
-        $this->changeBackDBConnection();
+        $this->closeDBConnection();
         return $result;
     }
 }

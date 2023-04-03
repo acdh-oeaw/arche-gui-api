@@ -20,7 +20,7 @@ class OntolgyJsModel extends \Drupal\arche_gui_api\Model\ArcheApiModel
         //run the actual query
         try {
             $this->setSqlTimeout('10000');
-            $query = $this->repodb->query(
+            $query = $this->drupalDb->query(
                 "SELECT * from gui.count_binaries_collection_func();"
             );
             $result = $query->fetchAll(\PDO::FETCH_CLASS);
@@ -31,7 +31,7 @@ class OntolgyJsModel extends \Drupal\arche_gui_api\Model\ArcheApiModel
             \Drupal::logger('arche_gui_api')->notice($ex->getMessage());
             $result = array();
         }
-        $this->changeBackDBConnection();
+        $this->closeDBConnection();
         return $result;
     }
 }

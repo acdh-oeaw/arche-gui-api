@@ -41,9 +41,9 @@ class GndPersonsObject extends \Drupal\arche_gui_api\Object\MainObject
     {
         if (count((array) $data) > 0) {
             foreach ($data as $val) {
-                if (count($val[$this->repo->getSchema()->id] ?? []) > 0) {
-                    //$this->text .= $this->getGNDIdentifier($val[$this->repo->getSchema()->id]) . "|" . $this->host . $this->getRepoId($val[$this->repo->getSchema()->id]) . " \n";
-                    $this->text .= $this->getGNDIdentifier($val[$this->repo->getSchema()->id]) . "|" . $this->getResourceUrl($val[$this->repo->getSchema()->id]) . " \n";
+                if (count($val[$this->repoDb->getSchema()->id] ?? []) > 0) {
+                    //$this->text .= $this->getGNDIdentifier($val[$this->repoDb->getSchema()->id]) . "|" . $this->host . $this->getRepoId($val[$this->repoDb->getSchema()->id]) . " \n";
+                    $this->text .= $this->getGNDIdentifier($val[$this->repoDb->getSchema()->id]) . "|" . $this->getResourceUrl($val[$this->repoDb->getSchema()->id]) . " \n";
                 }
             }
             return $this->createFileContent();
@@ -88,8 +88,8 @@ class GndPersonsObject extends \Drupal\arche_gui_api\Object\MainObject
     private function getRepoId(array $ids): int
     {
         foreach ($ids as $id) {
-            if (str_starts_with($id['value'], $this->repo->getBaseUrl())) {
-                return (int)str_replace($this->repo->getBaseUrl(), "", $id['value']);
+            if (str_starts_with($id['value'], $this->repoDb->getBaseUrl())) {
+                return (int)str_replace($this->repoDb->getBaseUrl(), "", $id['value']);
             }
         }
         return 0;
@@ -115,9 +115,9 @@ class GndPersonsObject extends \Drupal\arche_gui_api\Object\MainObject
     {
         $result = [];
         foreach ($ids as $id) {
-            if (str_starts_with($id['value'], $this->repo->getSchema()->namespaces->id)) {
+            if (str_starts_with($id['value'], $this->repoDb->getSchema()->namespaces->id)) {
                 $result['acdhId'] = $id['value'];
-            } elseif (str_starts_with($id['value'], $this->repo->getSchema()->drupal->epicResolver)) {
+            } elseif (str_starts_with($id['value'], $this->repoDb->getSchema()->drupal->epicResolver)) {
                 $result['pid'] = $id['value'];
             } else {
                 $result['acdhGuiId'] = $this->host . $this->getRepoId($ids);

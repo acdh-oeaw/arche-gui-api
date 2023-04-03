@@ -11,7 +11,7 @@ class CollectionScriptObject extends \Drupal\arche_gui_api\Object\MainObject
 {
     public function init(string $repoUrl): string
     {
-        return $this->processData($this->repo->getBaseUrl() .$repoUrl);
+        return $this->processData($this->repoDb->getBaseUrl() .$repoUrl);
     }
 
     private function processData(string $repoUrl): string
@@ -27,12 +27,12 @@ class CollectionScriptObject extends \Drupal\arche_gui_api\Object\MainObject
 
     private function changeText(string $text, string $repoUrl): string
     {
-        $schema = $this->repo->getSchema();
+        $schema = $this->repoDb->getSchema();
         $replace = [
             "{ingest.location}" => $schema->ingest->location,
             "{fileName}" => $schema->fileName,
             "{parent}" => $schema->parent,
-            "{metadataReadMode}" => $this->repo->getHeaderName('metadataReadMode'),
+            "{metadataReadMode}" => $this->repoDb->getHeaderName('metadataReadMode'),
             "{searchMatch}" => $schema->searchMatch,
             "{resourceUrl}" => $repoUrl,
         ];

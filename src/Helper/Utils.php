@@ -10,7 +10,7 @@ namespace Drupal\arche_gui_api\Helper;
 class Utils
 {
     private $config;
-    private $repo;
+    private $repoDb;
     private $rdfProps;
     private $properties;
     private $data;
@@ -19,7 +19,7 @@ class Utils
     public function __construct($cfg = null)
     {
         ($cfg && is_string($cfg)) ?  $this->config = $cfg : $this->config = \Drupal::service('extension.list.module')->getPath('acdh_repo_gui').'/config/config.yaml';
-        $this->repo = \acdhOeaw\arche\lib\Repo::factory($this->config);
+        $this->repoDb = \acdhOeaw\arche\lib\RepoDb::factory($this->config);
         $this->properties = $this->rdfProps();
         (isset($_SESSION['language'])) ? $this->siteLang = strtolower($_SESSION['language'])  : $this->siteLang = "en";
     }
@@ -27,14 +27,14 @@ class Utils
     private function rdfProps(): array
     {
         return [
-            'version' => array('shortcut' => 'acdh:hasVersion', 'property' => $this->repo->getSchema()->__get('namespaces')->ontology. "hasVersion"),
-            'acdhtype' => array('shortcut' => 'rdf:type', 'property' => $this->repo->getSchema()->__get('namespaces')->rdfs . "type"),
-            'accesres' => array('shortcut' => 'acdh:hasAccessRestriction', 'property' => $this->repo->getSchema()->__get('namespaces')->ontology."hasAccessRestriction"),
-            'description' => array('shortcut' => 'acdh:hasDescription', 'property' => $this->repo->getSchema()->__get('namespaces')->ontology."hasDescription"),
-            'avdate' => array('shortcut' => 'acdh:hasAvailableDate', 'property' => $this->repo->getSchema()->creationDate),
-            'title' => array('shortcut' => 'acdh:hasTitle', 'property' => $this->repo->getSchema()->label),
-            'id' => array('shortcut' => 'acdh:hasIdentifier', 'property' => $this->repo->getSchema()->__get('id')),
-            'acdhid' => array('shortcut' => 'acdh:hasIdentifier', 'property' => $this->repo->getSchema()->__get('id'))
+            'version' => array('shortcut' => 'acdh:hasVersion', 'property' => $this->repoDb->getSchema()->__get('namespaces')->ontology. "hasVersion"),
+            'acdhtype' => array('shortcut' => 'rdf:type', 'property' => $this->repoDb->getSchema()->__get('namespaces')->rdfs . "type"),
+            'accesres' => array('shortcut' => 'acdh:hasAccessRestriction', 'property' => $this->repoDb->getSchema()->__get('namespaces')->ontology."hasAccessRestriction"),
+            'description' => array('shortcut' => 'acdh:hasDescription', 'property' => $this->repoDb->getSchema()->__get('namespaces')->ontology."hasDescription"),
+            'avdate' => array('shortcut' => 'acdh:hasAvailableDate', 'property' => $this->repoDb->getSchema()->creationDate),
+            'title' => array('shortcut' => 'acdh:hasTitle', 'property' => $this->repoDb->getSchema()->label),
+            'id' => array('shortcut' => 'acdh:hasIdentifier', 'property' => $this->repoDb->getSchema()->__get('id')),
+            'acdhid' => array('shortcut' => 'acdh:hasIdentifier', 'property' => $this->repoDb->getSchema()->__get('id'))
         ];
     }
     
@@ -87,9 +87,9 @@ class Utils
         $this->data[$k]['rdf:type'][$lang] = array(
             $this->createObj(
                 $v->id,
-                $this->repo->getSchema()->namespaces->rdfs.'type',
-                $this->repo->getSchema()->__get('namespaces')->ontology. "TopCollection",
-                $this->repo->getSchema()->__get('namespaces')->ontology. "TopCollection"
+                $this->repoDb->getSchema()->namespaces->rdfs.'type',
+                $this->repoDb->getSchema()->__get('namespaces')->ontology. "TopCollection",
+                $this->repoDb->getSchema()->__get('namespaces')->ontology. "TopCollection"
             )
         );
     }

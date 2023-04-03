@@ -9,10 +9,9 @@ namespace Drupal\arche_gui_api\Model;
  */
 class ArcheApiModel
 {
-    protected $repodb;
+    protected $repoDb;
+    protected $drupalDb;
     protected $config;
-    protected $repo;
-    protected $repolibDB;
     protected $siteLang = "en";
     
     public function __construct()
@@ -20,8 +19,7 @@ class ArcheApiModel
         $this->config = \Drupal::service('extension.list.module')->getPath('acdh_repo_gui') . '/config/config.yaml';
         (isset($_SESSION['language'])) ? $this->siteLang = strtolower($_SESSION['language']) : $this->siteLang = "en";
         try {
-            $this->repo = \acdhOeaw\arche\lib\Repo::factory($this->config);
-            $this->repoliDB = \acdhOeaw\arche\lib\RepoDb::factory($this->config);
+            $this->repoDb = \acdhOeaw\arche\lib\RepoDb::factory($this->config);
         } catch (\Exception $ex) {
             \Drupal::messenger()->addWarning($this->t('Error during the BaseController initialization!').' '.$ex->getMessage());
             return array();
@@ -36,12 +34,12 @@ class ArcheApiModel
     protected function setActiveConnection()
     {
         \Drupal\Core\Database\Database::setActiveConnection('repo');
-        $this->repodb = \Drupal\Core\Database\Database::getConnection('repo');
+        $this->drupalDb = \Drupal\Core\Database\Database::getConnection('repo');
     }
 
-    protected function changeBackDBConnection()
+    protected function closeDBConnection()
     {
-        \Drupal\Core\Database\Database::setActiveConnection();
+        \Drupal\Core\Database\Database::closeConnection('repo');
     }
 
     /**
@@ -53,7 +51,7 @@ class ArcheApiModel
         $this->setActiveConnection();
 
         try {
-            $this->repodb->query(
+            $this->drupalDb->query(
                 "SET statement_timeout TO :timeout;",
                 array(':timeout' => $timeout)
             )->fetch();
@@ -62,5 +60,6 @@ class ArcheApiModel
         } catch (\Drupal\Core\Database\DatabaseExceptionWrapper $ex) {
             \Drupal::logger('arche_gui_api')->notice($ex->getMessage());
         }
+        $this->closeDBConnection();
     }
 }

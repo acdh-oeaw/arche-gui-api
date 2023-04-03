@@ -16,14 +16,14 @@ class EntityTestModel extends \Drupal\arche_gui_api\Model\ArcheApiModel
     
     private function getAllRdfType(): array
     {
-        $schema = $this->repo->getSchema();
+        $schema = $this->repoDb->getSchema();
         $searchTerm = new \acdhOeaw\arche\lib\SearchTerm($schema->namespaces->rdfs . 'type');
         $searchCfg = new \acdhOeaw\arche\lib\SearchConfig();
         $searchCfg->metadataMode = 'resource';
         $searchCfg->orderBy = ['https://vocabs.acdh.oeaw.ac.at/schema#hasTitle'];
         $searchCfg->orderByLang = 'en';
         
-        $pdoStmt = $this->repoliDB->getPdoStatementBySearchTerms([$searchTerm], $searchCfg);
+        $pdoStmt = $this->repoDb->getPdoStatementBySearchTerms([$searchTerm], $searchCfg);
 
         # define context
         $result = [];
@@ -35,12 +35,6 @@ class EntityTestModel extends \Drupal\arche_gui_api\Model\ArcheApiModel
                 }
             }
         }
-      
-        echo "<pre>";
-        var_dump($result);
-        echo "</pre>";
-
-        die();
         return [];
     }
 
