@@ -15,11 +15,40 @@ class ChildModel extends \Drupal\arche_gui_api\Model\ArcheApiModel
         parent::__construct();
     }
     
+     
+    /**
+     * Fetch the root type to we can generate the child template
+     * @param string $repoid
+     * @return string
+     */
+    public function getRootType(string $repoid) : string {
+        
+        try {
+            $this->setSqlTimeout('10000');
+            $query = $this->drupalDb->query(
+                "select value from metadata where property = 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type' and 
+                id = :repoid order by property limit 1; ",
+                array(
+                        ':repoid' => $repoid
+                )
+            );
+            
+            return $query->fetchField();
+        } catch (Exception $ex) {
+            \Drupal::logger('arche_gui_api')->notice($ex->getMessage());
+        } catch (\Drupal\Core\Database\DatabaseExceptionWrapper $ex) {
+            \Drupal::logger('arche_gui_api')->notice($ex->getMessage());
+        }
+        $this->closeDBConnection();
+        return "";
+        
+    }
+    
     public function getData(string $repoid, array $sqlTypes, int $offset, int $limit, string $search = "", int $orderby = 1, string $order = 'asc', string $lang = "en"): array
     {
         $result = array();
         //run the actual query
-        
+     
         if (count($sqlTypes) > 0) {
             $this->formatTypeFilter($sqlTypes);
         } else {
@@ -29,7 +58,7 @@ class ChildModel extends \Drupal\arche_gui_api\Model\ArcheApiModel
         try {
             $this->setSqlTimeout('10000');
             $query = $this->drupalDb->query(
-                "select * from gui.get_table_by_property_func(:repoid, :lang, $this->sqlTypes)"
+                "select title, id, property, type, accessres, sumcount from gui.get_child_table_func(:repoid, :lang, $this->sqlTypes)"
                     . " where LOWER(title) like  LOWER('%' || :search || '%') "
                     . " order by $orderby $order "
                     . " limit :limit offset :offset;",

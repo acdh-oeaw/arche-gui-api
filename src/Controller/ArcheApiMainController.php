@@ -13,14 +13,14 @@ use Drupal\Component\Utility\Xss;
  */
 class ArcheApiMainController extends \Drupal\Core\Controller\ControllerBase
 {
-    private function setProps(): array
-    {
+    
+    private function setProps(): array {
         $offset = (empty($_POST['start'])) ? 0 : $_POST['start'];
         $limit = (empty($_POST['length'])) ? 10 : $_POST['length'];
         $draw = (empty($_POST['draw'])) ? 0 : $_POST['draw'];
         $search = (empty($_POST['search']['value'])) ? "" : $_POST['search']['value'];
         //datatable start columns from 0 but in db we have to start it from 1
-        $orderby = (empty($_POST['order'][0]['column'])) ? 1 : (int)$_POST['order'][0]['column'] + 1;
+        $orderby = (empty($_POST['order'][0]['column'])) ? 1 : (int)$_POST['order'][0]['column'];
         $order = (empty($_POST['order'][0]['dir'])) ? 'asc' : $_POST['order'][0]['dir'];
         return [
             'offset' => $offset, 'limit' => $limit, 'draw' => $draw, 'search' => $search,
@@ -45,7 +45,7 @@ class ArcheApiMainController extends \Drupal\Core\Controller\ControllerBase
      */
     public function api_get_inversedata(string $repoid): JsonResponse
     {
-        $controller = new \Drupal\arche_gui_api\Controller\InverseDataController();
+        $controller = new \Drupal\arche_gui_api\Controller\Detail\InverseDataController();
         return $controller->execute($repoid);
     }
     
@@ -68,7 +68,7 @@ class ArcheApiMainController extends \Drupal\Core\Controller\ControllerBase
      */
     public function api_get_rpr(string $repoid, string $lang = "en"): JsonResponse
     {
-        $controller = new \Drupal\arche_gui_api\Controller\RPRController();
+        $controller = new \Drupal\arche_gui_api\Controller\Detail\RPRController();
         return $controller->execute($repoid, $lang);
     }
     
@@ -197,7 +197,7 @@ class ArcheApiMainController extends \Drupal\Core\Controller\ControllerBase
     public function api_get_hasActor(string $repoid, string $lang = "en"): Response
     {
         $controller = new \Drupal\arche_gui_api\Controller\Child\ChildController();
-        return $controller->execute($repoid, $this->setProps(), $lang);
+        return $controller->getActor($repoid, $this->setProps(), $lang);
     }
     
     public function api_searchBlock(string $lang): Response
@@ -211,4 +211,36 @@ class ArcheApiMainController extends \Drupal\Core\Controller\ControllerBase
         $controller = new \Drupal\arche_gui_api\Controller\Metadata\MetadataController();
         return $controller->getTopThreeTopCollection($lang, $this->setProps());
     }
+    
+    public function api_root(string $lang="en"): Response
+    {
+        $controller = new \Drupal\arche_gui_api\Controller\Metadata\MetadataController();
+        return $controller->getRootData($lang, $this->setProps());
+    }
+    
+    public function api_search(string $values): Response
+    {
+        $controller = new \Drupal\arche_gui_api\Controller\Search\SearchController();
+        return $controller->getData($values, $this->setProps());
+    }
+    
+    public function api_overview(string $identifier, string $lang): Response
+    {
+        $controller = new \Drupal\arche_gui_api\Controller\Metadata\MetadataOverviewController();
+        return $controller->getData($identifier, $lang);
+    }
+    
+    
+    public function api_breadcrumb(string $identifier): Response
+    {
+        $controller = new \Drupal\arche_gui_api\Controller\Detail\BreadcrumbController();
+        return $controller->getData($identifier);
+    }
+    
+    public function api_child(string $repoid, string $lang = "en"): Response
+    {
+        $controller = new \Drupal\arche_gui_api\Controller\Child\ChildController();
+        return $controller->getChild($repoid, $this->setProps(), $lang);
+    }
+    
 }

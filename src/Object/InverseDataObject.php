@@ -13,7 +13,7 @@ class InverseDataObject extends \Drupal\arche_gui_api\Object\MainObject
 
     protected function createModel(): void
     {
-        $this->model = new \Drupal\arche_gui_api\Model\InverseDataModel();
+        $this->model = new \Drupal\arche_gui_api\Model\Detail\InverseDataModel();
     }
 
     public function init(string $repoid): array

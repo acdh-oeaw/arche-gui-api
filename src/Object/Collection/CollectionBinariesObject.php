@@ -36,7 +36,7 @@ class CollectionBinariesObject extends \Drupal\arche_gui_api\Object\MainObject
      */
     public function init(array $binaries, string $repoid, string $username = "", string $password = ""): string
     {
-        $this->repoUrl = $this->repo->getBaseUrl() . $repoid;
+        $this->repoUrl = $this->repoDb->getBaseUrl() . $repoid;
         
         //1. setup tmp dir
         if ($this->collectionCreateDlDirectory() === false) {

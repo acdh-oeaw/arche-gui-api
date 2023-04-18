@@ -131,8 +131,25 @@ arche_api_get_searchBlock:
     defaults:
         _controller: '\Drupal\arche_gui_api\Controller\ArcheApiMainController::api_searchBlock'
     requirements:
-        _access: 'TRUE'          
-        
+        _access: 'TRUE'              
+       
+arche_api_search:    
+    path: '/api/search/{values}'
+    defaults:
+        _controller: '\Drupal\arche_gui_api\Controller\ArcheApiMainController::api_search'
+    requirements:
+        _permission: 'access content'
+        _access: 'TRUE'       
+### search block end 
+
+arche_api_overview:    
+    path: '/api/overview/{identifier}/{lang}'
+    defaults:
+        _controller: '\Drupal\arche_gui_api\Controller\ArcheApiMainController::api_overview'
+    requirements:
+        _permission: 'access content'
+        _access: 'TRUE'               
+
 arche_api_get_hp_top_resources:    
     path: '/api/getHPTop/{lang}'
     defaults:
@@ -140,5 +157,31 @@ arche_api_get_hp_top_resources:
     requirements:
         _access: 'TRUE'              
         
+arche_api_root:    
+    path: '/api/root/{lang}'
+    defaults:
+        _controller: '\Drupal\arche_gui_api\Controller\ArcheApiMainController::api_root'
+    requirements:
+        uri: '^[^\?]*$'
+        _permission: 'access content'
+        _access: 'TRUE'     
+
+arche_api_breadcrumb:    
+    path: '/api/breadcrumb/{identifier}'
+    defaults:
+        _controller: '\Drupal\arche_gui_api\Controller\ArcheApiMainController::api_breadcrumb'
+    requirements:
+        uri: '^[^\?]*$'
+        _permission: 'access content'
+        _access: 'TRUE'         
+        
+arche_api_child:    
+    path: '/api/child/{repoid}/{lang}'
+    defaults:
+        _controller: '\Drupal\arche_gui_api\Controller\ArcheApiMainController::api_child'
+    requirements:
+        uri: '^[^\?]*$'
+        _permission: 'access content'
+        _access: 'TRUE'           
         
         

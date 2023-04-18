@@ -13,7 +13,7 @@ class RPRObject extends \Drupal\arche_gui_api\Object\MainObject
 
     protected function createModel(): void
     {
-        $this->model = new \Drupal\arche_gui_api\Model\RPRModel();
+        $this->model = new \Drupal\arche_gui_api\Model\Detail\RPRModel();
     }
 
     public function init(string $repoid, string $lang): array
