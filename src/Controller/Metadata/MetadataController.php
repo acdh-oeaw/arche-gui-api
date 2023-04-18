@@ -15,27 +15,29 @@ class MetadataController extends \Drupal\arche_gui_api\Controller\ArcheApiBaseCo
     private $model;
     private $utils;
     
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
         $this->setModel();
         $this->utils = new \Drupal\arche_gui_api\Helper\Utils();
     }
     
-    private function setModel() {
+    private function setModel()
+    {
         $this->model = new \Drupal\arche_gui_api\Model\Metadata\MetadataModel();
     }
     
     /**
      * Get the top 3 topcollection for the homepage
-     * 
+     *
      * URL: https://arche-dev.acdh-dev.oeaw.ac.at/browser/api/getHPTop/en
-     * 
+     *
      * @param string $lang
      * @param array $searchProps
      * @return Response
      */
-    public function getTopThreeTopCollection(string $lang, array $searchProps): Response {
-        
+    public function getTopThreeTopCollection(string $lang, array $searchProps): Response
+    {
         $searchProps['limit'] = 3;
         $searchProps['order'] = 'desc';
         $searchProps['orderby'] = 3;
@@ -45,7 +47,7 @@ class MetadataController extends \Drupal\arche_gui_api\Controller\ArcheApiBaseCo
         
         $guiData = $this->utils->formatResultToGui($data);
       
-        foreach($guiData as $v) {
+        foreach ($guiData as $v) {
             $objects[] =  new \Drupal\acdh_repo_gui\Object\ResourceObject($v, $this->repoDb);
         }
         
@@ -64,7 +66,7 @@ class MetadataController extends \Drupal\arche_gui_api\Controller\ArcheApiBaseCo
     }
     
     /**
-     * 
+     *
      * @param string $lang
      * @param array $searchProps
      * @return JsonResponse
@@ -80,7 +82,7 @@ class MetadataController extends \Drupal\arche_gui_api\Controller\ArcheApiBaseCo
       
         $guiData = $this->utils->formatResultToGui($data);
       
-        foreach($guiData as $v) {
+        foreach ($guiData as $v) {
             $objects[] =  json_encode((array)new \Drupal\acdh_repo_gui\Object\ResourceObject($v, $this->repoDb));
         }
         
@@ -125,8 +127,5 @@ class MetadataController extends \Drupal\arche_gui_api\Controller\ArcheApiBaseCo
         $response->headers->set('Content-Type', 'application/json');
         
         return $response;
-        
     }
-    
-    
 }

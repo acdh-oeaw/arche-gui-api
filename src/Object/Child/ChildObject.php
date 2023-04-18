@@ -19,11 +19,13 @@ class ChildObject extends \Drupal\arche_gui_api\Object\MainObject
         $this->model = new \Drupal\arche_gui_api\Model\Child\ChildModel();
     }
 
-    public function getRootType(): string {
+    public function getRootType(): string
+    {
         return $this->rootType;
     }
     
-    public function getChildTitle(): string {
+    public function getChildTitle(): string
+    {
         return $this->childTitle;
     }
     
@@ -51,7 +53,6 @@ class ChildObject extends \Drupal\arche_gui_api\Object\MainObject
     
     public function getActor(string $repoid, string $lang, array $searchProps): array
     {
-       
         $this->createModel();
         return $this->processData($this->model->getData(
             $repoid,
@@ -68,7 +69,6 @@ class ChildObject extends \Drupal\arche_gui_api\Object\MainObject
    
     private function processData(array $data): array
     {
-     
         $this->result = array();
         foreach ($data as $obj) {
             if (isset($obj->id) && isset($obj->title) && isset($obj->property)) {
@@ -87,7 +87,6 @@ class ChildObject extends \Drupal\arche_gui_api\Object\MainObject
     
     private function checkChildProperties(string $class)
     {
-       
         $class= str_replace($this->repoDb->getSchema()->namespaces->ontology, "", $class);
         switch (strtolower($class)) {
             case 'https://vocabs.acdh.oeaw.ac.at/schema#Organisation':

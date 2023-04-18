@@ -21,8 +21,8 @@ class ChildModel extends \Drupal\arche_gui_api\Model\ArcheApiModel
      * @param string $repoid
      * @return string
      */
-    public function getRootType(string $repoid) : string {
-        
+    public function getRootType(string $repoid) : string
+    {
         try {
             $this->setSqlTimeout('10000');
             $query = $this->drupalDb->query(
@@ -41,7 +41,6 @@ class ChildModel extends \Drupal\arche_gui_api\Model\ArcheApiModel
         }
         $this->closeDBConnection();
         return "";
-        
     }
     
     public function getData(string $repoid, array $sqlTypes, int $offset, int $limit, string $search = "", int $orderby = 1, string $order = 'asc', string $lang = "en"): array

@@ -36,5 +36,4 @@ class BreadcrumbModel extends \Drupal\arche_gui_api\Model\ArcheApiModel
         $this->closeDBConnection();
         return $result;
     }
-
 }

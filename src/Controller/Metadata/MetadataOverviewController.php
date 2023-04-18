@@ -15,13 +15,15 @@ class MetadataOverviewController extends \Drupal\arche_gui_api\Controller\ArcheA
     private $model;
     private $utils;
     
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
         $this->setModel();
         $this->utils = new \Drupal\arche_gui_api\Helper\Utils();
     }
     
-    private function setModel() {
+    private function setModel()
+    {
         $this->model = new \Drupal\arche_gui_api\Model\Metadata\MetadataModel();
     }
     
@@ -44,7 +46,4 @@ class MetadataOverviewController extends \Drupal\arche_gui_api\Controller\ArcheA
 
         return new JsonResponse($data, 200, ['Content-Type' => 'application/json']);
     }
-    
-   
-    
 }
