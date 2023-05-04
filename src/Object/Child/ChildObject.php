@@ -73,7 +73,7 @@ class ChildObject extends \Drupal\arche_gui_api\Object\MainObject
         foreach ($data as $obj) {
             if (isset($obj->id) && isset($obj->title) && isset($obj->property)) {
                 $this->result[] = array(
-                    'title' => "<a id='archeHref' href='/browser/oeaw_detail/$obj->id'>$obj->title</a>",
+                    'title' => "<a id='archeHref' href='/browser/detail/$obj->id'>$obj->title</a>",
                     'property' => $obj->property,
                     'type' => $obj->type,
                     'accessres' => $obj->accessres,

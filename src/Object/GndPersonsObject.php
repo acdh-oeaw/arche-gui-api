@@ -33,7 +33,7 @@ class GndPersonsObject extends \Drupal\arche_gui_api\Object\MainObject
 
     private function createFileLocation(): void
     {
-        $this->host = str_replace('http://', 'https://', \Drupal::request()->getSchemeAndHttpHost() . '/browser/oeaw_detail/');
+        $this->host = str_replace('http://', 'https://', \Drupal::request()->getSchemeAndHttpHost() . '/browser/detail/');
         $this->fileLocation = \Drupal::request()->getSchemeAndHttpHost() . '/browser/sites/default/files/beacon.txt';
     }
 

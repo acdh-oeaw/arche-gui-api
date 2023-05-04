@@ -54,7 +54,7 @@ class CollectionObject extends \Drupal\arche_gui_api\Object\MainObject
         $v['resShortId'] = $v['id'];
         $v['accessRestriction'] = $v['accesres'];
         $v['encodedUri'] = $this->repoDb->getBaseUrl() . $v['id'];
-        $v['a_attr'] = array("href" => str_replace('api/', 'browser/oeaw_detail/', $this->repoDb->getBaseUrl()) . $v['id']);
+        $v['a_attr'] = array("href" => str_replace('api/', 'browser/detail/', $this->repoDb->getBaseUrl()) . $v['id']);
     }
 
     /**

@@ -28,7 +28,7 @@ class MembersObject extends \Drupal\arche_gui_api\Object\MainObject
         $this->result = array();
         foreach ($data as $obj) {
             if (isset($obj->id) && isset($obj->title)) {
-                $this->result[] = array("<a id='archeHref' href='/browser/oeaw_detail/$obj->id'>$obj->title</a>");
+                $this->result[] = array("<a id='archeHref' href='/browser/detail/$obj->id'>$obj->title</a>");
             }
         }
         //$this->result = array("data" => $this->result);

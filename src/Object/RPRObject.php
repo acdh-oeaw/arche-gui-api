@@ -29,7 +29,7 @@ class RPRObject extends \Drupal\arche_gui_api\Object\MainObject
         foreach ($data as $obj) {
             if (isset($obj->id) && isset($obj->title) && isset($obj->relatedtype) && isset($obj->acdhtype)) {
                 $this->result[] = array(
-                    0 => "<a id='archeHref' href='/browser/oeaw_detail/$obj->id'>$obj->title</a>",
+                    0 => "<a id='archeHref' href='/browser/detail/$obj->id'>$obj->title</a>",
                     1 => str_replace($this->repoDb->getSchema()->__get('namespaces')->ontology, '', $obj->relatedtype),
                     2 => str_replace($this->repoDb->getSchema()->__get('namespaces')->ontology, '', $obj->acdhtype)
                 );
