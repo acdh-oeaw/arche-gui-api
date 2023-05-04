@@ -96,7 +96,6 @@ class MetadataModel extends \Drupal\arche_gui_api\Model\ArcheApiModel
      */
     public function getOverviewData(string $identifier, string $lang = "en"): array
     {
-        
         $result = array();
         try {
             $this->setSqlTimeout();
@@ -114,5 +113,4 @@ class MetadataModel extends \Drupal\arche_gui_api\Model\ArcheApiModel
         }
         return $result;
     }
-    
 }

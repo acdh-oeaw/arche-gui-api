@@ -14,12 +14,14 @@ class BreadcrumbController extends \Drupal\arche_gui_api\Controller\ArcheApiBase
 {
     private $model;
     
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
         $this->setModel();
     }
     
-    private function setModel() {
+    private function setModel()
+    {
         $this->model = new \Drupal\arche_gui_api\Model\Detail\BreadcrumbModel();
     }
     
@@ -39,7 +41,4 @@ class BreadcrumbController extends \Drupal\arche_gui_api\Controller\ArcheApiBase
         $resp = $data->getBreadCrumb();
         return new JsonResponse($resp, 200, ['Content-Type' => 'application/json']);
     }
-    
-   
-    
 }
