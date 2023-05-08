@@ -55,7 +55,7 @@ class ChildModel extends \Drupal\arche_gui_api\Model\ArcheApiModel
         }
        
         try {
-            $this->setSqlTimeout('10000');
+            $this->setSqlTimeout('70000');
             $query = $this->drupalDb->query(
                 "select title, id, property, type, accessres, sumcount from gui.get_child_table_func(:repoid, :lang, $this->sqlTypes)"
                     . " where LOWER(title) like  LOWER('%' || :search || '%') "
