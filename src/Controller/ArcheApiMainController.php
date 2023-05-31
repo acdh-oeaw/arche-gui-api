@@ -254,7 +254,4 @@ class ArcheApiMainController extends \Drupal\Core\Controller\ControllerBase
         $controller = new \Drupal\arche_gui_api\Controller\SmartSearch\SmartSearchController();
         return $controller->search($_GET);
     }
-    
-    
-    
 }
