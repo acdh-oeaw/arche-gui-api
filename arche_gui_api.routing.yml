@@ -182,6 +182,23 @@ arche_api_child:
     requirements:
         uri: '^[^\?]*$'
         _permission: 'access content'
-        _access: 'TRUE'           
+        _access: 'TRUE'       
         
+arche_api_search_date_facets:    
+    path: '/api/searchDateFacet'
+    defaults:
+        _controller: '\Drupal\arche_gui_api\Controller\ArcheApiMainController::api_search_date_facets'
+    requirements:
+        uri: '^[^\?]*$'
+        _permission: 'access content'
+        _access: 'TRUE'     
         
+arche_api_smart_search:    
+    path: '/api/smartsearch'
+    defaults:
+        _controller: '\Drupal\arche_gui_api\Controller\ArcheApiMainController::api_smart_search'
+    requirements:
+        uri: '^[^\?]*$'
+        _permission: 'access content'
+        _access: 'TRUE'             
+                

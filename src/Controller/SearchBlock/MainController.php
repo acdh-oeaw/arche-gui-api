@@ -45,4 +45,14 @@ class MainController extends \Drupal\Core\Controller\ControllerBase
      
         return new Response(render($build));
     }
+    
+    public function dateFacets(): Response 
+    {
+        try {
+            $config = \acdhOeaw\arche\lib\Config::fromYaml(\Drupal::service('extension.list.module')->getPath('acdh_repo_gui') . '/config-repo.yaml');
+            return new Response(json_encode($config->smartSearch->dateFacets));
+        } catch(Throwable $e){
+            return new Response(array(), 404, ['Content-Type' => 'application/json']);
+        }
+    }
 }

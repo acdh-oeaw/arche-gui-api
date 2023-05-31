@@ -242,4 +242,19 @@ class ArcheApiMainController extends \Drupal\Core\Controller\ControllerBase
         $controller = new \Drupal\arche_gui_api\Controller\Child\ChildController();
         return $controller->getChild($repoid, $this->setProps(), $lang);
     }
+    
+    public function api_search_date_facets(): Response
+    {
+        $controller = new \Drupal\arche_gui_api\Controller\SearchBlock\MainController();
+        return $controller->dateFacets();
+    }
+    
+    public function api_smart_search(): Response
+    {
+        $controller = new \Drupal\arche_gui_api\Controller\SmartSearch\SmartSearchController();
+        return $controller->search($_GET);
+    }
+    
+    
+    
 }
