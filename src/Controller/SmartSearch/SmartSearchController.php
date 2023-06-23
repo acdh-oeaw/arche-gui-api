@@ -18,7 +18,7 @@ class SmartSearchController extends \Drupal\Core\Controller\ControllerBase {
     private $schema;
 
     public function __construct() {
-        $this->config = \acdhOeaw\arche\lib\Config::fromYaml(\Drupal::service('extension.list.module')->getPath('acdh_repo_gui') . '/config-repo.yaml');
+        $this->config = \acdhOeaw\arche\lib\Config::fromYaml(\Drupal::service('extension.list.module')->getPath('acdh_repo_gui') . '/config/config.yaml');
     }
 
     private function setContext() {
@@ -235,7 +235,7 @@ class SmartSearchController extends \Drupal\Core\Controller\ControllerBase {
                         'totalCount' => $totalCount,
                         'page' => $page,
                         'pageSize' => $resourcesPerPage,
-                                    ], JSON_UNESCAPED_SLASHES)));
+                                    ], \JSON_UNESCAPED_SLASHES)));
         } catch (\Throwable $e) {
             return new Response(array("Error in search! " . $e->getMessage()), 404, ['Content-Type' => 'application/json']);
         }
@@ -246,19 +246,7 @@ class SmartSearchController extends \Drupal\Core\Controller\ControllerBase {
             return new Response(array("There is no resource"), 404, ['Content-Type' => 'application/json']);
         }
         return new Response(json_encode($result));
-
-        $build = [
-            '#theme' => 'acdh-repo-gui-search-left-block',
-            '#result' => $result,
-            '#cache' => ['max-age' => 0],
-            '#attached' => [
-                'library' => [
-                    'acdh_repo_gui/repo-search-ajax',
-                ]
-            ]
-        ];
-
-        return new Response(render($build));
+      
     }
 
     public function dateFacets(): Response {
