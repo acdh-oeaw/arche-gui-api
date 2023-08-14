@@ -58,5 +58,4 @@ class GndPersonsObject extends \Drupal\arche_gui_api\Object\MainObject
             return array();
         }
     }
-    
 }

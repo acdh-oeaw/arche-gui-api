@@ -7,11 +7,12 @@ namespace Drupal\arche_gui_api\Model;
  *
  * @author nczirjak
  */
-class GndPersonsModel extends \Drupal\arche_gui_api\Model\ArcheApiModel {
-
+class GndPersonsModel extends \Drupal\arche_gui_api\Model\ArcheApiModel
+{
     private $repo;
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
         $this->repo = \acdhOeaw\arche\lib\Repo::factory($this->config);
     }
@@ -21,11 +22,12 @@ class GndPersonsModel extends \Drupal\arche_gui_api\Model\ArcheApiModel {
      * @param array $ids
      * @return string
      */
-    private function checkId(array $ids): string {
+    private function checkId(array $ids): string
+    {
         $gndId = "";
         $acdhId = "";
         
-        foreach($ids as $id) {
+        foreach ($ids as $id) {
             if (strpos($id, 'd-nb.info/gnd/') !== false) {
                 $gndId = $id;
             }
@@ -34,7 +36,7 @@ class GndPersonsModel extends \Drupal\arche_gui_api\Model\ArcheApiModel {
             }
         }
         
-        if(!empty($gndId) && !empty($acdhId)) {
+        if (!empty($gndId) && !empty($acdhId)) {
             return $gndId.'|'.$acdhId.PHP_EOL;
         }
         return "";
@@ -44,8 +46,8 @@ class GndPersonsModel extends \Drupal\arche_gui_api\Model\ArcheApiModel {
      * Get the graphs and return the result as a string
      * @return string
      */
-    public function getData(): string {
-
+    public function getData(): string
+    {
         $config = new \acdhOeaw\arche\lib\SearchConfig();
         $searchTerms[] = new \acdhOeaw\arche\lib\SearchTerm($this->repoDb->getSchema()->__get('namespaces')->rdfs . "type", $this->repoDb->getSchema()->__get('namespaces')->ontology . 'Person', '=');
 
@@ -55,12 +57,10 @@ class GndPersonsModel extends \Drupal\arche_gui_api\Model\ArcheApiModel {
         $str = "";
         foreach ($results as $r) {
             $check = $this->checkId($r->getGraph()->allResources($idProp));
-            if(!empty($check)) {
+            if (!empty($check)) {
                 $str .= $check;
             }
         }
         return $str;
     }
-
-    
 }
