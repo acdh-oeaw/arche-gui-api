@@ -16,7 +16,7 @@ class SMCoordinatesModel extends \Drupal\arche_gui_api\Model\ArcheApiModel
     
     public function getData()
     {
-      return $this->getCoordinates();
+        return $this->getCoordinates();
     }
     
     
@@ -56,6 +56,4 @@ class SMCoordinatesModel extends \Drupal\arche_gui_api\Model\ArcheApiModel
         $this->closeDBConnection();
         return $result;
     }
-
-    
 }

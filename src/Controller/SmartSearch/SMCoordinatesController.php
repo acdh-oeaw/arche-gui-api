@@ -10,12 +10,13 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @author nczirjak
  */
-class SMCoordinatesController extends \Drupal\Core\Controller\ControllerBase {
-
+class SMCoordinatesController extends \Drupal\Core\Controller\ControllerBase
+{
     private $config;
     private $model;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->config = \acdhOeaw\arche\lib\Config::fromYaml(\Drupal::service('extension.list.module')->getPath('acdh_repo_gui') . '/config/config.yaml');
         $this->setModel();
     }
@@ -25,8 +26,8 @@ class SMCoordinatesController extends \Drupal\Core\Controller\ControllerBase {
         $this->model = new \Drupal\arche_gui_api\Model\SmartSearch\SMCoordinatesModel();
     }
 
-    public function get(): Response {
-
+    public function get(): Response
+    {
         $data = [];
         $data = $this->model->getData();
 
@@ -35,8 +36,5 @@ class SMCoordinatesController extends \Drupal\Core\Controller\ControllerBase {
             return new Response(array("There is no resource"), 404, ['Content-Type' => 'application/json']);
         }
         return new Response(json_encode($data));
-      
     }
-
-
 }
