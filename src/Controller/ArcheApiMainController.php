@@ -243,10 +243,10 @@ class ArcheApiMainController extends \Drupal\Core\Controller\ControllerBase
         return $controller->getChild($repoid, $this->setProps(), $lang);
     }
     
-    public function api_search_date_facets(): Response
+    public function api_sms_coordinates(): Response
     {
-        $controller = new \Drupal\arche_gui_api\Controller\SearchBlock\MainController();
-        return $controller->dateFacets();
+        $controller = new \Drupal\arche_gui_api\Controller\SmartSearch\SMCoordinatesController();
+        return $controller->get();
     }
     
     public function api_smart_search(): Response
@@ -254,4 +254,12 @@ class ArcheApiMainController extends \Drupal\Core\Controller\ControllerBase
         $controller = new \Drupal\arche_gui_api\Controller\SmartSearch\SmartSearchController();
         return $controller->search($_GET);
     }
+    
+    public function api_search_date_facets(): Response
+    {
+        $controller = new \Drupal\arche_gui_api\Controller\SearchBlock\MainController();
+        return $controller->dateFacets();
+    }
+    
+   
 }

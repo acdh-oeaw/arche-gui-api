@@ -183,15 +183,7 @@ arche_api_child:
         uri: '^[^\?]*$'
         _permission: 'access content'
         _access: 'TRUE'       
-        
-arche_api_search_date_facets:    
-    path: '/api/searchDateFacet'
-    defaults:
-        _controller: '\Drupal\arche_gui_api\Controller\ArcheApiMainController::api_search_date_facets'
-    requirements:
-        uri: '^[^\?]*$'
-        _permission: 'access content'
-        _access: 'TRUE'     
+     
         
 arche_api_smart_search:    
     path: '/api/smartsearch'
@@ -200,5 +192,23 @@ arche_api_smart_search:
     requirements:
         uri: '^[^\?]*$'
         _permission: 'access content'
+        _access: 'TRUE'      
+        
+
+arche_api_search_date_facets:    
+    path: '/api/searchDateFacet'
+    defaults:
+        _controller: '\Drupal\arche_gui_api\Controller\ArcheApiMainController::api_search_date_facets'
+    requirements:
+        uri: '^[^\?]*$'
+        _permission: 'access content'
         _access: 'TRUE'             
-                
+        
+arche_api_test:    
+    path: '/api/search_coordinates'
+    defaults:
+        _controller: '\Drupal\arche_gui_api\Controller\ArcheApiMainController::api_sms_coordinates'
+    requirements:
+        uri: '^[^\?]*$'
+        _permission: 'access content'
+        _access: 'TRUE'                    
