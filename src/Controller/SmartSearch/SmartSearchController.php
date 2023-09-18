@@ -70,6 +70,9 @@ class SmartSearchController extends \Drupal\Core\Controller\ControllerBase {
                 foreach ($reqFacets['linkProperty'] as $i) {
                     $namedEntityWeights[$i] ??= 1.0;
                 }
+                foreach (array_diff(array_keys($namedEntityWeights), $reqFacets['linkProperty']) as $i) {
+                    unset($namedEntityWeights[$i]);
+                }
                 $namedEntityWeightDefault = 0.0;
             }
 
@@ -246,7 +249,6 @@ class SmartSearchController extends \Drupal\Core\Controller\ControllerBase {
             return new Response(array("There is no resource"), 404, ['Content-Type' => 'application/json']);
         }
         return new Response(json_encode($result));
-      
     }
 
     public function dateFacets(): Response {
