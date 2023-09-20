@@ -36,8 +36,9 @@ class SmartSearchController extends \Drupal\Core\Controller\ControllerBase {
 
     public function search(array $post): Response {
 
+        error_log(print_r($post, true));
         $postParams = $post;
-
+        
         try {
             $this->sConfig = $this->config->smartSearch;
             $this->schema = new \acdhOeaw\arche\lib\Schema($this->config->schema);
@@ -50,7 +51,7 @@ class SmartSearchController extends \Drupal\Core\Controller\ControllerBase {
                 $this->schema->label => 'title',
                 $this->schema->parent => 'parent',
             ];
-
+   
             // SEARCH CONFIG
             $namedEntityWeights = [];
             $namedEntityClasses = [];
@@ -98,6 +99,7 @@ class SmartSearchController extends \Drupal\Core\Controller\ControllerBase {
                 }
             }
 
+            
             $facets = $this->sConfig->facets;
             $dateFacets = $this->sConfig->dateFacets;
             foreach ($dateFacets as $fid => &$facet) {
@@ -126,6 +128,9 @@ class SmartSearchController extends \Drupal\Core\Controller\ControllerBase {
                 $facet->start = is_array($facet->start) ? $facet->start : [$facet->start];
                 $facet->end = is_array($facet->end) ? $facet->end : [$facet->end];
             }
+            
+            
+            
             unset($facet);
             $dateFacets = array_filter((array) $dateFacets, fn($x) => $x->distribution);
             $spatialSearchTerm = null;
@@ -143,8 +148,9 @@ class SmartSearchController extends \Drupal\Core\Controller\ControllerBase {
                     }
                 }
             }
+            
 
-
+            
             //model !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             $pdo = new \PDO('pgsql: host=127.0.0.1 dbname=www-data user=gui password=' . $pswd);
             // Put everything together
@@ -154,6 +160,7 @@ class SmartSearchController extends \Drupal\Core\Controller\ControllerBase {
             $search->setRangeFacets($dateFacets);
             $search->setNamedEntityWeights($namedEntityWeights, $namedEntityWeightDefault);
             $search->setNamedEntityFilter($namedEntityClasses);
+           
             $search->search($searchPhrase, $preferredLang, $searchInBinaries, $allowedProperties, $searchTerms, $spatialSearchTerm, $postParams['searchIn'] ?? []);
 
             // display distribution of defined facets
@@ -164,13 +171,14 @@ class SmartSearchController extends \Drupal\Core\Controller\ControllerBase {
             $facetLabels['property'] = $this->sConfig->property->label;
             $facetsLang = !empty($postParams['labelsLang']) ? $postParams['labelsLang'] : (!empty($postParams['preferredLang']) ? $postParams['preferredLang'] : ($this->sConfig->prefLang ?? 'en'));
             $facets = [];
-
+    
             foreach ($search->getSearchFacets($facetsLang) as $prop => $i) {
                 $i['property'] = $prop;
                 $i['label'] = $facetLabels[$prop] ?? $prop;
                 $facets[] = $i;
             }
 
+         
             // obtain one page of results
             $page = (int) ($postParams['page'] ?? 0);
             $resourcesPerPage = (int) ($postParams['pageSize'] ?? 20);
@@ -207,7 +215,8 @@ class SmartSearchController extends \Drupal\Core\Controller\ControllerBase {
             $resources = array_filter($resources, fn($x) => isset($x->matchOrder));
             $order = array_map(fn($x) => (int) $x->matchOrder[0], $resources);
             array_multisort($order, $resources);
-
+            
+        
             foreach ($resources as $i) {
                 $i->url = $baseUrl . $i->id;
                 $i->matchProperty ??= [];
@@ -232,19 +241,18 @@ class SmartSearchController extends \Drupal\Core\Controller\ControllerBase {
                 }
             }
 
-            return new Response(render(json_encode([
+            return new Response(json_encode([
                         'facets' => $facets,
                         'results' => $resources,
                         'totalCount' => $totalCount,
                         'page' => $page,
                         'pageSize' => $resourcesPerPage,
-                                    ], \JSON_UNESCAPED_SLASHES)));
+                                    ], \JSON_UNESCAPED_SLASHES));
         } catch (\Throwable $e) {
             return new Response(array("Error in search! " . $e->getMessage()), 404, ['Content-Type' => 'application/json']);
         }
 
-
-
+     
         if ($object === false) {
             return new Response(array("There is no resource"), 404, ['Content-Type' => 'application/json']);
         }
